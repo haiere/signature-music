@@ -1618,7 +1618,7 @@
         </div>
     </div>
 
-     <!-- ═══ VIEW: SETTINGS ═══ -->
+    <!-- ═══ VIEW: SETTINGS ═══ -->
     <div class="view hidden" id="vSettings">
         <div class="set-head">
             <span class="set-head-title" data-i18n="settings.title">Pengaturan &amp; Info</span>
@@ -1633,7 +1633,6 @@
                     <span class="atag">Muhaajir</span>
                     <span class="atag hi" data-i18n="settings.nocopy">No Copyright</span>
                     <span class="atag">Original</span>
-                    <span class="atag">v2.2.1</span>
                 </div>
             </div>
             <div class="set-section">
@@ -2161,7 +2160,7 @@
             if (btnShare) btnShare.addEventListener('click', doShare);
             if (setShare) setShare.addEventListener('click', doShare);
 
-            /* ─── DOWNLOAD ─── */
+            /* ─── DOWNLOAD (NO UNDERSCORE) ─── */
             async function dl(url, file, el) {
                 if (!url) { alert('URL tidak tersedia'); return; }
                 if (el) el.classList.add('dl-ing');
@@ -2169,10 +2168,19 @@
                     const r = await fetch(url, { mode: 'cors' });
                     if (!r.ok) throw new Error();
                     const b = await r.blob();
-                    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(b), download: file });
+                    // Hapus underscore dari nama file
+                    const cleanFile = file.replace(/_/g, ' ');
+                    const a = Object.assign(document.createElement('a'), {
+                        href: URL.createObjectURL(b),
+                        download: cleanFile
+                    });
                     a.click();
                     URL.revokeObjectURL(a.href);
-                } catch (_) { window.open(url, '_blank'); } finally { if (el) el.classList.remove('dl-ing'); }
+                } catch (_) {
+                    window.open(url, '_blank');
+                } finally {
+                    if (el) el.classList.remove('dl-ing');
+                }
             }
 
             function openModal() { const mb = $('modalBg'); if (mb) mb.classList.add('on'); }
@@ -2192,6 +2200,7 @@
                 optCatbox.addEventListener('click', () => {
                     const url = optCatbox.dataset.url;
                     const name = songs[idx]?.name || 'track';
+                    // Nama file bersih tanpa underscore
                     dl(url, `Muhaajir - ${name}.opus`, optCatbox);
                 });
             }
@@ -2418,6 +2427,7 @@
             console.log('🎵 Muhaajir Music · Resonance Studio');
             console.log('🌐 Language: ' + currentLang.toUpperCase());
             console.log('📁 Total lagu: ' + songs.length);
+            console.log('📁 Download: Nama file tanpa underscore (_)');
             console.log('🛡️ Gambar & canvas dilindungi');
 
         })();
