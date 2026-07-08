@@ -41,42 +41,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Dancing+Script:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "MusicPlaylist",
-            "name": "Muhaajir Signature Music Playlist",
-            "description": "A collection of original songs by Muhaajir, featuring the albums Fragmen Suara and Resonansi Dalam Diam.",
-            "url": "https://Muhaajir.github.io/signature-music",
-            "image": "https://i.postimg.cc/8PJ0bhb1/H-haiere.webp",
-            "creator": {
-                "@type": "MusicGroup",
-                "name": "Muhaajir",
-                "image": "https://i.postimg.cc/8PJ0bhb1/H-haiere.webp",
-                "sameAs": [
-                    "https://instagram.com/muhaajir.music",
-                    "https://soundcloud.com/m65TNUx3XarndC67jO"
-                ]
-            },
-            "track": [
-                { "@type": "MusicRecording", "name": "Lintasan Tak Bermakna", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Fragmen Suara", "image": "https://i.postimg.cc/W3pHjGCQ/fragmen.webp" } },
-                { "@type": "MusicRecording", "name": "Padahal Sudah Bilang", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Fragmen Suara" } },
-                { "@type": "MusicRecording", "name": "Mimpi yang Tertunda", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Fragmen Suara" } },
-                { "@type": "MusicRecording", "name": "Langit Masih Sama", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Fragmen Suara" } },
-                { "@type": "MusicRecording", "name": "Suatu Hari Nanti", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Fragmen Suara" } },
-                { "@type": "MusicRecording", "name": "Nada Terpendam", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Resonansi Dalam Diam", "image": "https://i.postimg.cc/Tw24GVFB/resonansi.webp" } },
-                { "@type": "MusicRecording", "name": "Langit Patah Arah", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Resonansi Dalam Diam" } },
-                { "@type": "MusicRecording", "name": "Tak Bernama, Tapi Ada", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Resonansi Dalam Diam" } },
-                { "@type": "MusicRecording", "name": "Resonansi Dalam Diam", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Resonansi Dalam Diam" } },
-                { "@type": "MusicRecording", "name": "Runtuh Tanpa Suara", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Resonansi Dalam Diam" } },
-                { "@type": "MusicRecording", "name": "Kilau Tanpa Sorotan", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Resonansi Dalam Diam" } },
-                { "@type": "MusicRecording", "name": "Gelombang Terakhir", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Resonansi Dalam Diam" } },
-                { "@type": "MusicRecording", "name": "Saya Akan Lawan", "byArtist": { "@type": "MusicGroup", "name": "Muhaajir" }, "inAlbum": { "@type": "MusicAlbum", "name": "Saya Akan Lawan", "image": "https://i.postimg.cc/rsz332C3/sayaakanlawan.webp" } }
-            ],
-            "numTracks": 13
-        }
-    </script>
-
     <style>
         /* ── CSS Variables ── */
         :root {
@@ -95,6 +59,16 @@
             --dplayer-h: 92px;
             --sat: env(safe-area-inset-top, 0px);
             --sab: env(safe-area-inset-bottom, 0px);
+
+            /* Glass system */
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 14px 34px rgba(0, 0, 0, 0.40);
+            --glass-blur: 24px;
+            --glass-saturate: 1.4;
+            --glass-highlight: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            --glass-hover-bg: rgba(255, 255, 255, 0.07);
+            --glass-hover-border: rgba(255, 255, 255, 0.14);
         }
 
         /* ── Reset & base ── */
@@ -133,7 +107,6 @@
             color: inherit;
             text-decoration: none;
         }
-        /* Desktop-only chrome: hidden by default, shown via min-width:1000px media query */
         #sidebar,
         #dPlayerBar {
             display: none;
@@ -161,6 +134,152 @@
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, var(--accent), var(--accent2));
             border-radius: 20px;
+        }
+
+        /* ── GLASS SYSTEM ── */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow), var(--glass-highlight);
+            transition: background 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+        }
+        .glass-hover:hover {
+            background: var(--glass-hover-bg);
+            border-color: var(--glass-hover-border);
+            box-shadow: var(--glass-shadow), var(--glass-highlight), 0 0 20px rgba(167, 139, 250, 0.06);
+        }
+        .glass-light {
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.10);
+        }
+        .glass-dark {
+            --glass-bg: rgba(0, 0, 0, 0.30);
+            --glass-border: rgba(255, 255, 255, 0.06);
+        }
+        .glass-strong {
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-blur: 32px;
+        }
+        .glass-pill {
+            border-radius: 999px;
+            padding: 6px 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--fm);
+            font-size: 0.52rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #c8c4e8;
+        }
+        .glass-pill.accent {
+            color: var(--accent2);
+            border-color: rgba(167, 139, 250, 0.20);
+            background: rgba(167, 139, 250, 0.08);
+        }
+        .glass-card {
+            border-radius: 22px;
+            padding: 18px 20px;
+            transition: transform 0.2s var(--spring), box-shadow 0.25s var(--ease);
+        }
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--glass-shadow), var(--glass-highlight), 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+        .glass-nav {
+            --glass-bg: rgba(10, 10, 26, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-blur: 28px;
+        }
+        .glass-player {
+            --glass-bg: rgba(10, 10, 24, 0.88);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-blur: 24px;
+        }
+        .glass-sidebar {
+            --glass-bg: rgba(8, 8, 20, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-blur: 20px;
+        }
+        .glass-modal {
+            --glass-bg: rgba(16, 16, 38, 0.95);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: 30px;
+        }
+        .glass-track {
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass-hover-bg: rgba(167, 139, 250, 0.06);
+            --glass-hover-border: rgba(167, 139, 250, 0.12);
+            border-radius: 18px;
+            padding: 14px 16px;
+            transition: transform 0.15s var(--spring), background 0.2s var(--ease), border-color 0.2s var(--ease);
+        }
+        .glass-track.on {
+            background: linear-gradient(180deg, rgba(167, 139, 250, 0.12), rgba(167, 139, 250, 0.05));
+            border-color: rgba(167, 139, 250, 0.18);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(167, 139, 250, 0.10);
+        }
+        .glass-track:hover:not(.on) {
+            background: var(--glass-hover-bg);
+            border-color: var(--glass-hover-border);
+        }
+
+        .glass-btn {
+            border-radius: 14px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.18s var(--ease);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #c8c4e8;
+        }
+        .glass-btn:hover {
+            background: rgba(167, 139, 250, 0.10);
+            border-color: rgba(167, 139, 250, 0.18);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        .glass-btn:active {
+            transform: scale(0.96);
+        }
+        .glass-btn.accent {
+            background: rgba(167, 139, 250, 0.12);
+            border-color: rgba(167, 139, 250, 0.16);
+            color: var(--accent2);
+        }
+        .glass-btn.accent:hover {
+            background: rgba(167, 139, 250, 0.20);
+            border-color: rgba(167, 139, 250, 0.30);
+        }
+
+        .glass-icon {
+            border-radius: 14px;
+            padding: 10px;
+            background: rgba(167, 139, 250, 0.08);
+            border: 1px solid rgba(167, 139, 250, 0.14);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s var(--ease);
+        }
+        .glass-icon:hover {
+            background: rgba(167, 139, 250, 0.16);
+            border-color: rgba(167, 139, 250, 0.26);
+        }
+        .glass-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent2);
+            fill: none;
+            stroke-width: 1.8;
         }
 
         /* ── Ambient background ── */
@@ -204,9 +323,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, rgba(30, 30, 70, 0.95), rgba(16, 16, 38, 0.95));
-            border: 1px solid rgba(255, 255, 255, .08);
-            box-shadow: 0 0 0 1px rgba(167, 139, 250, 0.08), 0 20px 50px rgba(0, 0, 0, .45), 0 0 40px rgba(167, 139, 250, 0.16);
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow), var(--glass-highlight);
             animation: logoPulse 2.6s var(--ease) infinite;
         }
         .ld-logo img {
@@ -237,9 +358,10 @@
             padding: 12px 18px;
             border-radius: 999px;
             background: rgba(18, 18, 48, 0.72);
+            backdrop-filter: blur(18px) saturate(1.4);
+            -webkit-backdrop-filter: blur(18px) saturate(1.4);
             border: 1px solid rgba(167, 139, 250, 0.18);
             box-shadow: 0 14px 34px rgba(0, 0, 0, 0.40);
-            backdrop-filter: blur(18px) saturate(1.4);
         }
         .ld-headset svg {
             width: 26px;
@@ -274,14 +396,16 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 5vw;
-            background: linear-gradient(180deg, rgba(8, 8, 22, 0.82), rgba(8, 8, 22, 0.42));
-            border-bottom: 1px solid transparent;
+            background: rgba(8, 8, 22, 0.55);
+            backdrop-filter: blur(28px) saturate(1.5);
+            -webkit-backdrop-filter: blur(28px) saturate(1.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
             transition: all .35s var(--ease);
         }
         header.scrolled {
             background: rgba(10, 10, 26, 0.72);
             border-bottom-color: rgba(255, 255, 255, .06);
-            backdrop-filter: blur(28px) saturate(1.6);
             box-shadow: 0 10px 40px rgba(0, 0, 0, .26);
         }
         .logo {
@@ -316,7 +440,7 @@
             margin-top: -2px;
         }
 
-        /* ── Navigation (desktop) ── */
+        /* ── Navigation ── */
         #nav {
             display: none;
             align-items: center;
@@ -398,8 +522,9 @@
                 flex-direction: column;
                 align-items: stretch;
                 gap: 0;
-                background: rgba(10, 10, 26, 0.92);
-                backdrop-filter: blur(24px);
+                background: rgba(10, 10, 26, 0.90);
+                backdrop-filter: blur(28px) saturate(1.5);
+                -webkit-backdrop-filter: blur(28px) saturate(1.5);
                 border-bottom: 1px solid rgba(255, 255, 255, .06);
                 padding: 12px 5vw;
                 transform: translateY(-120%);
@@ -661,7 +786,7 @@
         .pl-track.on {
             background: linear-gradient(180deg, rgba(167, 139, 250, 0.10), rgba(167, 139, 250, 0.05));
             border-color: rgba(167, 139, 250, 0.18);
-            box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, .18), inset 0 0 0 1px rgba(167, 139, 250, 0.06);
         }
         .pl-track::before {
             content: "";
@@ -736,9 +861,10 @@
             padding: 14px;
             border-radius: 22px;
             background: rgba(12, 12, 30, 0.88);
-            border: 1px solid rgba(255, 255, 255, .06);
-            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.40);
             backdrop-filter: blur(24px) saturate(1.4);
+            -webkit-backdrop-filter: blur(24px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, .06);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.40), inset 0 0 0 1px rgba(255, 255, 255, .04);
         }
         .pl-mini-inner {
             display: flex;
@@ -810,8 +936,10 @@
             overflow: hidden;
             border-radius: 22px;
             background: rgba(255, 255, 255, .03);
+            backdrop-filter: blur(20px) saturate(1.3);
+            -webkit-backdrop-filter: blur(20px) saturate(1.3);
             border: 1px solid rgba(255, 255, 255, .06);
-            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.40);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.40), inset 0 0 0 1px rgba(255, 255, 255, .03);
         }
         .set-row {
             display: flex;
@@ -875,9 +1003,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, rgba(167, 139, 250, 0.16), rgba(255, 255, 255, .03));
+            background: rgba(167, 139, 250, 0.10);
+            backdrop-filter: blur(20px) saturate(1.3);
+            -webkit-backdrop-filter: blur(20px) saturate(1.3);
             border: 1px solid rgba(167, 139, 250, 0.16);
-            box-shadow: 0 14px 34px rgba(0, 0, 0, .24);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, .24), inset 0 0 0 1px rgba(255, 255, 255, .04);
         }
         .about-logo img {
             width: 36px;
@@ -1003,8 +1133,9 @@
             padding: 12px 6px calc(var(--sab) + 10px);
             margin-top: auto;
             background: rgba(8, 8, 22, 0.72);
-            border-top: 1px solid rgba(255, 255, 255, .06);
             backdrop-filter: blur(24px) saturate(1.5);
+            -webkit-backdrop-filter: blur(24px) saturate(1.5);
+            border-top: 1px solid rgba(255, 255, 255, .06);
             box-shadow: 0 -12px 32px rgba(0, 0, 0, .22);
         }
         .nav-btn {
@@ -1050,6 +1181,7 @@
             justify-content: center;
             background: rgba(4, 6, 14, .78);
             backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             transition: all .25s var(--ease);
         }
         .modal-bg.on {
@@ -1060,11 +1192,13 @@
             width: 100%;
             max-width: 520px;
             padding: 24px 18px calc(var(--sab) + 24px);
-            background: linear-gradient(180deg, rgba(16, 16, 38, 0.98), rgba(10, 10, 26, 0.98));
+            background: rgba(16, 16, 38, 0.96);
+            backdrop-filter: blur(30px) saturate(1.5);
+            -webkit-backdrop-filter: blur(30px) saturate(1.5);
             border: 1px solid rgba(255, 255, 255, .08);
             border-bottom: none;
             border-radius: 28px 28px 0 0;
-            box-shadow: 0 -24px 70px rgba(0, 0, 0, .52);
+            box-shadow: 0 -24px 70px rgba(0, 0, 0, .52), inset 0 0 0 1px rgba(255, 255, 255, .04);
             transform: translateY(100%);
             transition: transform .34s var(--spring);
         }
@@ -1176,15 +1310,19 @@
         }
 
         /* ════════════════════════════════════════
-           DESKTOP LAYOUT (Spotify/YT Music style)
-           Sidebar kiri + konten utama + player bar persisten
+           DESKTOP LAYOUT
            ════════════════════════════════════════ */
         @media (min-width: 1000px) {
 
-            /* Sembunyikan header mobile & bottom-nav, diganti sidebar */
-            header { display: none; }
-            .bottom-nav { display: none !important; }
-            .pl-mini { display: none !important; }
+            header {
+                display: none;
+            }
+            .bottom-nav {
+                display: none !important;
+            }
+            .pl-mini {
+                display: none !important;
+            }
 
             body {
                 display: flex;
@@ -1204,7 +1342,10 @@
                 height: 100vh;
                 padding: 22px 14px;
                 background: rgba(8, 8, 20, 0.55);
-                border-right: 1px solid rgba(255, 255, 255, .06);
+                backdrop-filter: blur(20px) saturate(1.4);
+                -webkit-backdrop-filter: blur(20px) saturate(1.4);
+                border-right: 1px solid rgba(255, 255, 255, .05);
+                box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .03);
                 position: relative;
                 z-index: 20;
             }
@@ -1267,6 +1408,8 @@
                 padding: 14px;
                 border-radius: 16px;
                 background: rgba(255, 255, 255, .03);
+                backdrop-filter: blur(12px) saturate(1.2);
+                -webkit-backdrop-filter: blur(12px) saturate(1.2);
                 border: 1px solid rgba(255, 255, 255, .06);
                 cursor: pointer;
                 transition: all .18s var(--ease);
@@ -1335,7 +1478,6 @@
                 width: 8px;
             }
 
-            /* Views jadi panel konten, bukan overlay full-screen */
             .view {
                 position: relative;
                 inset: auto;
@@ -1355,7 +1497,6 @@
                 transform: none;
             }
 
-            /* Status row (Hi-Res badge) & section paddings pakai max-width terpusat */
             #vPlayer .status-row,
             #vPlayer .art-section,
             #vPlayer .info-section,
@@ -1367,7 +1508,6 @@
                 padding-right: 0 !important;
             }
 
-            /* Now Playing desktop: layout dua kolom */
             #vPlayer {
                 display: grid;
                 grid-template-columns: minmax(200px, 360px) 1fr;
@@ -1378,7 +1518,10 @@
                 padding-left: 32px;
                 padding-right: 32px;
             }
-            #vPlayer .ctrl-row1 { flex-wrap: wrap; row-gap: 10px; }
+            #vPlayer .ctrl-row1 {
+                flex-wrap: wrap;
+                row-gap: 10px;
+            }
             #vPlayer .status-row {
                 grid-column: 1 / -1;
                 height: auto;
@@ -1401,27 +1544,40 @@
                 padding-top: 0 !important;
                 margin-top: 22px;
             }
-            #vPlayer .info-section { margin-top: 0; }
-            #vPlayer .vol-section { display: none !important; }
-            #vPlayer h1#npTitle { font-size: 2.4rem !important; }
-            #vPlayer .ctrl-row1 { justify-content: flex-start !important; gap: 18px; }
-
-            /* Playlist & settings: max-width terpusat, padding konsisten */
-            #vPlaylist > div:first-child,
-            #vSettings > div:first-child {
-                padding-left: 0 !important;
-                padding-right: 0 !important;
+            #vPlayer .info-section {
+                margin-top: 0;
             }
-            #vPlaylist, #vSettings {
+            #vPlayer .vol-section {
+                display: none !important;
+            }
+            #vPlayer h1#npTitle {
+                font-size: 2.4rem !important;
+            }
+            #vPlayer .ctrl-row1 {
+                justify-content: flex-start !important;
+                gap: 18px;
+            }
+
+            #vPlaylist,
+            #vSettings {
                 max-width: 760px;
                 margin: 0 auto;
                 padding-left: 48px;
                 padding-right: 48px;
             }
-            #plScroll { padding: 6px 0 12px !important; }
-            #vSettings > div:nth-child(2) { padding: 6px 0 12px !important; }
+            #vPlaylist>div:first-child,
+            #vSettings>div:first-child {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+            #plScroll {
+                padding: 6px 0 12px !important;
+            }
+            #vSettings>div:nth-child(2) {
+                padding: 6px 0 12px !important;
+            }
 
-            /* ── Persistent desktop player bar ── */
+            /* ── Desktop player bar ── */
             #dPlayerBar {
                 display: flex;
                 align-items: center;
@@ -1432,10 +1588,11 @@
                 bottom: 0;
                 height: var(--dplayer-h);
                 padding: 0 18px;
-                background: rgba(10, 10, 24, 0.92);
+                background: rgba(10, 10, 24, 0.90);
                 backdrop-filter: blur(28px) saturate(1.5);
+                -webkit-backdrop-filter: blur(28px) saturate(1.5);
                 border-top: 1px solid rgba(255, 255, 255, .07);
-                box-shadow: 0 -14px 40px rgba(0, 0, 0, .4);
+                box-shadow: 0 -14px 40px rgba(0, 0, 0, .4), inset 0 0 0 1px rgba(255, 255, 255, .03);
                 z-index: 500;
             }
             .dp-track {
@@ -1455,7 +1612,10 @@
                 border: 1px solid rgba(255, 255, 255, .08);
                 cursor: pointer;
             }
-            .dp-info { min-width: 0; flex: 1; }
+            .dp-info {
+                min-width: 0;
+                flex: 1;
+            }
             .dp-title {
                 font-size: .86rem;
                 font-weight: 700;
@@ -1517,7 +1677,10 @@
                 background: transparent;
                 border: none;
             }
-            .dp-ctrl .cb svg { width: 17px; height: 17px; }
+            .dp-ctrl .cb svg {
+                width: 17px;
+                height: 17px;
+            }
             .dp-play {
                 width: 36px;
                 height: 36px;
@@ -1529,8 +1692,15 @@
                 flex-shrink: 0;
                 transition: transform .16s var(--spring);
             }
-            .dp-play:active { transform: scale(.92); }
-            .dp-play svg { width: 16px; height: 16px; fill: #080816; stroke: none; }
+            .dp-play:active {
+                transform: scale(.92);
+            }
+            .dp-play svg {
+                width: 16px;
+                height: 16px;
+                fill: #080816;
+                stroke: none;
+            }
             .dp-prog-row {
                 display: flex;
                 align-items: center;
@@ -1573,7 +1743,10 @@
                 background: transparent;
                 border: none;
             }
-            .dp-right .act-btn svg { width: 16px; height: 16px; }
+            .dp-right .act-btn svg {
+                width: 16px;
+                height: 16px;
+            }
             .dp-vol {
                 display: flex;
                 align-items: center;
@@ -1589,17 +1762,19 @@
                 flex-shrink: 0;
             }
 
-            /* Modal jadi dialog tengah, bukan sheet dari bawah */
-            .modal-bg { align-items: center; }
+            .modal-bg {
+                align-items: center;
+            }
             .modal {
                 max-width: 380px;
                 border-radius: 22px;
                 padding: 26px;
             }
-            .modal-bg.on .modal { transform: none; }
+            .modal-bg.on .modal {
+                transform: none;
+            }
         }
 
-        /* Layar lebih lapang (laptop besar/monitor): beri lebih banyak ruang */
         @media (min-width: 1280px) {
             #vPlayer {
                 grid-template-columns: minmax(280px, 420px) 1fr;
@@ -1608,7 +1783,6 @@
                 padding-right: 48px;
             }
         }
-
 
         @media (max-width: 768px) {
             :root {
@@ -1686,9 +1860,10 @@
             }
         }
 
-        /* ── Reduced motion ── */
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
+            *,
+            *::before,
+            *::after {
                 animation-duration: 0.001ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.001ms !important;
@@ -1702,7 +1877,7 @@
     <!-- Ambient Background -->
     <div id="ambientBg"></div>
 
-    <!-- ═══ SIDEBAR (Desktop only) ═══ -->
+    <!-- ═══ SIDEBAR (Desktop) ═══ -->
     <aside id="sidebar">
         <a href="#" class="sb-logo">
             <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Muhaajir" decoding="async" />
@@ -1755,7 +1930,6 @@
         </div>
     </div>
 
-    <!-- ═══ HEADER ═══ -->
     <!-- ═══ HEADER (Mobile) ═══ -->
     <header id="header">
         <a href="#" class="logo">
@@ -1784,264 +1958,264 @@
     </header>
 
     <main id="mainArea">
-    <!-- ═══ VIEW: NOW PLAYING ═══ -->
-    <div class="view" id="vPlayer">
-        <div class="status-row" style="display:flex;align-items:center;justify-content:space-between;height:44px;flex-shrink:0;padding:0 5vw;">
-            <div style="display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent2);padding:6px 12px;border-radius:999px;background:rgba(167,139,250,0.09);border:1px solid rgba(167,139,250,0.16);">
-                <span style="width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.8s infinite;"></span>
-                <span data-i18n="player.hires">Hi-Res</span>
-            </div>
-            <img src="https://i.postimg.cc/JztFxsRH/hajir-logo-putih.webp" style="height:20px;opacity:0.7;filter:brightness(0) invert(0.86);" alt="" />
-        </div>
-
-        <div class="art-section" style="padding-top:18px;padding-left:5vw;padding-right:5vw;flex-shrink:0;">
-            <div class="art-outer" id="artOuter">
-                <div class="art-inner">
-                    <canvas id="artCv"></canvas>
+        <!-- ═══ VIEW: NOW PLAYING ═══ -->
+        <div class="view" id="vPlayer">
+            <div class="status-row" style="display:flex;align-items:center;justify-content:space-between;height:44px;flex-shrink:0;padding:0 5vw;">
+                <div style="display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent2);padding:6px 12px;border-radius:999px;background:rgba(167,139,250,0.09);border:1px solid rgba(167,139,250,0.16);">
+                    <span style="width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.8s infinite;"></span>
+                    <span data-i18n="player.hires">Hi-Res</span>
                 </div>
-            </div>
-        </div>
-
-        <div class="info-section" style="padding-top:22px;padding-left:5vw;padding-right:5vw;flex-shrink:0;">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
-                <h1 id="npTitle" aria-live="polite" style="font-size:clamp(1.35rem,6vw,2.35rem);font-weight:700;line-height:1.06;letter-spacing:-0.02em;color:#fff;text-wrap:balance;margin:0;">Pilih lagu...</h1>
-                <button id="btnFav" aria-label="Favorit" style="width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);transition:transform 0.15s var(--spring);flex-shrink:0;">
-                    <svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#8884b0;fill:none;stroke-width:2;transition:all 0.2s var(--ease);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                </button>
-            </div>
-            <div id="npAlbum" style="margin-top:8px;font-family:var(--fm);font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:#8884b0;">Muhaajir · 2025</div>
-        </div>
-
-        <div class="prog-section" style="padding-top:18px;padding-left:5vw;padding-right:5vw;flex-shrink:0;">
-            <div class="prog-track" id="progTrack">
-                <div id="pFill"></div>
-            </div>
-            <div style="display:flex;justify-content:space-between;margin-top:10px;font-family:var(--fm);font-size:0.56rem;color:#8884b0;letter-spacing:0.08em;">
-                <span id="tNow">0:00</span>
-                <span id="tEnd">0:00</span>
-            </div>
-        </div>
-
-        <div class="ctrl-section" style="padding-top:18px;padding-left:5vw;padding-right:5vw;flex-shrink:0;">
-            <div class="ctrl-row1" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
-                <button class="cb" id="btnShuffle" aria-label="Acak">
-                    <svg viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M16 20h5v-5M4 4l5 5M9 15l-5 5"/></svg>
-                </button>
-                <button class="cb" id="btnPrev" aria-label="Sebelumnya">
-                    <svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
-                </button>
-                <button class="play-big" id="btnPlay" aria-label="Play/Pause">
-                    <svg id="playSvg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                </button>
-                <button class="cb" id="btnNext" aria-label="Selanjutnya">
-                    <svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
-                </button>
-                <button class="cb" id="btnRepeat" aria-label="Ulangi">
-                    <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-                </button>
-            </div>
-        </div>
-
-        <div class="vol-section" style="padding-top:16px;padding-left:5vw;padding-right:5vw;flex-shrink:0;">
-            <div style="display:flex;align-items:center;gap:12px;">
-                <span><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#8884b0;fill:none;stroke-width:1.8;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg></span>
-                <input type="range" class="vol-sl" id="volSl" min="0" max="1" step="0.01" value="0.7" />
-                <span class="vol-pct" id="volPct">70%</span>
-            </div>
-        </div>
-
-        <div class="action-section" style="padding-top:16px;padding-left:5vw;padding-right:5vw;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;">
-            <button class="act-btn" id="btnShare" aria-label="Bagikan">
-                <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-            </button>
-            <button class="act-btn" id="btnDl" aria-label="Unduh">
-                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </button>
-            <button class="act-btn" id="btnTimer" aria-label="Timer tidur">
-                <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            </button>
-        </div>
-
-        <div class="bottom-nav">
-            <button class="nav-btn on" data-view="vPlayer">
-                <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                <span>Putar</span>
-            </button>
-            <button class="nav-btn" data-view="vPlaylist">
-                <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                <span>Lagu</span>
-            </button>
-            <button class="nav-btn" data-view="vSettings">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-                <span>Lainnya</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- ═══ VIEW: PLAYLIST ═══ -->
-    <div class="view hidden" id="vPlaylist">
-        <div style="display:flex;align-items:center;justify-content:space-between;height:52px;flex-shrink:0;padding:0 5vw;">
-            <span style="font-family:var(--fm);font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8c4e8;" data-i18n="playlist.title">Daftar Putar · Original</span>
-            <span class="pl-count" id="plCount" style="font-family:var(--fm);font-size:0.52rem;letter-spacing:0.12em;color:var(--accent2);padding:6px 12px;border-radius:999px;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.16);">13 Lagu</span>
-        </div>
-        <div id="plScroll" style="flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 5vw 12px;"></div>
-        <div class="pl-mini">
-            <div class="pl-mini-inner">
-                <div class="pl-mini-art"><canvas id="plMiniCv"></canvas></div>
-                <div class="pl-mini-info">
-                    <div class="pl-mini-title" id="plMiniTitle">—</div>
-                    <div class="pl-mini-sub">Muhaajir</div>
-                </div>
-                <button class="pl-mini-play" id="plPlay">
-                    <svg id="plPlaySvg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                </button>
-            </div>
-            <div class="pl-mini-prog"><div id="plPFill"></div></div>
-        </div>
-        <div class="bottom-nav">
-            <button class="nav-btn" data-view="vPlayer">
-                <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                <span>Putar</span>
-            </button>
-            <button class="nav-btn on" data-view="vPlaylist">
-                <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                <span>Lagu</span>
-            </button>
-            <button class="nav-btn" data-view="vSettings">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-                <span>Lainnya</span>
-            </button>
-        </div>
-    </div>
-
-    <!-- ═══ VIEW: SETTINGS ═══ -->
-    <div class="view hidden" id="vSettings">
-        <div style="display:flex;align-items:center;justify-content:space-between;height:52px;flex-shrink:0;padding:0 5vw;">
-            <span style="font-family:var(--fm);font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8c4e8;" data-i18n="settings.title">Pengaturan &amp; Info</span>
-        </div>
-        <div style="flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 5vw 12px;">
-            <div class="about-card">
-                <div class="about-logo"><img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="" loading="lazy" decoding="async" /></div>
-                <div class="about-name">Haiere Signature Music</div>
-                <div class="about-sub" data-i18n="settings.sub">Studio Resonansi · 2025–2026</div>
-                <div class="about-rotname" id="rotName">Dibuat oleh <span>Regina</span></div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
-                    <span class="atag">Muhaajir</span>
-                    <span class="atag hi" data-i18n="settings.nocopy">No Copyright</span>
-                    <span class="atag">Original</span>
-                </div>
+                <img src="https://i.postimg.cc/JztFxsRH/hajir-logo-putih.webp" style="height:20px;opacity:0.7;filter:brightness(0) invert(0.86);" alt="" />
             </div>
 
-            <div style="margin-bottom:10px;">
-                <div style="padding-top:16px;padding-bottom:8px;padding-left:8px;padding-right:8px;font-family:var(--fm);font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:#8884b0;" data-i18n="settings.playback">Pemutaran</div>
-                <div class="set-card">
-                    <div class="set-row">
-                        <div class="set-row-ico"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></div>
-                        <div class="set-row-txt">
-                            <div class="set-row-name" data-i18n="settings.volume">Volume</div>
-                            <div class="set-row-sub" id="volSetSub">70%</div>
-                        </div>
-                        <div style="display:flex;align-items:center;gap:12px;">
-                            <input type="range" class="vol-set-sl" id="volSetSl" min="0" max="1" step="0.01" value="0.7" />
-                            <span class="vol-set-pct" id="volSetPct">70%</span>
-                        </div>
+            <div class="art-section" style="padding-top:18px;padding-left:5vw;padding-right:5vw;flex-shrink:0;">
+                <div class="art-outer" id="artOuter">
+                    <div class="art-inner">
+                        <canvas id="artCv"></canvas>
                     </div>
-                    <div class="set-row">
-                        <div class="set-row-ico"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
-                        <div class="set-row-txt">
-                            <div class="set-row-name" data-i18n="settings.timer">Timer Tidur</div>
-                            <div class="set-row-sub" id="sleepStatus" data-i18n="settings.timerOff">Tidak aktif</div>
-                        </div>
-                        <div>
-                            <div class="sleep-inline">
-                                <select class="sleep-sel" id="sleepSel">
-                                    <option value="" data-i18n="settings.timerSelect">Pilih</option>
-                                    <option value="900" data-i18n="settings.timer15">15 Mnt</option>
-                                    <option value="1800" data-i18n="settings.timer30">30 Mnt</option>
-                                    <option value="3600" data-i18n="settings.timer60">60 Mnt</option>
-                                    <option value="5400" data-i18n="settings.timer90">90 Mnt</option>
-                                </select>
-                                <button class="sleep-go" id="sleepGo" data-i18n="settings.timerSet">Set</button>
-                                <button class="sleep-stop" id="sleepStop">✕</button>
+                </div>
+            </div>
+
+            <div class="info-section" style="padding-top:22px;padding-left:5vw;padding-right:5vw;flex-shrink:0;">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+                    <h1 id="npTitle" aria-live="polite" style="font-size:clamp(1.35rem,6vw,2.35rem);font-weight:700;line-height:1.06;letter-spacing:-0.02em;color:#fff;text-wrap:balance;margin:0;">Pilih lagu...</h1>
+                    <button id="btnFav" aria-label="Favorit" style="width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);transition:transform 0.15s var(--spring);flex-shrink:0;">
+                        <svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:#8884b0;fill:none;stroke-width:2;transition:all 0.2s var(--ease);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div id="npAlbum" style="margin-top:8px;font-family:var(--fm);font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:#8884b0;">Muhaajir · 2025</div>
+            </div>
+
+            <div class="prog-section" style="padding-top:18px;padding-left:5vw;padding-right:5vw;flex-shrink:0;">
+                <div class="prog-track" id="progTrack">
+                    <div id="pFill"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:10px;font-family:var(--fm);font-size:0.56rem;color:#8884b0;letter-spacing:0.08em;">
+                    <span id="tNow">0:00</span>
+                    <span id="tEnd">0:00</span>
+                </div>
+            </div>
+
+            <div class="ctrl-section" style="padding-top:18px;padding-left:5vw;padding-right:5vw;flex-shrink:0;">
+                <div class="ctrl-row1" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+                    <button class="cb" id="btnShuffle" aria-label="Acak">
+                        <svg viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M16 20h5v-5M4 4l5 5M9 15l-5 5"/></svg>
+                    </button>
+                    <button class="cb" id="btnPrev" aria-label="Sebelumnya">
+                        <svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+                    </button>
+                    <button class="play-big" id="btnPlay" aria-label="Play/Pause">
+                        <svg id="playSvg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </button>
+                    <button class="cb" id="btnNext" aria-label="Selanjutnya">
+                        <svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+                    </button>
+                    <button class="cb" id="btnRepeat" aria-label="Ulangi">
+                        <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="vol-section" style="padding-top:16px;padding-left:5vw;padding-right:5vw;flex-shrink:0;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span><svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#8884b0;fill:none;stroke-width:1.8;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg></span>
+                    <input type="range" class="vol-sl" id="volSl" min="0" max="1" step="0.01" value="0.7" />
+                    <span class="vol-pct" id="volPct">70%</span>
+                </div>
+            </div>
+
+            <div class="action-section" style="padding-top:16px;padding-left:5vw;padding-right:5vw;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;">
+                <button class="act-btn" id="btnShare" aria-label="Bagikan">
+                    <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                </button>
+                <button class="act-btn" id="btnDl" aria-label="Unduh">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </button>
+                <button class="act-btn" id="btnTimer" aria-label="Timer tidur">
+                    <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
+
+            <div class="bottom-nav">
+                <button class="nav-btn on" data-view="vPlayer">
+                    <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    <span>Putar</span>
+                </button>
+                <button class="nav-btn" data-view="vPlaylist">
+                    <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                    <span>Lagu</span>
+                </button>
+                <button class="nav-btn" data-view="vSettings">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                    <span>Lainnya</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ═══ VIEW: PLAYLIST ═══ -->
+        <div class="view hidden" id="vPlaylist">
+            <div style="display:flex;align-items:center;justify-content:space-between;height:52px;flex-shrink:0;padding:0 5vw;">
+                <span style="font-family:var(--fm);font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8c4e8;" data-i18n="playlist.title">Daftar Putar · Original</span>
+                <span class="pl-count" id="plCount" style="font-family:var(--fm);font-size:0.52rem;letter-spacing:0.12em;color:var(--accent2);padding:6px 12px;border-radius:999px;background:rgba(167,139,250,0.08);border:1px solid rgba(167,139,250,0.16);">13 Lagu</span>
+            </div>
+            <div id="plScroll" style="flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 5vw 12px;"></div>
+            <div class="pl-mini">
+                <div class="pl-mini-inner">
+                    <div class="pl-mini-art"><canvas id="plMiniCv"></canvas></div>
+                    <div class="pl-mini-info">
+                        <div class="pl-mini-title" id="plMiniTitle">—</div>
+                        <div class="pl-mini-sub">Muhaajir</div>
+                    </div>
+                    <button class="pl-mini-play" id="plPlay">
+                        <svg id="plPlaySvg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    </button>
+                </div>
+                <div class="pl-mini-prog"><div id="plPFill"></div></div>
+            </div>
+            <div class="bottom-nav">
+                <button class="nav-btn" data-view="vPlayer">
+                    <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    <span>Putar</span>
+                </button>
+                <button class="nav-btn on" data-view="vPlaylist">
+                    <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                    <span>Lagu</span>
+                </button>
+                <button class="nav-btn" data-view="vSettings">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                    <span>Lainnya</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ═══ VIEW: SETTINGS ═══ -->
+        <div class="view hidden" id="vSettings">
+            <div style="display:flex;align-items:center;justify-content:space-between;height:52px;flex-shrink:0;padding:0 5vw;">
+                <span style="font-family:var(--fm);font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8c4e8;" data-i18n="settings.title">Pengaturan &amp; Info</span>
+            </div>
+            <div style="flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 5vw 12px;">
+                <div class="about-card">
+                    <div class="about-logo"><img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="" loading="lazy" decoding="async" /></div>
+                    <div class="about-name">Haiere Signature Music</div>
+                    <div class="about-sub" data-i18n="settings.sub">Studio Resonansi · 2025–2026</div>
+                    <div class="about-rotname" id="rotName">Dibuat oleh <span>Regina</span></div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+                        <span class="atag">Muhaajir</span>
+                        <span class="atag hi" data-i18n="settings.nocopy">No Copyright</span>
+                        <span class="atag">Original</span>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                    <div style="padding-top:16px;padding-bottom:8px;padding-left:8px;padding-right:8px;font-family:var(--fm);font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:#8884b0;" data-i18n="settings.playback">Pemutaran</div>
+                    <div class="set-card">
+                        <div class="set-row">
+                            <div class="set-row-ico"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></div>
+                            <div class="set-row-txt">
+                                <div class="set-row-name" data-i18n="settings.volume">Volume</div>
+                                <div class="set-row-sub" id="volSetSub">70%</div>
                             </div>
-                            <div class="sleep-cd" id="sleepCd">
-                                <span class="sc-dot"></span>
-                                <span id="sleepCdTxt">--:--</span>
-                                <span data-i18n="settings.timerLeft">tersisa</span>
+                            <div style="display:flex;align-items:center;gap:12px;">
+                                <input type="range" class="vol-set-sl" id="volSetSl" min="0" max="1" step="0.01" value="0.7" />
+                                <span class="vol-set-pct" id="volSetPct">70%</span>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-bottom:10px;">
-                <div style="padding-top:16px;padding-bottom:8px;padding-left:8px;padding-right:8px;font-family:var(--fm);font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:#8884b0;" data-i18n="settings.collection">Koleksi</div>
-                <div class="set-card">
-                    <div class="set-row">
-                        <div class="set-row-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-                        <div class="set-row-txt">
-                            <div class="set-row-name" data-i18n="settings.favorites">Total Favorit</div>
-                            <div class="set-row-sub" data-i18n="settings.favoritesSub">Lagu yang kamu sukai</div>
-                        </div>
-                        <span id="favCount" style="font-family:var(--fm);font-size:1.1rem;font-weight:600;color:var(--accent2);min-width:28px;text-align:right;">0</span>
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-bottom:10px;">
-                <div style="padding-top:16px;padding-bottom:8px;padding-left:8px;padding-right:8px;font-family:var(--fm);font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:#8884b0;" data-i18n="settings.actions">Aksi Cepat</div>
-                <div class="set-card">
-                    <div class="set-row" id="setShare" style="cursor:pointer;">
-                        <div class="set-row-ico"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
-                        <div class="set-row-txt">
-                            <div class="set-row-name" data-i18n="settings.share">Bagikan Lagu</div>
-                            <div class="set-row-sub" data-i18n="settings.shareSub">Via WhatsApp</div>
-                        </div>
-                        <svg style="width:14px;height:14px;stroke:#8884b0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    </div>
-                    <div class="set-row" id="setDl" style="cursor:pointer;">
-                        <div class="set-row-ico"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
-                        <div class="set-row-txt">
-                            <div class="set-row-name" data-i18n="settings.download">Unduh Lagu</div>
-                            <div class="set-row-sub" data-i18n="settings.downloadSub">Muhaajir · Direct</div>
-                        </div>
-                        <svg style="width:14px;height:14px;stroke:#8884b0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-bottom:10px;">
-                <div style="padding-top:16px;padding-bottom:8px;padding-left:8px;padding-right:8px;font-family:var(--fm);font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:#8884b0;" data-i18n="settings.shortcuts">Pintasan Keyboard</div>
-                <div class="set-card">
-                    <div class="set-row">
-                        <div class="set-row-txt">
-                            <div class="set-row-sub" style="font-family:var(--fm);font-size:0.62rem;line-height:1.9;">
-                                <b style="color:#c8c4e8;">Space / K</b> Play–Pause &nbsp;·&nbsp;
-                                <b style="color:#c8c4e8;">←/→</b> Mundur–Maju 5s &nbsp;·&nbsp;
-                                <b style="color:#c8c4e8;">Shift+←/→</b> Lagu Seb.–Selanjutnya &nbsp;·&nbsp;
-                                <b style="color:#c8c4e8;">↑/↓</b> Volume &nbsp;·&nbsp;
-                                <b style="color:#c8c4e8;">F</b> Favorit
+                        <div class="set-row">
+                            <div class="set-row-ico"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>
+                            <div class="set-row-txt">
+                                <div class="set-row-name" data-i18n="settings.timer">Timer Tidur</div>
+                                <div class="set-row-sub" id="sleepStatus" data-i18n="settings.timerOff">Tidak aktif</div>
+                            </div>
+                            <div>
+                                <div class="sleep-inline">
+                                    <select class="sleep-sel" id="sleepSel">
+                                        <option value="" data-i18n="settings.timerSelect">Pilih</option>
+                                        <option value="900" data-i18n="settings.timer15">15 Mnt</option>
+                                        <option value="1800" data-i18n="settings.timer30">30 Mnt</option>
+                                        <option value="3600" data-i18n="settings.timer60">60 Mnt</option>
+                                        <option value="5400" data-i18n="settings.timer90">90 Mnt</option>
+                                    </select>
+                                    <button class="sleep-go" id="sleepGo" data-i18n="settings.timerSet">Set</button>
+                                    <button class="sleep-stop" id="sleepStop">✕</button>
+                                </div>
+                                <div class="sleep-cd" id="sleepCd">
+                                    <span class="sc-dot"></span>
+                                    <span id="sleepCdTxt">--:--</span>
+                                    <span data-i18n="settings.timerLeft">tersisa</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div style="margin-bottom:10px;">
+                    <div style="padding-top:16px;padding-bottom:8px;padding-left:8px;padding-right:8px;font-family:var(--fm);font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:#8884b0;" data-i18n="settings.collection">Koleksi</div>
+                    <div class="set-card">
+                        <div class="set-row">
+                            <div class="set-row-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+                            <div class="set-row-txt">
+                                <div class="set-row-name" data-i18n="settings.favorites">Total Favorit</div>
+                                <div class="set-row-sub" data-i18n="settings.favoritesSub">Lagu yang kamu sukai</div>
+                            </div>
+                            <span id="favCount" style="font-family:var(--fm);font-size:1.1rem;font-weight:600;color:var(--accent2);min-width:28px;text-align:right;">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                    <div style="padding-top:16px;padding-bottom:8px;padding-left:8px;padding-right:8px;font-family:var(--fm);font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:#8884b0;" data-i18n="settings.actions">Aksi Cepat</div>
+                    <div class="set-card">
+                        <div class="set-row" id="setShare" style="cursor:pointer;">
+                            <div class="set-row-ico"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
+                            <div class="set-row-txt">
+                                <div class="set-row-name" data-i18n="settings.share">Bagikan Lagu</div>
+                                <div class="set-row-sub" data-i18n="settings.shareSub">Via WhatsApp</div>
+                            </div>
+                            <svg style="width:14px;height:14px;stroke:#8884b0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                        </div>
+                        <div class="set-row" id="setDl" style="cursor:pointer;">
+                            <div class="set-row-ico"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+                            <div class="set-row-txt">
+                                <div class="set-row-name" data-i18n="settings.download">Unduh Lagu</div>
+                                <div class="set-row-sub" data-i18n="settings.downloadSub">Muhaajir · Direct</div>
+                            </div>
+                            <svg style="width:14px;height:14px;stroke:#8884b0;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:10px;">
+                    <div style="padding-top:16px;padding-bottom:8px;padding-left:8px;padding-right:8px;font-family:var(--fm);font-size:0.5rem;letter-spacing:0.22em;text-transform:uppercase;color:#8884b0;" data-i18n="settings.shortcuts">Pintasan Keyboard</div>
+                    <div class="set-card">
+                        <div class="set-row">
+                            <div class="set-row-txt">
+                                <div class="set-row-sub" style="font-family:var(--fm);font-size:0.62rem;line-height:1.9;">
+                                    <b style="color:#c8c4e8;">Space / K</b> Play–Pause &nbsp;·&nbsp;
+                                    <b style="color:#c8c4e8;">←/→</b> Mundur–Maju 5s &nbsp;·&nbsp;
+                                    <b style="color:#c8c4e8;">Shift+←/→</b> Lagu Seb.–Selanjutnya &nbsp;·&nbsp;
+                                    <b style="color:#c8c4e8;">↑/↓</b> Volume &nbsp;·&nbsp;
+                                    <b style="color:#c8c4e8;">F</b> Favorit
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <button class="nav-btn" data-view="vPlayer">
+                    <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    <span>Putar</span>
+                </button>
+                <button class="nav-btn" data-view="vPlaylist">
+                    <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                    <span>Lagu</span>
+                </button>
+                <button class="nav-btn on" data-view="vSettings">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                    <span>Lainnya</span>
+                </button>
             </div>
         </div>
-        <div class="bottom-nav">
-            <button class="nav-btn" data-view="vPlayer">
-                <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                <span>Putar</span>
-            </button>
-            <button class="nav-btn" data-view="vPlaylist">
-                <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                <span>Lagu</span>
-            </button>
-            <button class="nav-btn on" data-view="vSettings">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-                <span>Lainnya</span>
-            </button>
-        </div>
-    </div>
     </main>
 
     <!-- ═══ DESKTOP PERSISTENT PLAYER BAR ═══ -->
@@ -2150,7 +2324,7 @@
                     'settings.share': 'Bagikan Lagu',
                     'settings.shareSub': 'Via WhatsApp',
                     'settings.download': 'Unduh Lagu',
-                    'settings.downloadSub': 'Haiere · Direct',
+                    'settings.downloadSub': 'Muhaajir · Direct',
                     'modal.title': 'Unduh Lagu',
                     'modal.sub': 'Pilih server unduhan',
                     'modal.catbox': 'Haiere Storage',
@@ -2185,7 +2359,7 @@
                     'settings.share': 'Share Song',
                     'settings.shareSub': 'Via WhatsApp',
                     'settings.download': 'Download Song',
-                    'settings.downloadSub': 'Haiere · Direct',
+                    'settings.downloadSub': 'Muhaajir · Direct',
                     'modal.title': 'Download Song',
                     'modal.sub': 'Select download server',
                     'modal.catbox': 'Haiere Storage',
@@ -2367,7 +2541,7 @@
                 if (!coverUrl) return;
                 const entry = getCachedImg(coverUrl);
                 const draw = () => {
-                    if (cv._renderToken !== renderToken) return; // stale: cover changed since this draw was requested
+                    if (cv._renderToken !== renderToken) return;
                     if (entry.failed || !entry.img) return;
                     ctx.drawImage(entry.img, 0, 0, sz, sz);
                     ctx.fillStyle = 'rgba(10,15,40,0.3)';
@@ -2554,7 +2728,7 @@
                 if (npt && songs[idx]) {
                     npt.textContent = (currentLang === 'id' ? '⚠ Gagal memuat — ' : '⚠ Failed to load — ') + songs[idx].name;
                 }
-                if (errorSkipGuard || !interacted) return; // avoid infinite loop if every track fails
+                if (errorSkipGuard || !interacted) return;
                 errorSkipGuard = true;
                 setTimeout(() => { errorSkipGuard = false; next(); }, 1400);
             });
@@ -2578,6 +2752,7 @@
 
             const btnShuffle = $('btnShuffle');
             const dpShuffle = $('dpShuffle');
+
             function setShuffle(v) {
                 shuffle = v;
                 if (btnShuffle) btnShuffle.classList.toggle('on', shuffle);
@@ -2588,6 +2763,7 @@
 
             const btnRepeat = $('btnRepeat');
             const dpRepeat = $('dpRepeat');
+
             function setRepeat(v) {
                 repeat = v;
                 if (btnRepeat) btnRepeat.classList.toggle('on', repeat);
@@ -2778,11 +2954,10 @@
                         w.appendChild(g);
                     }
                     const r = document.createElement('div');
-                    r.className =
-                        'pl-track flex items-center gap-3 p-3.5 mb-2 rounded-[18px] bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] transition-transform duration-150 ease-[cubic-bezier(0.2,1.2,0.2,1)] hover:bg-[rgba(167,139,250,0.06)] hover:border-[rgba(167,139,250,0.12)] cursor-pointer';
+                    r.className = 'pl-track';
                     r.dataset.i = i;
                     r.innerHTML =
-                        `<span class="pl-num w-[18px] text-right font-["JetBrains_Mono"] text-[0.58rem] text-[#8884b0]">${i+1}</span><span class="pl-tname flex-1 min-w-0 truncate text-[0.92rem] font-medium text-[#c8c4e8]">${s.name}</span><div class="pl-wave flex items-end gap-0.5 h-3"><span class="w-[2.5px] rounded-sm bg-[var(--accent2)] animate-[wave_0.55s_ease-in-out_infinite_alternate] h-[5px]"></span><span class="w-[2.5px] rounded-sm bg-[var(--accent2)] animate-[wave_0.72s_ease-in-out_infinite_alternate_0.08s] h-[10px]"></span><span class="w-[2.5px] rounded-sm bg-[var(--accent2)] animate-[wave_0.58s_ease-in-out_infinite_alternate_0.04s] h-[6px]"></span></div>`;
+                        `<span class="pl-num">${i+1}</span><span class="pl-tname">${s.name}</span><div class="pl-wave"><span></span><span></span><span></span></div>`;
                     r.addEventListener('click', () => { interacted = true;
                         idx = i;
                         load(i, true);
@@ -2905,7 +3080,6 @@
                     if (lang && lang !== currentLang) updateLanguage(lang);
                 });
             });
-            // Inisialisasi tampilan bahasa
             document.querySelectorAll('.lang-switch button').forEach(btn => {
                 const isActive = btn.dataset.lang === currentLang;
                 btn.dataset.active = isActive ? 'true' : 'false';
@@ -2928,7 +3102,8 @@
                     case 'ArrowRight':
                         e.preventDefault();
                         if (e.shiftKey) { next(); }
-                        else if (aud.duration) { interacted = true; aud.currentTime = Math.min(aud.duration, aud.currentTime + 5); }
+                        else if (aud.duration) { interacted = true; aud.currentTime = Math.min(aud.duration, aud
+                                .currentTime + 5); }
                         break;
                     case 'ArrowLeft':
                         e.preventDefault();
@@ -2938,13 +3113,15 @@
                     case 'ArrowUp': {
                         e.preventDefault();
                         const v = Math.min(1, getVol() + 0.05);
-                        if (volSl) { volSl.value = v; onVolInput({ target: volSl }); }
+                        if (volSl) { volSl.value = v;
+                            onVolInput({ target: volSl }); }
                         break;
                     }
                     case 'ArrowDown': {
                         e.preventDefault();
                         const v = Math.max(0, getVol() - 0.05);
-                        if (volSl) { volSl.value = v; onVolInput({ target: volSl }); }
+                        if (volSl) { volSl.value = v;
+                            onVolInput({ target: volSl }); }
                         break;
                     }
                     case 'f':
