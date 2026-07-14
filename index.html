@@ -853,6 +853,108 @@
             animation-delay: .04s;
             animation-duration: .58s;
         }
+        .pl-track.paused .pl-wave span {
+            animation-play-state: paused;
+            opacity: .45;
+        }
+
+        /* ── Toast notifications ── */
+        #toastHost {
+            position: fixed;
+            left: 50%;
+            bottom: calc(var(--player-h) + 22px + var(--sab));
+            transform: translateX(-50%);
+            z-index: 4000;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+            width: min(92vw, 380px);
+        }
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 16px;
+            background: rgba(16, 16, 38, 0.82);
+            backdrop-filter: blur(22px) saturate(1.5);
+            -webkit-backdrop-filter: blur(22px) saturate(1.5);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+            color: #f2f0ff;
+            font-size: .82rem;
+            font-weight: 500;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(14px) scale(.96);
+            transition: opacity .32s var(--spring), transform .32s var(--spring);
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        .toast .t-ico {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(167, 139, 250, 0.16);
+        }
+        .toast .t-ico svg {
+            width: 12px;
+            height: 12px;
+            stroke: var(--accent2);
+            fill: none;
+            stroke-width: 2.4;
+        }
+        @media (min-width: 1000px) {
+            #toastHost {
+                bottom: calc(var(--dplayer-h) + 22px);
+            }
+        }
+
+        /* ── Spotlight & tilt (desktop interactivity) ── */
+        @media (min-width: 1000px) {
+            .art-outer {
+                --sx: 50%;
+                --sy: 50%;
+                transform-style: preserve-3d;
+                transition: transform .12s linear, filter .35s var(--ease);
+            }
+            .art-inner {
+                position: relative;
+            }
+            .art-inner::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                z-index: 2;
+                border-radius: 32px;
+                pointer-events: none;
+                background: radial-gradient(circle 160px at var(--sx) var(--sy), rgba(255,255,255,.22), transparent 60%);
+                opacity: 0;
+                transition: opacity .25s var(--ease);
+            }
+            .art-outer:hover .art-inner::before {
+                opacity: 1;
+            }
+            .play-big,
+            .dp-play {
+                --mx: 0px;
+                --my: 0px;
+                transform: translate(var(--mx), var(--my));
+                transition: transform .16s var(--spring), box-shadow .2s var(--ease);
+            }
+            .play-big:active,
+            .dp-play:active {
+                transform: translate(var(--mx), var(--my)) scale(.92);
+            }
+        }
 
         /* ── Mini player ── */
         .pl-mini {
@@ -2285,6 +2387,9 @@
         </div>
     </div>
 
+    <!-- ═══ TOAST HOST ═══ -->
+    <div id="toastHost" aria-live="polite"></div>
+
     <!-- ═══ AUDIO ═══ -->
     <audio id="aud" preload="metadata"></audio>
 
@@ -2328,7 +2433,21 @@
                     'modal.title': 'Unduh Lagu',
                     'modal.sub': 'Pilih server unduhan',
                     'modal.catbox': 'Haiere Storage',
-                    'modal.catboxSub': 'Unduh langsung · Stabil'
+                    'modal.catboxSub': 'Unduh langsung · Stabil',
+                    'toast.favAdd': 'Ditambahkan ke Favorit',
+                    'toast.favRemove': 'Dihapus dari Favorit',
+                    'toast.shuffleOn': 'Acak diaktifkan',
+                    'toast.shuffleOff': 'Acak dimatikan',
+                    'toast.repeatOn': 'Ulangi lagu diaktifkan',
+                    'toast.repeatOff': 'Ulangi lagu dimatikan',
+                    'toast.share': 'Membuka WhatsApp...',
+                    'toast.sleepSet': 'Timer tidur diatur',
+                    'toast.sleepOff': 'Timer tidur dimatikan',
+                    'toast.sleepDone': 'Timer tidur selesai, musik dijeda',
+                    'toast.dlStart': 'Mengunduh lagu...',
+                    'toast.dlDone': 'Unduhan selesai',
+                    'toast.dlFail': 'URL tidak tersedia',
+                    'toast.lang': 'Bahasa diganti ke Indonesia'
                 },
                 en: {
                     loader: 'Loading Resonance...',
@@ -2363,7 +2482,21 @@
                     'modal.title': 'Download Song',
                     'modal.sub': 'Select download server',
                     'modal.catbox': 'Haiere Storage',
-                    'modal.catboxSub': 'Direct download · Stable'
+                    'modal.catboxSub': 'Direct download · Stable',
+                    'toast.favAdd': 'Added to Favorites',
+                    'toast.favRemove': 'Removed from Favorites',
+                    'toast.shuffleOn': 'Shuffle enabled',
+                    'toast.shuffleOff': 'Shuffle disabled',
+                    'toast.repeatOn': 'Repeat enabled',
+                    'toast.repeatOff': 'Repeat disabled',
+                    'toast.share': 'Opening WhatsApp...',
+                    'toast.sleepSet': 'Sleep timer set',
+                    'toast.sleepOff': 'Sleep timer cancelled',
+                    'toast.sleepDone': 'Sleep timer ended, playback paused',
+                    'toast.dlStart': 'Downloading track...',
+                    'toast.dlDone': 'Download complete',
+                    'toast.dlFail': 'URL not available',
+                    'toast.lang': 'Language switched to English'
                 }
             };
 
@@ -2458,6 +2591,21 @@
 
             const $ = id => document.getElementById(id);
             const fmt = s => isFinite(s) ? `${Math.floor(s/60)}:${(Math.floor(s%60)+'').padStart(2,'0')}` : '0:00';
+
+            /* ─── TOAST ─── */
+            function showToast(key, iconPath) {
+                const host = $('toastHost');
+                if (!host) return;
+                const el = document.createElement('div');
+                el.className = 'toast';
+                el.innerHTML = `<span class="t-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">${iconPath || '<polyline points="20 6 9 17 4 12"/>'}</svg></span><span>${getText(key)}</span>`;
+                host.appendChild(el);
+                requestAnimationFrame(() => el.classList.add('show'));
+                setTimeout(() => {
+                    el.classList.remove('show');
+                    setTimeout(() => el.remove(), 350);
+                }, 2600);
+            }
 
             /* ─── HELPERS ─── */
             function setPlaySvg(el, playing) {
@@ -2627,6 +2775,8 @@
                 if (bf) bf.classList.toggle('on', favorites[n]);
                 const dpf = $('dpFav');
                 if (dpf) dpf.classList.toggle('on', favorites[n]);
+                showToast(favorites[n] ? 'toast.favAdd' : 'toast.favRemove',
+                    '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>');
             }
 
             function syncFavButton() {
@@ -2702,6 +2852,45 @@
             bindProgressDrag($('progTrack'), 'pFill', 'tNow');
             bindProgressDrag($('dpProgTrack'), 'dpFill', 'dpTNow');
 
+            /* ─── DESKTOP SPOTLIGHT + TILT ON ALBUM ART ─── */
+            const isDesktop = () => window.matchMedia('(min-width:1000px)').matches && window.matchMedia('(pointer:fine)').matches;
+            const artOuterEl = $('artOuter');
+            if (artOuterEl) {
+                artOuterEl.addEventListener('pointermove', e => {
+                    if (!isDesktop()) return;
+                    const r = artOuterEl.getBoundingClientRect();
+                    const px = ((e.clientX - r.left) / r.width) * 100;
+                    const py = ((e.clientY - r.top) / r.height) * 100;
+                    artOuterEl.style.setProperty('--sx', px + '%');
+                    artOuterEl.style.setProperty('--sy', py + '%');
+                    const rx = ((py - 50) / 50) * -6;
+                    const ry = ((px - 50) / 50) * 6;
+                    artOuterEl.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+                });
+                artOuterEl.addEventListener('pointerleave', () => {
+                    artOuterEl.style.transform = 'rotateX(0) rotateY(0)';
+                });
+            }
+
+            /* ─── MAGNETIC PLAY BUTTONS (desktop) ─── */
+            function magnetize(el, strength = 0.28) {
+                if (!el) return;
+                el.addEventListener('pointermove', e => {
+                    if (!isDesktop()) return;
+                    const r = el.getBoundingClientRect();
+                    const mx = (e.clientX - r.left - r.width / 2) * strength;
+                    const my = (e.clientY - r.top - r.height / 2) * strength;
+                    el.style.setProperty('--mx', mx + 'px');
+                    el.style.setProperty('--my', my + 'px');
+                });
+                el.addEventListener('pointerleave', () => {
+                    el.style.setProperty('--mx', '0px');
+                    el.style.setProperty('--my', '0px');
+                });
+            }
+            magnetize($('btnPlay'));
+            magnetize($('dpPlay'), 0.35);
+
             /* ─── NAVIGATION ─── */
             function getNext(d) {
                 if (shuffle) { let r; do { r = Math.floor(Math.random() * songs.length); } while (r === idx && songs.length >
@@ -2757,6 +2946,8 @@
                 shuffle = v;
                 if (btnShuffle) btnShuffle.classList.toggle('on', shuffle);
                 if (dpShuffle) dpShuffle.classList.toggle('on', shuffle);
+                showToast(shuffle ? 'toast.shuffleOn' : 'toast.shuffleOff',
+                    '<path d="M16 3h5v5M4 20 21 3M16 20h5v-5M4 4l5 5M9 15l-5 5"/>');
             }
             if (btnShuffle) btnShuffle.addEventListener('click', () => setShuffle(!shuffle));
             if (dpShuffle) dpShuffle.addEventListener('click', () => setShuffle(!shuffle));
@@ -2768,6 +2959,8 @@
                 repeat = v;
                 if (btnRepeat) btnRepeat.classList.toggle('on', repeat);
                 if (dpRepeat) dpRepeat.classList.toggle('on', repeat);
+                showToast(repeat ? 'toast.repeatOn' : 'toast.repeatOff',
+                    '<polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>');
             }
             if (btnRepeat) btnRepeat.addEventListener('click', () => setRepeat(!repeat));
             if (dpRepeat) dpRepeat.addEventListener('click', () => setRepeat(!repeat));
@@ -2814,8 +3007,12 @@
             /* ─── SHARE ─── */
             function doShare() {
                 const s = songs[idx];
-                if (s) window.open(`https://wa.me/?text=${encodeURIComponent('*'+s.name+'* — Muhaajir\n'+location.href)}`,
-                    '_blank');
+                if (s) {
+                    window.open(`https://wa.me/?text=${encodeURIComponent('*'+s.name+'* — Muhaajir\n'+location.href)}`,
+                        '_blank');
+                    showToast('toast.share',
+                        '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>');
+                }
             }
             const btnShare = $('btnShare');
             const setShare = $('setShare');
@@ -2824,8 +3021,9 @@
 
             /* ─── DOWNLOAD ─── */
             async function dl(url, file, el) {
-                if (!url) { alert('URL tidak tersedia'); return; }
+                if (!url) { showToast('toast.dlFail', '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'); return; }
                 if (el) el.classList.add('dl-ing');
+                showToast('toast.dlStart', '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>');
                 try {
                     const r = await fetch(url, { mode: 'cors' });
                     if (!r.ok) throw new Error();
@@ -2837,6 +3035,7 @@
                     });
                     a.click();
                     URL.revokeObjectURL(a.href);
+                    showToast('toast.dlDone', '<polyline points="20 6 9 17 4 12"/>');
                 } catch (_) {
                     window.open(url, '_blank');
                 } finally {
@@ -2911,7 +3110,8 @@
                         clearSleep();
                         fadeTo(0, 1500, () => { aud.pause();
                             aud.volume = getVol();
-                            syncPlayBtns(false); });
+                            syncPlayBtns(false);
+                            showToast('toast.sleepDone', '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'); });
                         return;
                     }
                     const txt = $('sleepCdTxt');
@@ -2931,10 +3131,12 @@
             if (sleepGo) {
                 sleepGo.addEventListener('click', () => {
                     const v = parseInt(sleepSel?.value);
-                    if (v) startSleep(v);
+                    if (v) { startSleep(v);
+                        showToast('toast.sleepSet', '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'); }
                 });
             }
-            if (sleepStop) sleepStop.addEventListener('click', clearSleep);
+            if (sleepStop) sleepStop.addEventListener('click', () => { clearSleep();
+                showToast('toast.sleepOff', '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'); });
             if (btnTimer) btnTimer.addEventListener('click', () => showView('vSettings'));
             if (dpTimer) dpTimer.addEventListener('click', () => showView('vSettings'));
 
@@ -3077,7 +3279,8 @@
             document.querySelectorAll('.lang-switch button').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const lang = btn.dataset.lang;
-                    if (lang && lang !== currentLang) updateLanguage(lang);
+                    if (lang && lang !== currentLang) { updateLanguage(lang);
+                        showToast('toast.lang', '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>'); }
                 });
             });
             document.querySelectorAll('.lang-switch button').forEach(btn => {
