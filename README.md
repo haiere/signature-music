@@ -1,320 +1,678 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhaajir Music Players</title>
-    <style>
-        :root {
-            --bg: #080808;
-            --card: #121212;
-            --accent: #00d2ff;
-            --text: #ffffff;
-            --text-dim: #666666;
-            --border: #222222;
-        }
+Signature Music
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+A web-based music player for streaming original albums by Muhaajir.
 
-        .player-wrapper {
-            width: 100%;
-            max-width: 420px;
-            background: var(--card);
-            border-radius: 24px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-            position: relative;
-        }
+---
 
-        .loading { opacity: 0.5; pointer-events: none; }
+Overview
 
-        /* Display Section */
-        .display-section {
-            padding: 50px 20px 30px;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(to bottom, #1a1a1a, var(--card));
-        }
+Signature Music is a modern, browser-based audio player designed to showcase original music releases. It provides a polished interface for listening to Muhaajir's albums, with playback controls, playlist management, favorites, and a sleep timer. The application runs entirely in the browser with no server-side dependencies.
 
-        #visualizer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            opacity: 0.4;
-        }
+---
 
-        .meta-info { position: relative; z-index: 5; }
-        .meta-info h1 { font-size: 1.3rem; margin: 0; letter-spacing: -0.5px; }
-        .meta-info p { font-size: 0.7rem; color: var(--accent); margin: 5px 0; text-transform: uppercase; font-weight: 700; }
-        
-        .badge-container { margin: 10px 0; }
-        .badge { 
-            font-size: 0.6rem; 
-            padding: 3px 10px; 
-            border: 1px solid var(--accent); 
-            border-radius: 4px; 
-            color: var(--accent); 
-            font-weight: bold;
-            display: inline-block;
-        }
+Features
 
-        .lyrics-mini {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            margin-top: 10px;
-            font-style: italic;
-            height: 18px;
-        }
+· Full-featured player — Play, pause, skip, seek, and control volume with dedicated controls.
+· Playlist management — Browse all tracks, filter by favorites, and switch between albums.
+· Favorites system — Mark tracks as favorites, stored locally in your browser.
+· Shuffle and repeat — Toggle shuffle mode and repeat playback.
+· Sleep timer — Set a timer to automatically pause playback after a specified duration.
+· Keyboard shortcuts — Full keyboard support for playback and navigation.
+· Download support — Direct download of tracks via the built-in modal.
+· Share integration — Share the currently playing track via WhatsApp.
+· Responsive design — Optimized for desktop, tablet, and mobile devices with adaptive layouts.
+· Persistent state — Remembers your last played track, position, volume, and settings.
 
-        /* Controls Section */
-        .controls-section { padding: 25px; background: var(--card); border-top: 1px solid var(--border); }
-        
-        .time-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.7rem; color: var(--text-dim); font-family: monospace; }
+---
 
-        .progress-bar {
-            width: 100%; height: 5px; background: #222; border-radius: 3px;
-            margin-bottom: 25px; position: relative; cursor: pointer;
-        }
-        #progress-fill { height: 100%; background: var(--accent); width: 0%; border-radius: 3px; }
+Preview
 
-        .nav-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+https://i.postimg.cc/8PJ0bhb1/H-haiere.webp
 
-        .ctrl-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4rem; cursor: pointer; transition: 0.2s; }
-        .ctrl-btn:hover { color: var(--text); }
-        .ctrl-btn.active { color: var(--accent); }
+The application features a clean dark-themed interface with album art, playback controls, and a searchable playlist.
 
-        .play-btn {
-            width: 55px; height: 55px;
-            background-color: var(--text);
-            background-size: 40%;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-        }
-        .state-play { background-image: url('https://i.postimg.cc/13j2rbt8/play.png'); }
-        .state-pause { background-image: url('https://i.postimg.cc/J0L9BJhD/pause.png'); }
+---
 
-        .volume-control { display: flex; align-items: center; gap: 12px; }
-        .volume-control input { flex-grow: 1; accent-color: var(--accent); height: 3px; cursor: pointer; }
+Requirements
 
-        /* Playlist */
-        .playlist-scroll { max-height: 280px; overflow-y: auto; border-top: 1px solid var(--border); }
-        .album-label { padding: 20px 20px 5px; font-size: 0.6rem; color: var(--text-dim); letter-spacing: 2px; font-weight: 800; text-transform: uppercase; }
-        
-        .track-row { display: flex; align-items: center; padding: 12px 20px; cursor: pointer; }
-        .track-row:hover { background: rgba(255,255,255,0.03); }
-        .track-row.active { background: rgba(0, 210, 255, 0.08); color: var(--accent); }
-        
-        .t-num { width: 30px; font-size: 0.7rem; opacity: 0.5; }
-        .t-name { font-size: 0.85rem; flex-grow: 1; }
+· A modern web browser (Chrome, Firefox, Safari, Edge)
+· Internet connection for initial loading of audio files
+· No additional runtime, package manager, or build tools required
 
-        .track-actions { display: none; gap: 8px; }
-        .track-row:hover .track-actions { display: flex; }
-        
-        .action-btn { background: #222; border: none; color: #fff; font-size: 0.55rem; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .action-btn:hover { background: var(--accent); color: #000; }
+---
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #333; }
-    </style>
-</head>
-<body>
+Installation
 
-<div class="player-wrapper" id="player-ui">
-    <div class="display-section">
-        <div class="meta-info">
-            <p id="cur-album">Muhaajir Archive</p>
-            <h1 id="cur-title">Mulai Mendengar</h1>
-            <div class="badge-container">
-                <span class="badge">NO COPYRIGHT SONG</span>
-            </div>
-            <div class="lyrics-mini" id="lyrics">Klik lagu untuk memulai resonansi</div>
-        </div>
-        <canvas id="visualizer"></canvas>
-    </div>
+Signature Music is a single-page application. No installation is required.
 
-    <div class="controls-section">
-        <div class="time-info">
-            <span id="current-time">0:00</span>
-            <span id="duration">0:00</span>
-        </div>
-        <div class="progress-bar" id="progress-container">
-            <div id="progress-fill"></div>
-        </div>
-        
-        <div class="nav-group">
-            <button class="ctrl-btn" id="shuffle" style="font-size: 0.6rem; font-weight: 900;">SHUFFLE</button>
-            <button class="ctrl-btn" id="prev">◁</button>
-            <button class="play-btn state-play" id="play-pause"></button>
-            <button class="ctrl-btn" id="next">▷</button>
-            <button class="ctrl-btn" id="repeat">↻</button>
-        </div>
+Clone the repository
 
-        <div class="volume-control">
-            <span style="font-size: 0.6rem; font-weight: bold; color: var(--text-dim);">VOL</span>
-            <input type="range" id="volume" min="0" max="1" step="0.05" value="1">
-        </div>
-    </div>
+```bash
+git clone https://github.com/haiere/signature-music.git
+cd signature-music
+```
 
-    <div class="playlist-scroll" id="playlist">
-        <div class="album-label">Fragmen Suara</div>
-        <div class="track-row" data-url="https://files.catbox.moe/6pact4.mp3" data-title="Lintasan Tak Bermakna" data-album="Fragmen Suara"><span class="t-num">01</span><span class="t-name">Lintasan Tak Bermakna</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/6pact4.mp3')">LINK</button><a href="https://files.catbox.moe/6pact4.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-        <div class="track-row" data-url="https://files.catbox.moe/xksnbw.mp3" data-title="Padahal Sudah Bilang" data-album="Fragmen Suara"><span class="t-num">02</span><span class="t-name">Padahal Sudah Bilang</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/xksnbw.mp3')">LINK</button><a href="https://files.catbox.moe/xksnbw.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-        <div class="track-row" data-url="https://files.catbox.moe/g0qdg4.mp3" data-title="Mimpi yang Tertunda" data-album="Fragmen Suara"><span class="t-num">03</span><span class="t-name">Mimpi yang Tertunda</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/g0qdg4.mp3')">LINK</button><a href="https://files.catbox.moe/g0qdg4.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-        <div class="track-row" data-url="https://files.catbox.moe/xku817.mp3" data-title="Langit Masih Sama" data-album="Fragmen Suara"><span class="t-num">04</span><span class="t-name">Langit Masih Sama</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/xku817.mp3')">LINK</button><a href="https://files.catbox.moe/xku817.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-        <div class="track-row" data-url="https://files.catbox.moe/c21lkq.mp3" data-title="Suatu Hari Nanti" data-album="Fragmen Suara"><span class="t-num">05</span><span class="t-name">Suatu Hari Nanti</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/c21lkq.mp3')">LINK</button><a href="https://files.catbox.moe/c21lkq.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
+Serve locally
 
-        <div class="album-label">Resonansi Dalam Diam</div>
-        <div class="track-row" data-url="https://files.catbox.moe/zp943i.mp3" data-title="Nada Terpendam" data-album="Resonansi Dalam Diam"><span class="t-num">01</span><span class="t-name">Nada Terpendam</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/zp943i.mp3')">LINK</button><a href="https://files.catbox.moe/zp943i.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-        <div class="track-row" data-url="https://files.catbox.moe/4476ew.mp3" data-title="Langit Patah Arah" data-album="Resonansi Dalam Diam"><span class="t-num">02</span><span class="t-name">Langit Patah Arah</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/4476ew.mp3')">LINK</button><a href="https://files.catbox.moe/4476ew.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-        <div class="track-row" data-url="https://files.catbox.moe/fmjqjz.mp3" data-title="Tak Bernama, Tapi Ada" data-album="Resonansi Dalam Diam"><span class="t-num">03</span><span class="t-name">Tak Bernama, Tapi Ada</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/fmjqjz.mp3')">LINK</button><a href="https://files.catbox.moe/fmjqjz.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-        <div class="track-row" data-url="https://files.catbox.moe/bqdso1.mp3" data-title="Resonansi Dalam Diam" data-album="Resonansi Dalam Diam"><span class="t-num">04</span><span class="t-name">Resonansi Dalam Diam</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/bqdso1.mp3')">LINK</button><a href="https://files.catbox.moe/bqdso1.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-        <div class="track-row" data-url="https://files.catbox.moe/wy0hy6.mp3" data-title="Runtuh Tanpa Suara" data-album="Resonansi Dalam Diam"><span class="t-num">05</span><span class="t-name">Runtuh Tanpa Suara</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/wy0hy6.mp3')">LINK</button><a href="https://files.catbox.moe/wy0hy6.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-        <div class="track-row" data-url="https://files.catbox.moe/7nxsix.mp3" data-title="Kilau Tanpa Sorotan" data-album="Resonansi Dalam Diam"><span class="t-num">06</span><span class="t-name">Kilau Tanpa Sorotan</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/7nxsix.mp3')">LINK</button><a href="https://files.catbox.moe/7nxsix.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-        <div class="track-row" data-url="https://files.catbox.moe/hkair0.mp3" data-title="Gelombang Terakhir" data-album="Resonansi Dalam Diam"><span class="t-num">07</span><span class="t-name">Gelombang Terakhir</span><div class="track-actions"><button class="action-btn" onclick="copyLink(event, 'https://files.catbox.moe/hkair0.mp3')">LINK</button><a href="https://files.catbox.moe/hkair0.mp3" download class="action-btn" style="text-decoration:none">DL</a></div></div>
-    </div>
-</div>
+Open index.html directly in your browser, or serve with a local development server:
 
-<audio id="audio" crossorigin="anonymous"></audio>
+```bash
+# Python 3
+python -m http.server 8000
 
-<script>
-    const audio = document.getElementById('audio');
-    const playBtn = document.getElementById('play-pause');
-    const progressFill = document.getElementById('progress-fill');
-    const playerUI = document.getElementById('player-ui');
-    const trackRows = Array.from(document.querySelectorAll('.track-row'));
-    
-    let currentIndex = -1;
-    let isShuffle = false;
-    let isRepeat = false;
-    let audioCtx, analyser, dataArray, canvas, ctx;
+# Node.js
+npx serve .
 
-    function formatTime(s) {
-        if (isNaN(s)) return "0:00";
-        const m = Math.floor(s / 60);
-        const sec = Math.floor(s % 60);
-        return `${m}:${sec.toString().padStart(2, '0')}`;
-    }
+# PHP
+php -S localhost:8000
+```
 
-    function setupVisualizer() {
-        if (audioCtx) return;
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioCtx.createAnalyser();
-        const src = audioCtx.createMediaElementSource(audio);
-        src.connect(analyser);
-        analyser.connect(audioCtx.destination);
-        analyser.fftSize = 64;
-        dataArray = new Uint8Array(analyser.frequencyBinCount);
-        canvas = document.getElementById('visualizer');
-        ctx = canvas.getContext('2d');
-        draw();
-    }
+Then navigate to http://localhost:8000 in your browser.
 
-    function draw() {
-        requestAnimationFrame(draw);
-        analyser.getByteFrequencyData(dataArray);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        let barWidth = (canvas.width / dataArray.length) * 2;
-        let x = 0;
-        for(let i = 0; i < dataArray.length; i++) {
-            let barHeight = dataArray[i] / 1.5;
-            ctx.fillStyle = `rgba(0, 210, 255, ${barHeight/150})`;
-            ctx.fillRect(x, canvas.height - barHeight, barWidth - 1, barHeight);
-            x += barWidth;
-        }
-    }
+---
 
-    function playTrack(idx, shouldPlay = true) {
-        if (idx < 0 || idx >= trackRows.length) return;
-        playerUI.classList.add('loading');
-        currentIndex = idx;
-        const row = trackRows[idx];
-        
-        audio.src = row.dataset.url;
-        document.getElementById('cur-title').innerText = row.dataset.title;
-        document.getElementById('cur-album').innerText = row.dataset.album;
-        document.getElementById('lyrics').innerText = `Sedang diputar...`;
-        
-        trackRows.forEach(r => r.classList.remove('active'));
-        row.classList.add('active');
-        localStorage.setItem('lastTrack', idx);
-        
-        audio.load();
-        if(shouldPlay) audio.play().catch(() => {});
-    }
+Quick Start
 
-    playBtn.onclick = () => audio.paused ? audio.play() : audio.pause();
-    
-    document.getElementById('next').onclick = () => {
-        let n = isShuffle ? Math.floor(Math.random()*trackRows.length) : (currentIndex + 1) % trackRows.length;
-        playTrack(n);
-    };
+1. Open the application in your browser.
+2. The first track loads automatically.
+3. Use the play button to start playback.
+4. Navigate between tracks using the next/previous buttons.
+5. Explore the playlist view to see all available tracks.
+6. Use the settings panel to adjust volume, set a sleep timer, or view keyboard shortcuts.
 
-    document.getElementById('prev').onclick = () => {
-        let p = (currentIndex - 1 + trackRows.length) % trackRows.length;
-        playTrack(p);
-    };
+---
 
-    document.getElementById('shuffle').onclick = (e) => {
-        isShuffle = !isShuffle; e.currentTarget.classList.toggle('active', isShuffle);
-    };
+Usage
 
-    document.getElementById('repeat').onclick = (e) => {
-        isRepeat = !isRepeat; e.currentTarget.classList.toggle('active', isRepeat);
-    };
+Playback Controls
 
-    document.getElementById('volume').oninput = (e) => audio.volume = e.target.value;
+Control Description
+Play / Pause Starts or pauses the current track
+Next / Previous Skips to the next or previous track
+Seek bar Click or drag to jump to a specific position
+Volume slider Adjusts playback volume
+Shuffle Randomizes playback order
+Repeat Repeats the current track
 
-    function copyLink(e, url) {
-        e.stopPropagation();
-        navigator.clipboard.writeText(url);
-        alert("Link lagu disalin!");
-    }
+Navigation
 
-    audio.oncanplay = () => playerUI.classList.remove('loading');
-    audio.onplay = () => {
-        if (!audioCtx) setupVisualizer();
-        playBtn.classList.replace('state-play', 'state-pause');
-    };
-    audio.onpause = () => playBtn.classList.replace('state-pause', 'state-play');
-    audio.onloadedmetadata = () => document.getElementById('duration').textContent = formatTime(audio.duration);
-    audio.ontimeupdate = () => {
-        const pct = (audio.currentTime / audio.duration) * 100;
-        progressFill.style.width = pct + "%";
-        document.getElementById('current-time').textContent = formatTime(audio.currentTime);
-    };
-    audio.onended = () => isRepeat ? audio.play() : document.getElementById('next').click();
+· Home — Returns to the player view
+· Songs — Opens the full playlist
+· More — Opens settings and configuration
 
-    document.getElementById('progress-container').onclick = (e) => {
-        const pct = e.offsetX / e.currentTarget.clientWidth;
-        audio.currentTime = pct * audio.duration;
-    };
+Favorites
 
-    window.onload = () => {
-        const last = localStorage.getItem('lastTrack');
-        playTrack(last ? parseInt(last) : 0, false);
-    };
+Click the heart icon on any track or in the player to add it to your favorites. Favorites are stored locally in your browser and persist across sessions.
 
-    trackRows.forEach((row, i) => {
-        row.onclick = (e) => {
-            if(!e.target.classList.contains('action-btn')) playTrack(i);
-        };
-    });
-</script>
+Sleep Timer
 
-</body>
-</html># muhaajirmusicplayers
+Set a timer (15, 30, 60, or 90 minutes) from the settings panel. Playback will automatically pause when the timer expires.
+
+Keyboard Shortcuts
+
+Shortcut Action
+Space / K Play / Pause
+Left / Right Seek backward / forward 5 seconds
+Shift + Left / Right Previous / Next track
+Up / Down Increase / Decrease volume
+F Toggle favorite
+S Toggle shuffle
+R Toggle repeat
+M Open download modal
+T Open settings
+Escape Close modal / menu
+
+---
+
+Configuration
+
+The application uses localStorage to persist user preferences. No external configuration files are required.
+
+Stored Preferences
+
+Key Description
+haiere_fav Favorites list (JSON object)
+haiere_state Playback state including current track, position, volume, and sleep timer
+haiere_vol Volume level
+haiere_view Last active view
+
+---
+
+Project Structure
+
+```
+signature-music/
+├── index.html          # Single-page application (HTML + CSS + JS)
+└── README.md           # Documentation
+```
+
+The entire application is contained within a single HTML file, including all styles and JavaScript. This makes deployment simple and eliminates external dependencies.
+
+---
+
+Supported Platforms
+
+· Desktop — Chrome, Firefox, Safari, Edge
+· Tablet — iPad, Android tablets
+· Mobile — iOS Safari, Android Chrome
+
+The application adapts its layout automatically based on screen size.
+
+---
+
+Troubleshooting
+
+Audio does not play
+
+· Ensure you have an active internet connection.
+· The audio files are hosted remotely; check if the URLs are accessible.
+· Try reloading the page.
+
+Favorites not persisting
+
+· Favorites are stored in localStorage. Ensure your browser allows local storage.
+· Clear site data and re-add favorites if they become corrupted.
+
+Sleep timer not working
+
+· The sleep timer requires the page to remain active. It may not function reliably if the browser tab is suspended.
+
+Mobile layout issues
+
+· Ensure your viewport is set correctly. The application uses viewport-fit=cover and responsive breakpoints.
+
+---
+
+Privacy Considerations
+
+· All user data (favorites, state, preferences) is stored locally in the browser's localStorage.
+· No data is transmitted to any external server.
+· No analytics, tracking, or cookies are used.
+· Audio files are hosted on third-party storage (catbox.moe) and are streamed directly to the client.
+
+---
+
+Performance Notes
+
+· The application is a single-page static site with no external libraries or frameworks.
+· Audio playback uses the native <audio> element with Opus codec support.
+· Cover art is loaded from remote sources and cached in memory.
+· All interactions are optimized for responsiveness with smooth animations.
+
+---
+
+Roadmap
+
+☐ Add album and track metadata display
+☐ Implement gapless playback
+☐ Add dynamic album art for each track
+☐ Support for local audio file upload
+☐ Enhanced playlist sorting and search
+
+---
+
+Contributing
+
+Contributions are welcome. To contribute:
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes.
+4. Test your changes across supported browsers.
+5. Submit a pull request with a clear description of the changes.
+
+Development Guidelines
+
+· Maintain the existing code style and structure.
+· Keep the application self-contained within a single HTML file.
+· Preserve accessibility standards.
+· Ensure responsiveness across all supported platforms.
+· Document any new features or changes.
+
+---
+
+Development Setup
+
+1. Clone the repository.
+2. Open index.html in your browser.
+3. Make changes to the HTML, CSS, or JavaScript directly.
+4. Refresh the browser to see updates.
+
+No build tools or compilation steps are required.
+
+---
+
+Testing
+
+Test the application across the following environments:
+
+· Desktop — Chrome, Firefox, Safari, Edge
+· Mobile — iOS Safari, Android Chrome
+· Tablet — Responsive breakpoints at 820px and 480px
+
+Verify that all features (playback, navigation, favorites, sleep timer, keyboard shortcuts) function correctly.
+
+---
+
+Build and Release
+
+The application is distributed as a single HTML file. To create a release:
+
+1. Update the version number if applicable.
+2. Commit the final changes.
+3. Tag the release and push to the repository.
+
+---
+
+License
+
+This project is open source and available for personal and educational use.
+
+---
+
+Author
+
+Created by Regina & Hajir Studio· Resonance Studio
+
+---
+
+Support and Contact
+
+For issues, questions, or contributions, please open an issue on the repository.
+
+Berikut versi README.md yang sudah dirapikan, distrukturkan ulang, dan dibersihkan tanpa emoji. Saya juga menyesuaikan gaya penulisan agar konsisten dengan README proyek sebelumnya.
+
+```md
+# Signature Music
+
+A web-based music player for streaming original albums by Muhaajir.
+
+Signature Music is a modern, browser-based audio player designed to showcase original music releases. It provides a polished interface for listening to Muhaajir's albums, with playback controls, playlist management, favorites, and a sleep timer. The application runs entirely in the browser with no server-side dependencies.
+
+---
+
+## Features
+
+- Full-featured player — Play, pause, skip, seek, and control volume with dedicated controls.
+- Playlist management — Browse all tracks, filter by favorites, and switch between albums.
+- Favorites system — Mark tracks as favorites, stored locally in your browser.
+- Shuffle and repeat — Toggle shuffle mode and repeat playback.
+- Sleep timer — Set a timer to automatically pause playback after a specified duration.
+- Keyboard shortcuts — Full keyboard support for playback and navigation.
+- Download support — Direct download of tracks via the built-in modal.
+- Share integration — Share the currently playing track via WhatsApp.
+- Responsive design — Optimized for desktop,Berikut versi README.md yang sudah dirapikan, distrukturkan ulang, dan dibersihkan tanpa emoji. Saya juga menyesuaikan gaya penulisan agar konsisten dengan README proyek sebelumnya.
+
+```md
+# Signature Music
+
+A web-based music player for streaming original albums by Muhaajir.
+
+Signature Music is a modern, browser-based audio player designed to showcase original music releases. It provides a polished interface for listening to Muhaajir's albums, with playback controls, playlist management, favorites, and a sleep timer. The application runs entirely in the browser with no server-side dependencies.
+
+***
+
+## Features
+
+- Full-featured player — Play, pause, skip, seek, and control volume with dedicated controls.
+- Playlist management — Browse all tracks, filter by favorites, and switch between albums.
+- Favorites system — Mark tracks as favorites, stored locally in your browser.
+- Shuffle and repeat — Toggle shuffle mode and repeat playback.
+- Sleep timer — Set a timer to automatically pause playback after a specified duration.
+- Keyboard shortcuts — Full keyboard support for playback and navigation.
+- Download support — Direct download of tracks via the built-in modal.
+- Share integration — Share the currently playing track via WhatsApp.
+- Responsive design — Optimized for desktop, tablet, and mobile devices with adaptive layouts.
+- Persistent state — Remembers your last played track, position, volume, and settings.
+
+***
+
+## Preview
+
+
+
+The application features a clean dark-themed interface with album art, playback controls, and a searchable playlist.
+
+***
+
+## Requirements
+
+- A modern web browser (Chrome, Firefox, Safari, Edge)
+- Internet connection for initial loading of audio files
+- No additional runtime, package manager, or build tools required
+
+***
+
+## Installation
+
+Signature Music is a single-page application. No installation is required.
+
+### Clone the repository
+
+```bash
+git clone https://github.com/haiere/signature-music.git
+cd signature-music
+```
+
+### Serve locally
+
+Open `index.html` directly in your browser, or serve with a local development server:
+
+```bash
+# Python 3
+python -m http.server 8000
+```
+
+```bash
+# Node.js
+npx serve .
+```
+
+```bash
+# PHP
+php -S localhost:8000
+```
+
+Then navigate to `http://localhost:8000` in your browser.
+
+***
+
+## Quick Start
+
+1. Open the application in your browser.
+2. The first track loads automatically.
+3. Use the play button to start playback.
+4. Navigate between tracks using the next/previous buttons.
+5. Explore the playlist view to see all available tracks.
+6. Use the settings panel to adjust volume, set a sleep timer, or view keyboard shortcuts.
+
+***
+
+## UsageBerikut versi README.md yang sudah dirapikan, distrukturkan ulang, dan dibersihkan tanpa emoji. Saya juga menyesuaikan gaya penulisan agar konsisten dengan README proyek sebelumnya.
+
+```md
+# Signature Music
+
+A web-based music player for streaming original albums by Muhaajir.
+
+Signature Music is a modern, browser-based audio player designed to showcase original music releases. It provides a polished interface for listening to Muhaajir's albums, with playback controls, playlist management, favorites, and a sleep timer. The application runs entirely in the browser with no server-side dependencies.
+
+---
+
+## Features
+
+- Full-featured player — Play, pause, skip, seek, and control volume with dedicated controls.
+- Playlist management — Browse all tracks, filter by favorites, and switch between albums.
+- Favorites system — Mark tracks as favorites, stored locally in your browser.
+- Shuffle and repeat — Toggle shuffle mode and repeat playback.
+- Sleep timer — Set a timer to automatically pause playback after a specified duration.
+- Keyboard shortcuts — Full keyboard support for playback and navigation.
+- Download support — Direct download of tracks via the built-in modal.
+- Share integration — Share the currently playing track via WhatsApp.
+- Responsive design — Optimized for desktop, tablet, and mobile devices with adaptive layouts.
+- Persistent state — Remembers your last played track, position, volume, and settings.
+
+---
+
+## Preview
+
+![Signature Music Preview](https://i.postimg.cc/8PJ0bhb1/H-haiere.webp)
+
+The application features a clean dark-themed interface with album art, playback controls, and a searchable playlist.
+
+---
+
+## Requirements
+
+- A modern web browser (Chrome, Firefox, Safari, Edge)
+- Internet connection for initial loading of audio files
+- No additional runtime, package manager, or build tools required
+
+---
+
+## Installation
+
+Signature Music is a single-page application. No installation is required.
+
+### Clone the repository
+
+```bash
+git clone https://github.com/haiere/signature-music.git
+cd signature-music
+```
+
+### Serve locally
+
+Open `index.html` directly in your browser, or serve with a local development server:
+
+```bash
+# Python 3
+python -m http.server 8000
+```
+
+```bash
+# Node.js
+npx serve .
+```
+
+```bash
+# PHP
+php -S localhost:8000
+```
+
+Then navigate to `http://localhost:8000` in your browser.
+
+---
+
+## Quick Start
+
+1. Open the application in your browser.
+2. The first track loads automatically.
+3. Use the play button to start playback.
+4. Navigate between tracks using the next/previous buttons.
+5. Explore the playlist view to see all available tracks.
+6. Use the settings panel to adjust volume, set a sleep timer, or view keyboard shortcuts.
+
+---
+
+## Usage
+
+### Playback Controls
+
+| Control | Description |
+|---|---|
+| Play / Pause | Starts or pauses the current track |
+| Next / Previous | Skips to the next or previous track |
+| Seek bar | Click or drag to jump to a specific position |
+| Volume slider | Adjusts playback volume |
+| Shuffle | Randomizes playback order |
+| Repeat | Repeats the current track |
+
+### Navigation
+
+- **Home** — Returns to the player view
+- **Songs** — Opens the full playlist
+- **More** — Opens settings and configuration
+
+### Favorites
+
+Click the heart icon on any track or in the player to add it to your favorites. Favorites are stored locally in your browser and persist across sessions.
+
+### Sleep Timer
+
+Set a timer (15, 30, 60, or 90 minutes) from the settings panel. Playback will automatically pause when the timer expires.
+
+### Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| Space / K | Play / Pause |
+| Left / Right | Seek backward / forward 5 seconds |
+| Shift + Left / Right | Previous / Next track |
+| Up / Down | Increase / Decrease volume |
+| F | Toggle favorite |
+| S | Toggle shuffle |
+| R | Toggle repeat |
+| M | Open download modal |
+| T | Open settings |
+| Escape | Close modal / menu |
+
+---
+
+## Configuration
+
+The application uses `localStorage` to persist user preferences. No external configuration files are required.
+
+### Stored Preferences
+
+| Key | Description |
+|---|---|
+| `haiere_fav` | Favorites list (JSON object) |
+| `haiere_state` | Playback state including current track, position, volume, and sleep timer |
+| `haiere_vol` | Volume level |
+| `haiere_view` | Last active view |
+
+---
+
+## Project Structure
+
+```
+signature-music/
+├── index.html          # Single-page application (HTML + CSS + JS)
+└── README.md           # Documentation
+```
+
+The entire application is contained within a single HTML file, including all styles and JavaScript. This makes deployment simple and eliminates external dependencies.
+
+---
+
+## Supported Platforms
+
+- **Desktop** — Chrome, Firefox, Safari, Edge
+- **Tablet** — iPad, Android tablets
+- **Mobile** — iOS Safari, Android Chrome
+
+The application adapts its layout automatically based on screen size.
+
+---
+
+## Troubleshooting
+
+### Audio does not play
+
+- Ensure you have an active internet connection.
+- The audio files are hosted remotely; check if the URLs are accessible.
+- Try reloading the page.
+
+### Favorites not persisting
+
+- Favorites are stored in `localStorage`. Ensure your browser allows local storage.
+- Clear site data and re-add favorites if they become corrupted.
+
+### Sleep timer not working
+
+- The sleep timer requires the page to remain active. It may not function reliably if the browser tab is suspended.
+
+### Mobile layout issues
+
+- Ensure your viewport is set correctly. The application uses `viewport-fit=cover` and responsive breakpoints.
+
+---
+
+## Privacy Considerations
+
+- All user data (favorites, state, preferences) is stored locally in the browser's `localStorage`.
+- No data is transmitted to any external server.
+- No analytics, tracking, or cookies are used.
+- Audio files are hosted on third-party storage (catbox.moe) and are streamed directly to the client.
+
+---
+
+## Performance Notes
+
+- The application is a single-page static site with no external libraries or frameworks.
+- Audio playback uses the native `<audio>` element with Opus codec support.
+- Cover art is loaded from remote sources and cached in memory.
+- All interactions are optimized for responsiveness with smooth animations.
+
+---
+
+## Roadmap
+
+- Add album and track metadata display
+- Implement gapless playback
+- Add dynamic album art for each track
+- Support for local audio file upload
+- Enhanced playlist sorting and search
+
+---
+
+## Contributing
+
+Contributions are welcome. To contribute:
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes.
+4. Test your changes across supported browsers.
+5. Submit a pull request with a clear description of the changes.
+
+### Development Guidelines
+
+- Maintain the existing code style and structure.
+- Keep the application self-contained within a single HTML file.
+- Preserve accessibility standards.
+- Ensure responsiveness across all supported platforms.
+- Document any new features or changes.
+
+---
+
+## Development Setup
+
+1. Clone the repository.
+2. Open `index.html` in your browser.
+3. Make changes to the HTML, CSS, or JavaScript directly.
+4. Refresh the browser to see updates.
+
+No build tools or compilation steps are required.
+
+---
+
+## Testing
+
+Test the application across the following environments:
+
+- **Desktop** — Chrome, Firefox, Safari, Edge
+- **Mobile** — iOS Safari, Android Chrome
+- **Tablet** — Responsive breakpoints at 820px and 480px
+
+Verify that all features (playback, navigation, favorites, sleep timer, keyboard shortcuts) function correctly.
+
+---
+
+## Build and Release
+
+The application is distributed as a single HTML file. To create a release:
+
+1. Update the version number if applicable.
+2. Commit the final changes.
+3. Tag the release and push to the repository.
+
+---
+
+## License
+
+This project is open source and available for personal and educational use.
+
+---
+
+## Author
+
+Created by Regina & Hajir Studio · Resonance Studio
+
+---
+
+## Support and Contact
+
+For issues, questions, or contributions, please open an issue on the repository.
+```
