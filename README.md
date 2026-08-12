@@ -286,23 +286,6 @@ Berikut versi README.md yang sudah dirapikan, distrukturkan ulang, dan dibersihk
 # Signature Music
 
 A web-based music player for streaming original albums by Muhaajir.
-
-Signature Music is a modern, browser-based audio player designed to showcase original music releases. It provides a polished interface for listening to Muhaajir's albums, with playback controls, playlist management, favorites, and a sleep timer. The application runs entirely in the browser with no server-side dependencies.
-
----
-
-## Features
-
-- Full-featured player — Play, pause, skip, seek, and control volume with dedicated controls.
-- Playlist management — Browse all tracks, filter by favorites, and switch between albums.
-- Favorites system — Mark tracks as favorites, stored locally in your browser.
-- Shuffle and repeat — Toggle shuffle mode and repeat playback.
-- Sleep timer — Set a timer to automatically pause playback after a specified duration.
-- Keyboard shortcuts — Full keyboard support for playback and navigation.
-- Download support — Direct download of tracks via the built-in modal.
-- Share integration — Share the currently playing track via WhatsApp.
-- Responsive design — Optimized for desktop,Berikut versi README.md yang sudah dirapikan, distrukturkan ulang, dan dibersihkan tanpa emoji. Saya juga menyesuaikan gaya penulisan agar konsisten dengan README proyek sebelumnya.
-
 ```md
 # Signature Music
 
@@ -390,7 +373,6 @@ Then navigate to `http://localhost:8000` in your browser.
 
 ## UsageBerikut versi README.md yang sudah dirapikan, distrukturkan ulang, dan dibersihkan tanpa emoji. Saya juga menyesuaikan gaya penulisan agar konsisten dengan README proyek sebelumnya.
 
-```md
 # Signature Music
 
 A web-based music player for streaming original albums by Muhaajir.
