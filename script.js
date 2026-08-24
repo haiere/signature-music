@@ -1,4 +1,4 @@
-        (function() {
+(function() {
             'use strict';
 
             // ==================== DATA ====================
@@ -273,15 +273,17 @@
                     div.dataset.index = i;
                     div.setAttribute('role', 'listitem');
                     div.innerHTML = `
-                        <span class="num">${i+1}</span>
-                        <span class="name">${s.name}</span>
-                        <span class="group">${s.group.split(' ').slice(0,2).join(' ')}</span>
-                        <span class="fav" data-name="${s.name}">${favorites[s.name] ? '♥' : '♡'}</span>
-                        <div class="wave"><span></span><span></span><span></span></div>
-                    `;
+                            <span class="num">${i+1}</span>
+                            <span class="name">${s.name}</span>
+                            <span class="group">${s.group.split(' ').slice(0,2).join(' ')}</span>
+                            <span class="fav" data-name="${s.name}">${favorites[s.name] ? '♥' : '♡'}</span>
+                            <div class="wave"><span></span><span></span><span></span></div>
+                        `;
                     div.addEventListener('click', () => {
                         loadSong(i, true);
-                        showView('player');
+                        if (window.innerWidth < 768) {
+                            showView('player');
+                        }
                     });
                     container.appendChild(div);
                 });
@@ -468,27 +470,37 @@
 
             // ==================== VIEW SWITCHING ====================
             function showView(view) {
-                document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-                const target = $('page-' + view);
-                if (target) {
-                    target.classList.remove('hidden');
-                    target.classList.add('active');
-                }
-                document.querySelectorAll('.sb-link[data-view], .nav-btn[data-view]').forEach(el => {
-                    el.classList.toggle('active', el.dataset.view === view);
-                    if (el.classList.contains('nav-btn')) {
-                        el.classList.toggle('on', el.dataset.view === view);
+                const isDesktop = window.innerWidth >= 768;
+
+                if (isDesktop) {
+                    document.querySelectorAll('.sb-link[data-view]').forEach(el => {
+                        el.classList.toggle('active', el.dataset.view === view);
+                    });
+                    document.querySelectorAll('.menu-item[data-view]').forEach(el => {
+                        el.classList.toggle('active', el.dataset.view === view && !el.dataset.filter);
+                    });
+                    const target = $('page-' + view);
+                    if (target) target.scrollTop = 0;
+                } else {
+                    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+                    const target = $('page-' + view);
+                    if (target) {
+                        target.classList.remove('hidden');
+                        target.classList.add('active');
+                        target.style.animation = 'none';
+                        requestAnimationFrame(() => {
+                            target.style.animation = '';
+                        });
                     }
-                });
-                document.querySelectorAll('.menu-item[data-view]').forEach(el => {
-                    el.classList.toggle('active', el.dataset.view === view && !el.dataset.filter);
-                });
-                if (window.innerWidth >= 820) {
-                    const area = document.getElementById('mainArea');
-                    if (area) area.scrollTop = 0;
-                } else if (view === 'player') {
+                    document.querySelectorAll('.bottom-nav .nav-btn').forEach(el => {
+                        el.classList.toggle('on', el.dataset.view === view);
+                    });
+                    document.querySelectorAll('.menu-item[data-view]').forEach(el => {
+                        el.classList.toggle('active', el.dataset.view === view && !el.dataset.filter);
+                    });
                     document.getElementById('mainArea')?.scrollTo(0, 0);
                 }
+
                 try { localStorage.setItem('haiere_view', view); } catch (_) {}
             }
 
@@ -627,23 +639,15 @@
 
             // ==================== INIT ====================
             function init() {
-                // Favorites
                 favorites = JSON.parse(localStorage.getItem('haiere_fav')) || {};
-
-                // Render playlist
                 renderPlaylist();
-
-                // Restore state
                 restoreState();
-
-                // If no song loaded, load first
                 if (!aud.src) loadSong(0, false);
 
                 updatePlayButtons();
                 updateFavCount();
                 updateProgress();
 
-                // --- Audio events ---
                 aud.addEventListener('play', () => { isPlaying = true;
                     updatePlayButtons(); });
                 aud.addEventListener('pause', () => { isPlaying = false;
@@ -658,18 +662,16 @@
                     setTimeout(playNext, 1500);
                 });
 
-                // --- Play buttons ---
                 ['btnPlay', 'bpPlay', 'dpPlay'].forEach(id => {
                     const el = $(id);
                     if (el) el.addEventListener('click', togglePlay);
                 });
 
-                // --- Prev/Next ---
                 ['btnPrev', 'dpPrev'].forEach(id => { const el = $(id); if (el) el.addEventListener('click',
                         playPrev); });
                 ['btnNext', 'dpNext'].forEach(id => { const el = $(id); if (el) el.addEventListener('click',
                         playNext); });
-                // --- Shuffle ---
+
                 ['btnShuffle', 'dpShuffle'].forEach(id => {
                     const el = $(id);
                     if (el) {
@@ -682,7 +684,6 @@
                     }
                 });
 
-                // --- Repeat ---
                 ['btnRepeat', 'dpRepeat'].forEach(id => {
                     const el = $(id);
                     if (el) {
@@ -695,19 +696,16 @@
                     }
                 });
 
-                // --- Favorites ---
                 ['btnFav', 'dpFav', 'bpFav'].forEach(id => {
                     const el = $(id);
                     if (el) el.addEventListener('click', toggleFav);
                 });
 
-                // --- Share ---
                 ['btnShare', 'setShare'].forEach(id => {
                     const el = $(id);
                     if (el) el.addEventListener('click', shareSong);
                 });
 
-                // --- Download ---
                 ['btnDl', 'setDl', 'dpDl'].forEach(id => {
                     const el = $(id);
                     if (el) el.addEventListener('click', () => $('modalBg')?.classList.add('show'));
@@ -722,13 +720,11 @@
                     if (e.target === $('modalBg')) $('modalBg').classList.remove('show');
                 });
 
-                // --- Timer ---
                 ['btnTimer', 'dpTimer'].forEach(id => {
                     const el = $(id);
                     if (el) el.addEventListener('click', () => showView('settings'));
                 });
 
-                // --- Sleep timer ---
                 $('sleepGo')?.addEventListener('click', () => {
                     const v = parseInt($('sleepSel')?.value);
                     if (v) { startSleep(v);
@@ -737,7 +733,6 @@
                 $('sleepStop')?.addEventListener('click', () => { clearSleep();
                     showToast('⏰ Sleep timer off'); });
 
-                // --- Volume ---
                 ['volSl', 'volSetSl', 'dpVolSl'].forEach(id => {
                     const el = $(id);
                     if (el) {
@@ -747,26 +742,36 @@
                 });
                 updateVolume(parseFloat(localStorage.getItem('haiere_vol') || 0.7));
 
-                // --- Navigation ---
-                document.querySelectorAll('.sb-link[data-view], .nav-btn[data-view]').forEach(el => {
+                document.querySelectorAll('.sb-link[data-view], .bottom-nav .nav-btn[data-view]').forEach(el => {
                     el.addEventListener('click', (e) => {
                         e.preventDefault();
                         const view = el.dataset.view;
                         if (view) showView(view);
                     });
                 });
-                // Mobile bottom nav click on the mini player area
-                $('bpMini')?.addEventListener('click', () => showView('player'));
 
-                // --- Playlist filter tabs ---
+                $('bpMini')?.addEventListener('click', () => {
+                    if (window.innerWidth < 768) showView('player');
+                });
+
+                $('btnMoreToggle')?.addEventListener('click', () => {
+                    const area = $('mainArea');
+                    if (!area) return;
+                    const collapsed = area.classList.toggle('more-collapsed');
+                    const btn = $('btnMoreToggle');
+                    btn?.setAttribute('aria-pressed', String(collapsed));
+                    const icon = $('moreToggleIcon');
+                    if (icon) icon.textContent = collapsed ? '›' : '‹';
+                });
+
                 document.querySelectorAll('.pl-filter-btn').forEach(btn => {
                     btn.addEventListener('click', () => setPlaylistFilter(btn.dataset.filter));
                 });
 
-                // --- Menu drawer (mobile) ---
                 const menuToggle = $('menuToggle');
                 const menuDrawer = $('menuDrawer');
                 const menuOverlay = $('menuOverlay');
+
                 function openMenu() {
                     menuDrawer?.classList.add('show');
                     menuOverlay?.classList.add('show');
@@ -797,13 +802,11 @@
                 $('menuShare')?.addEventListener('click', () => { shareSong();
                     closeMenu(); });
 
-                // --- Header scroll ---
                 const header = document.getElementById('header');
                 window.addEventListener('scroll', () => {
                     if (header) header.classList.toggle('scrolled', window.scrollY > 20);
                 }, { passive: true });
 
-                // --- Rotating name ---
                 const names = ['Muhaajir', 'Regina', 'FL', 'MHJR', 'HJST', 'Brava', 'Hajirstein', 'Hajir'];
                 let ni = 0;
                 setInterval(() => {
@@ -817,33 +820,39 @@
                     }, 300);
                 }, 3200);
 
-                // --- Resize cover ---
                 let resizeTimer;
                 window.addEventListener('resize', () => {
                     clearTimeout(resizeTimer);
                     resizeTimer = setTimeout(() => {
                         if (SONGS[currentIndex]) updateAllCovers(currentIndex);
+                        const isDesktop = window.innerWidth >= 768;
+                        if (isDesktop) {
+                            document.querySelectorAll('.page').forEach(el => el.classList.add('active'));
+                        } else {
+                            const activeView = localStorage.getItem('haiere_view') || 'player';
+                            document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+                            const target = $('page-' + activeView);
+                            if (target) target.classList.add('active');
+                        }
                     }, 300);
                 });
 
-                // --- Save state periodically ---
                 setInterval(saveState, 10000);
 
-                // --- Restore last view (mobile) ---
                 try {
                     const lastView = localStorage.getItem('haiere_view');
-                    if (lastView && lastView !== 'player') {
+                    if (lastView && window.innerWidth < 768) {
                         setTimeout(() => showView(lastView), 100);
+                    } else if (window.innerWidth >= 768) {
+                        document.querySelectorAll('.page').forEach(el => el.classList.add('active'));
                     }
                 } catch (_) {}
 
-                // --- Hide loader ---
                 setTimeout(() => { $('loader')?.classList.add('hide'); }, 700);
 
                 console.log('🎵 Haiere Signature Music · ' + SONGS.length + ' tracks loaded');
             }
 
-            // Start
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', init);
             } else {
