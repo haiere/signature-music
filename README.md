@@ -217,7 +217,7 @@ License not specified. All rights reserved by the original author unless otherwi
 
 ## Author
 
-Regina & Muhaajir · Resonance Studio  
+Regina & Muhaajir, And More· Resonance Studio  
 Maintainer: Regina (placeholder)  
 Developed by Haiere and HajirStudio
 
