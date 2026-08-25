@@ -5,17 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <title>Signature Music | Haiere</title>
-    <meta name="description" content="Stream Muhaajir's original albums in a premium Hi-Res web player." />
+    <meta name="description" content="Stream Muhaajir's original albums, Fragmen Suara and Resonansi Dalam Diam, with a premium Hi-Res web player featuring favorites, sleep timer, and exclusive playlists." />
+    <meta name="keywords" content="Muhaajir, music player, indie, Fragmen Suara, Resonansi Dalam Diam, Saya Akan Lawan, Regina, Resonance Studio, Hi-Res music, streaming" />
+    <meta name="author" content="Regina · Resonance Studio" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://signature-music.netlify.app/" />
     <meta name="theme-color" content="#0a0a1a" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
+    <meta property="og:type" content="music.playlist" />
+    <meta property="og:url" content="https://signature-music.netlify.app/" />
+    <meta property="og:title" content="Signature Music | Haiere" />
+    <meta property="og:description" content="Stream Fragmen Suara and Resonansi Dalam Diam in a premium Hi-Res music web player." />
+    <meta property="og:image" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Signature Music" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Signature Music | Haiere" />
+    <meta name="twitter:description" content="Listen to Fragmen Suara and Resonansi Dalam Diam by Muhaajir in a premium Hi-Res web player." />
+    <meta name="twitter:image" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
+
     <link rel="icon" type="image/webp" href="https://i.postimg.cc/VLrVFjF1/haieresignaturebiru.webp" />
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "MusicPlaylist",
+            "name": "Signature Music",
+            "description": "Original albums by Muhaajir: Fragmen Suara and Resonansi Dalam Diam.",
+            "url": "https://signature-music.netlify.app/",
+            "creator": {
+                "@type": "Person",
+                "name": "Muhaajir"
+            },
+            "tracks": [
+                { "@type": "MusicRecording", "name": "Lintasan Tak Bermakna" },
+                { "@type": "MusicRecording", "name": "Padahal Sudah Bilang" },
+                { "@type": "MusicRecording", "name": "Mimpi yang Tertunda" },
+                { "@type": "MusicRecording", "name": "Langit Masih Sama" },
+                { "@type": "MusicRecording", "name": "Suatu Hari Nanti" },
+                { "@type": "MusicRecording", "name": "Nada Terpendam" },
+                { "@type": "MusicRecording", "name": "Langit Patah Arah" },
+                { "@type": "MusicRecording", "name": "Tak Bernama, Tapi Ada" },
+                { "@type": "MusicRecording", "name": "Resonansi Dalam Diam" },
+                { "@type": "MusicRecording", "name": "Runtuh Tanpa Suara" },
+                { "@type": "MusicRecording", "name": "Kilau Tanpa Sorotan" },
+                { "@type": "MusicRecording", "name": "Gelombang Terakhir" },
+                { "@type": "MusicRecording", "name": "Saya Akan Lawan" }
+            ]
+        }
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -390,6 +439,7 @@
     <!-- AUDIO ENGINE -->
     <audio id="aud" preload="metadata" aria-label="Audio player"></audio>
 
-    <script src="script.js"></script>
+    <!-- ES Module Import -->
+    <script type="module" src="script.js"></script>
 </body>
 </html>

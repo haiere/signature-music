@@ -5,15 +5,17 @@
 [![Website](https://img.shields.io/badge/website-live-purple)](https://signature-music.netlify.app)
 [![Privacy](https://img.shields.io/badge/privacy-100%25%20client--side-success)](#)
 
-> A responsive, web-based music player designed for independent artists and curated listening experiences.
 
-Signature Music is a single-file HTML application that delivers a polished, full-featured audio player with a modern three-panel desktop layout and a mobile-optimised bottom navigation. It is built to showcase albums and tracks with zero server dependencies, making it ideal for portfolio projects, artist websites, or private listening collections.
+> A premium, Hi‑Res web music player built for independent artists and curated listening experiences. Stream original albums with a modern dark interface, favourites, sleep timer, and full playback controls — all in a single HTML file with zero server dependencies.
 
----
+
+**Live Demo:** [signature-music.netlify.app](https://signature-music.netlify.app/)
+
+***
 
 ## Overview
 
-Haiere solves the problem of presenting a curated music catalogue in a clean, interactive interface without requiring a backend or external libraries. It is designed for:
+Signature Music solves the problem of presenting a curated music catalogue in a clean, interactive interface without requiring a backend or external libraries. It is designed for:
 
 - **Artists and labels** — to share their work with a professional player.
 - **Developers** — who need a lightweight, customisable music player.
@@ -21,23 +23,37 @@ Haiere solves the problem of presenting a curated music catalogue in a clean, in
 
 The player stores preferences locally, supports keyboard shortcuts, and adapts gracefully from desktop to mobile screens.
 
----
+***
 
 ## Features
 
-- **Playlist Management** — Browse and filter a predefined list of tracks by album or favourites.
+- **Full Playlist** — 13 tracks from Muhaajir's discography, filterable by album or favourites.
 - **Favourites** — Mark tracks as favourites; persist across sessions using `localStorage`.
 - **Playback Controls** — Play, pause, skip, shuffle, and repeat with visual feedback.
 - **Sleep Timer** — Automatically pause playback after a chosen duration (15, 30, 60, or 90 minutes).
+- **Direct Download** — Get the current song with one click.
+- **Share** — Share the current track via WhatsApp.
 - **Volume Control** — Independent slider with real-time percentage display.
 - **Progress Bar** — Click or drag to seek; shows current and total time.
-- **Keyboard Shortcuts** — Full control via keyboard (Space, arrows, F, S, R, M, T, etc.).
+- **Keyboard Shortcuts** — Full control via keyboard (Space, K, arrows, F, S, R, M, T, Esc).
 - **Responsive Layout** — Three-panel grid on desktop (Songs, Home, More); bottom navigation with mini player on mobile.
 - **Album Artwork** — Dynamic cover display with fallback.
 - **Media Session API** — Integrates with system media controls where supported.
 - **Persistent State** — Remembers current track, position, volume, shuffle, repeat, and sleep timer across sessions.
+- **Dark & Glass‑Morphism UI** — Modern, elegant, and easy on the eyes.
 
----
+***
+
+## Built With
+
+- **Vanilla JavaScript** (ES modules)
+- **CSS3** with custom properties, flexbox, and grid
+- **HTML5** with semantic tags
+- **Web Audio API** for smooth playback
+- **Media Session API** for system media controls (desktop)
+- **Fonts:** Inter, Outfit, JetBrains Mono (Google Fonts)
+
+***
 
 ## Requirements
 
@@ -45,7 +61,7 @@ The player stores preferences locally, supports keyboard shortcuts, and adapts g
 - Internet connection to load remote audio files and cover images hosted externally.
 - No server, build tools, or runtime dependencies.
 
----
+***
 
 ## Installation
 
@@ -63,7 +79,13 @@ cd signature-music
 
 Then open `index.html` in your browser.
 
----
+### Local Development Server
+
+```bash
+npx serve
+```
+
+***
 
 ## Quick Start
 
@@ -74,7 +96,7 @@ Then open `index.html` in your browser.
 
 No configuration files or environment variables are required.
 
----
+***
 
 ## Usage
 
@@ -91,13 +113,20 @@ No configuration files or environment variables are required.
 - **Bottom Navigation** — Switch between Home (player), Songs (playlist), and More (settings).
 - **Mini Player** — Shows current track, playback controls, and favourite button at the bottom.
 
-### Keyboard Shortcuts
+### Responsive Behaviour
 
-| Key | Action |
+- **Desktop (≥768px):** Three‑column layout → Songs | Player | Settings
+- **Mobile (<768px):** Single‑page views with a bottom dock and slide‑out menu
+
+***
+
+## Keyboard Shortcuts
+
+| Key / Combo | Action |
 |---|---|
 | Space / K | Play / Pause |
 | ← / → | Seek backward / forward 5s |
-| Shift+← / → | Previous / Next track |
+| Shift + ← / → | Previous / Next track |
 | ↑ / ↓ | Increase / Decrease volume |
 | F | Toggle favourite |
 | S | Toggle shuffle |
@@ -106,7 +135,7 @@ No configuration files or environment variables are required.
 | T | Open settings (timer) |
 | Esc | Close modals / menus |
 
----
+***
 
 ## Configuration
 
@@ -118,25 +147,42 @@ All user preferences are stored in the browser's `localStorage`:
 
 There is no external configuration file.
 
----
+***
 
 ## Project Structure
 
-The entire application is contained in a single file:
-
 ```text
-index.html
+/
+├── index.html          # Main HTML document (includes embedded CSS and JS)
+├── style.css           # All styles (responsive + glass UI) [optional, if separated]
+├── script.js           # Application logic (player, state, UI) [optional, if separated]
+├── data-song.js        # Song data (title, artist, URL, cover)
+└── README.md           # This file
 ```
 
-It includes:
+The entire application can be contained in a single file (`index.html`) with embedded CSS and JavaScript, or split into separate files for clarity.
 
-- HTML structure with semantic markup and accessibility support.
-- Embedded CSS with variables, responsive breakpoints, and glass-morphism styling.
-- Embedded JavaScript for state management, audio control, and UI updates.
+***
 
-No additional assets or directories are required.
+## Data Source
 
----
+Songs are stored in `data-song.js` as an array of objects:
+
+```javascript
+export const SONGS = [
+  {
+    name: "Lintasan Tak Bermakna",
+    group: "Fragmen Suara",
+    url: "https://files.catbox.moe/7p3gmt.opus",
+    cover: "https://i.postimg.cc/W3pHjGCQ/fragmen.webp"
+  },
+  // ...
+];
+```
+
+Covers and audio files are hosted on catbox.moe and postimg.cc.
+
+***
 
 ## Supported Platforms
 
@@ -144,7 +190,7 @@ No additional assets or directories are required.
 - **Tablet** — iPadOS, Android browser.
 - **Mobile** — iOS Safari, Android Chrome, with touch-friendly controls and safe-area padding.
 
----
+***
 
 ## Troubleshooting
 
@@ -155,7 +201,7 @@ No additional assets or directories are required.
 | Keyboard shortcuts not working | Focus may be inside an input or select field; click outside or use the controls. |
 | Layout breaks on small screens | Refresh the page; the layout uses `viewport-fit=cover` and safe-area insets. |
 
----
+***
 
 ## Security Considerations
 
@@ -163,7 +209,7 @@ No additional assets or directories are required.
 - No user data is sent to any server; all state is stored locally.
 - The application does not use cookies or tracking.
 
----
+***
 
 ## Privacy Considerations
 
@@ -171,7 +217,7 @@ No additional assets or directories are required.
 - No personal information is collected, transmitted, or shared.
 - The application does not include analytics or third-party scripts except Google Fonts, if enabled.
 
----
+***
 
 ## Performance Notes
 
@@ -180,7 +226,7 @@ No additional assets or directories are required.
 - Volume changes use smooth fade transitions.
 - DOM updates are efficient and do not rely on heavy frameworks.
 
----
+***
 
 ## Roadmap
 
@@ -192,13 +238,13 @@ Potential future enhancements, not currently implemented:
 - Equaliser.
 - Additional audio sources, including local files.
 
----
+***
 
 ## Contributing
 
 This project is currently maintained as a demonstration. Contributions are not actively sought, but feedback and suggestions are welcome.
 
----
+***
 
 ## Development Setup
 
@@ -208,26 +254,30 @@ As a static HTML file, no build tools are required. To modify the project:
 2. Adjust CSS variables in the `<style>` block for theming.
 3. Extend functionality by adding new event listeners or UI elements.
 
----
+***
 
 ## License
 
 Signature Music is released under the MIT license. See the `LICENSE` file for full details.
 
----
+All musical content belongs to the respective copyright holders.
 
-## Author
+***
 
-**Regina & Muhaajir · Resonance Studio**  
-Maintainer: Regina (placeholder)  
-Developed by Haiere and HajirStudio
+## Credits
 
----
+- **Artist:** Muhaajir
+- **Design & Development:** Regina · Resonance Studio
+- **Typography:** Google Fonts (Inter, Outfit, JetBrains Mono)
+- **Maintainer:** Regina (placeholder)
+- **Developed by:** Haiere and HajirStudio
+
+***
 
 ## Support and Contact
 
 For questions or feedback, please open an issue in the repository, if available, or contact the author via the provided email.
 
----
+***
 
-Last updated: 2026
+**Last updated:** 2026
