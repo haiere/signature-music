@@ -1,10 +1,11 @@
 # Signature Music
 
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
-![Static Badge](https://img.shields.io/badge/Single%20File-HTML%20App-blue.svg)
-![Privacy First](https://img.shields.io/badge/privacy-first-purple.svg)
+[![Version](https://img.shields.io/badge/version-2.11.4-blue)](https://github.com/haiere/signature-music/releases)
+[![License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT)
+[![Website](https://img.shields.io/badge/website-live-purple)](https://signature-music.netlify.app)
+[![Privacy](https://img.shields.io/badge/privacy-100%25%20client--side-success)](#)
 
-A responsive, web-based music player designed for independent artists and curated listening experiences.
+> A responsive, web-based music player designed for independent artists and curated listening experiences.
 
 Signature Music is a single-file HTML application that delivers a polished, full-featured audio player with a modern three-panel desktop layout and a mobile-optimised bottom navigation. It is built to showcase albums and tracks with zero server dependencies, making it ideal for portfolio projects, artist websites, or private listening collections.
 
@@ -14,9 +15,9 @@ Signature Music is a single-file HTML application that delivers a polished, full
 
 Haiere solves the problem of presenting a curated music catalogue in a clean, interactive interface without requiring a backend or external libraries. It is designed for:
 
-- Artists and labels — to share their work with a professional player.
-- Developers — who need a lightweight, customisable music player.
-- End users — who want a seamless listening experience across devices.
+- **Artists and labels** — to share their work with a professional player.
+- **Developers** — who need a lightweight, customisable music player.
+- **End users** — who want a seamless listening experience across devices.
 
 The player stores preferences locally, supports keyboard shortcuts, and adapts gracefully from desktop to mobile screens.
 
@@ -24,17 +25,17 @@ The player stores preferences locally, supports keyboard shortcuts, and adapts g
 
 ## Features
 
-- Playlist Management — browse and filter a predefined list of tracks by album or favourites.
-- Favourites — mark tracks as favourites; persist across sessions using `localStorage`.
-- Playback Controls — play, pause, skip, shuffle, and repeat with visual feedback.
-- Sleep Timer — automatically pause playback after a chosen duration (15, 30, 60, or 90 minutes).
-- Volume Control — independent slider with real-time percentage display.
-- Progress Bar — click or drag to seek; shows current and total time.
-- Keyboard Shortcuts — full control via keyboard (Space, arrows, F, S, R, M, T, etc.).
-- Responsive Layout — three-panel grid on desktop (Songs, Home, More); bottom navigation with mini player on mobile.
-- Album Artwork — dynamic cover display with fallback.
-- Media Session API — integrates with system media controls where supported.
-- Persistent State — remembers current track, position, volume, shuffle, repeat, and sleep timer across sessions.
+- **Playlist Management** — Browse and filter a predefined list of tracks by album or favourites.
+- **Favourites** — Mark tracks as favourites; persist across sessions using `localStorage`.
+- **Playback Controls** — Play, pause, skip, shuffle, and repeat with visual feedback.
+- **Sleep Timer** — Automatically pause playback after a chosen duration (15, 30, 60, or 90 minutes).
+- **Volume Control** — Independent slider with real-time percentage display.
+- **Progress Bar** — Click or drag to seek; shows current and total time.
+- **Keyboard Shortcuts** — Full control via keyboard (Space, arrows, F, S, R, M, T, etc.).
+- **Responsive Layout** — Three-panel grid on desktop (Songs, Home, More); bottom navigation with mini player on mobile.
+- **Album Artwork** — Dynamic cover display with fallback.
+- **Media Session API** — Integrates with system media controls where supported.
+- **Persistent State** — Remembers current track, position, volume, shuffle, repeat, and sleep timer across sessions.
 
 ---
 
@@ -87,8 +88,8 @@ No configuration files or environment variables are required.
 
 ### Mobile Layout
 
-- Bottom Navigation — switch between Home (player), Songs (playlist), and More (settings).
-- Mini Player — shows current track, playback controls, and favourite button at the bottom.
+- **Bottom Navigation** — Switch between Home (player), Songs (playlist), and More (settings).
+- **Mini Player** — Shows current track, playback controls, and favourite button at the bottom.
 
 ### Keyboard Shortcuts
 
@@ -109,11 +110,11 @@ No configuration files or environment variables are required.
 
 ## Configuration
 
-All user preferences are stored in the browser’s `localStorage`:
+All user preferences are stored in the browser's `localStorage`:
 
-- `haiere_fav` — favourites list.
-- `haiere_vol` — volume level.
-- `haiere_state` — current track index, playback position, shuffle, repeat, and sleep timer state.
+- `haiere_fav` — Favourites list.
+- `haiere_vol` — Volume level.
+- `haiere_state` — Current track index, playback position, shuffle, repeat, and sleep timer state.
 
 There is no external configuration file.
 
@@ -139,9 +140,9 @@ No additional assets or directories are required.
 
 ## Supported Platforms
 
-- Desktop — Windows, macOS, Linux, any modern browser.
-- Tablet — iPadOS, Android browser.
-- Mobile — iOS Safari, Android Chrome, with touch-friendly controls and safe-area padding.
+- **Desktop** — Windows, macOS, Linux, any modern browser.
+- **Tablet** — iPadOS, Android browser.
+- **Mobile** — iOS Safari, Android Chrome, with touch-friendly controls and safe-area padding.
 
 ---
 
@@ -166,7 +167,7 @@ No additional assets or directories are required.
 
 ## Privacy Considerations
 
-- Favourites and playback state are stored only in the browser’s `localStorage`.
+- Favourites and playback state are stored only in the browser's `localStorage`.
 - No personal information is collected, transmitted, or shared.
 - The application does not include analytics or third-party scripts except Google Fonts, if enabled.
 
@@ -211,13 +212,13 @@ As a static HTML file, no build tools are required. To modify the project:
 
 ## License
 
-License not specified. All rights reserved by the original author unless otherwise stated.
+Signature Music is released under the MIT license. See the `LICENSE` file for full details.
 
 ---
 
 ## Author
 
-Regina & Muhaajir, And More· Resonance Studio  
+**Regina & Muhaajir · Resonance Studio**  
 Maintainer: Regina (placeholder)  
 Developed by Haiere and HajirStudio
 
@@ -226,3 +227,7 @@ Developed by Haiere and HajirStudio
 ## Support and Contact
 
 For questions or feedback, please open an issue in the repository, if available, or contact the author via the provided email.
+
+---
+
+Last updated: 2026

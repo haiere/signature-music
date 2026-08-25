@@ -5,69 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <title>Signature Music | Haiere</title>
-    <meta name="description" content="Stream Muhaajir's original albums, Fragmen Suara and Resonansi Dalam Diam, with a premium Hi-Res web player featuring favorites, sleep timer, and exclusive playlists." />
-    <meta name="keywords" content="Muhaajir, music player, indie, Fragmen Suara, Resonansi Dalam Diam, Saya Akan Lawan, Regina, Resonance Studio, Hi-Res music, streaming" />
-    <meta name="author" content="Regina · Resonance Studio" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://signature-music.netlify.app/" />
+    <meta name="description" content="Stream Muhaajir's original albums in a premium Hi-Res web player." />
     <meta name="theme-color" content="#0a0a1a" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <meta property="og:type" content="music.playlist" />
-    <meta property="og:url" content="https://signature-music.netlify.app/" />
-    <meta property="og:title" content="Signature Music | Haiere" />
-    <meta property="og:description" content="Stream Fragmen Suara and Resonansi Dalam Diam in a premium Hi-Res music web player." />
-    <meta property="og:image" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="Signature Music" />
-    <meta property="og:locale" content="en_US" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Signature Music | Haiere" />
-    <meta name="twitter:description" content="Listen to Fragmen Suara and Resonansi Dalam Diam by Muhaajir in a premium Hi-Res web player." />
-    <meta name="twitter:image" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
-
     <link rel="icon" type="image/webp" href="https://i.postimg.cc/VLrVFjF1/haieresignaturebiru.webp" />
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
 
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "MusicPlaylist",
-            "name": "Signature Music",
-            "description": "Original albums by Muhaajir: Fragmen Suara and Resonansi Dalam Diam.",
-            "url": "https://signature-music.netlify.app/",
-            "creator": {
-                "@type": "Person",
-                "name": "Muhaajir"
-            },
-            "tracks": [
-                { "@type": "MusicRecording", "name": "Lintasan Tak Bermakna" },
-                { "@type": "MusicRecording", "name": "Padahal Sudah Bilang" },
-                { "@type": "MusicRecording", "name": "Mimpi yang Tertunda" },
-                { "@type": "MusicRecording", "name": "Langit Masih Sama" },
-                { "@type": "MusicRecording", "name": "Suatu Hari Nanti" },
-                { "@type": "MusicRecording", "name": "Nada Terpendam" },
-                { "@type": "MusicRecording", "name": "Langit Patah Arah" },
-                { "@type": "MusicRecording", "name": "Tak Bernama, Tapi Ada" },
-                { "@type": "MusicRecording", "name": "Resonansi Dalam Diam" },
-                { "@type": "MusicRecording", "name": "Runtuh Tanpa Suara" },
-                { "@type": "MusicRecording", "name": "Kilau Tanpa Sorotan" },
-                { "@type": "MusicRecording", "name": "Gelombang Terakhir" },
-                { "@type": "MusicRecording", "name": "Saya Akan Lawan" }
-            ]
-        }
-    </script>
-
     <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
@@ -80,10 +29,10 @@
     <!-- ===== TOAST ===== -->
     <div id="toast" role="alert" aria-live="polite"></div>
 
-    <!-- ===== HEADER (mobile) ===== -->
+    <!-- ===== HEADER (Mobile) ===== -->
     <header id="header">
         <a href="#" class="logo" aria-label="Haiere Signature Music">
-            <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Haiere Logo" width="32" height="32" loading="eager" decoding="async" />
+            <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Haiere Logo" width="32" height="32" loading="eager" />
             <span class="logo-text">
                 <span class="main">Haiere</span>
                 <span class="sub">Signature Music</span>
@@ -96,12 +45,12 @@
         </div>
     </header>
 
-    <!-- ===== MENU DRAWER (mobile) ===== -->
+    <!-- ===== MENU DRAWER (Mobile) ===== -->
     <div class="menu-overlay" id="menuOverlay"></div>
     <aside class="menu-drawer" id="menuDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
         <div class="menu-drawer-head">
             <div class="menu-drawer-brand">
-                <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="" width="26" height="26" loading="lazy" decoding="async" />
+                <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Logo" width="26" height="26" />
                 <span>Haiere</span>
             </div>
             <button class="menu-close" id="menuClose" aria-label="Close menu">
@@ -133,42 +82,29 @@
         <div class="menu-divider"></div>
     </aside>
 
-    <!-- ===== SIDEBAR (desktop) ===== -->
+    <!-- ===== SIDEBAR BRANDING (Desktop) ===== -->
     <aside id="sidebar" role="navigation" aria-label="Main navigation">
         <a href="#" class="sb-logo" aria-label="Home">
-            <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Haiere Logo" width="34" height="34" loading="eager" decoding="async" />
+            <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Haiere Logo" width="34" height="34" />
             <span class="brand">
                 <span class="main">Haiere</span>
                 <span class="sub">Signature Music</span>
             </span>
         </a>
-        <nav class="sb-nav">
-            <a href="#" class="sb-link active" data-view="player" aria-current="page">
-                <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                <span>Play</span>
-            </a>
-            <a href="#" class="sb-link" data-view="playlist">
-                <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                <span>Songs</span>
-            </a>
-            <a href="#" class="sb-link" data-view="settings">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-                <span>More</span>
-            </a>
-        </nav>
         <div class="sb-divider"></div>
-        <div class="sb-now" id="sbNow" role="button" tabindex="0" aria-label="Open player">
+        <div class="sb-now" id="sbNow" role="button" tabindex="0" aria-label="Active track info">
             <div class="sb-now-art"><canvas id="sbNowCv" aria-hidden="true"></canvas></div>
             <div class="sb-now-title" id="sbNowTitle">Select a song...</div>
             <div class="sb-now-sub" id="sbNowSub">Muhaajir</div>
         </div>
     </aside>
 
-    <!-- ===== MAIN AREA ===== -->
+    <!-- ===== MAIN CONTENT AREA ===== -->
     <main id="mainArea">
 
-        <!-- PAGE: PLAYLIST (left panel / mobile "Songs") -->
-        <section class="page active" id="page-playlist" role="region" aria-label="Playlist">
+        <!-- PANEL 1 / MOBILE SCREEN: SONG LIST -->
+        <section class="page" id="page-playlist" role="region" aria-label="Playlist">
+            <div class="panel-header-title">Songs & Library</div>
             <div class="pl-filter" role="group" aria-label="Filter playlist">
                 <button class="pl-filter-btn active" data-filter="all">All</button>
                 <button class="pl-filter-btn" data-filter="fav">Favorites</button>
@@ -176,29 +112,28 @@
             <div class="pl-card">
                 <div class="pl-header">
                     <span>Playlist · Original</span>
-                    <span id="plCount" style="font-family:var(--font-mono);font-size:var(--text-xs);color:var(--accent2);background:rgba(167,139,250,0.04);padding:4px 12px;border-radius:var(--radius-full);border:1px solid rgba(167,139,250,0.06);">13 Songs</span>
+                    <span id="plCount" class="pl-count-badge">13 Songs</span>
                 </div>
                 <div class="pl-items" id="plItems" role="list"></div>
             </div>
         </section>
 
-        <!-- PAGE: PLAYER (center panel / mobile "Home") -->
-        <section class="page" id="page-player" role="main" aria-label="Music player">
-            <!-- Status row -->
+        <!-- PANEL 2 / MOBILE SCREEN: HOME & PLAYER -->
+        <section class="page active" id="page-player" role="main" aria-label="Music player">
             <div class="status-row">
                 <span class="glass-pill accent">
-                    <span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 1.8s infinite;"></span>
+                    <span class="dot-pulse"></span>
                     Hi-Res
                 </span>
-                <div style="display:flex;align-items:center;gap:10px;">
-                    <button class="glass-pill more-toggle" id="btnMoreToggle" aria-label="Show or hide the More panel" aria-pressed="false" aria-controls="page-settings">
+                <div class="status-actions">
+                    <button class="glass-pill more-toggle" id="btnMoreToggle" aria-label="Toggle Panel Kanan">
                         More <span id="moreToggleIcon" aria-hidden="true">‹</span>
                     </button>
-                    <img src="https://i.postimg.cc/JztFxsRH/hajir-logo-putih.webp" alt="" style="height:18px;opacity:0.5;filter:brightness(0) invert(0.8);" loading="lazy" decoding="async" />
+                    <img src="https://i.postimg.cc/JztFxsRH/hajir-logo-putih.webp" alt="Hajir Logo" class="brand-sub-logo" />
                 </div>
             </div>
 
-            <!-- Artwork -->
+            <!-- Artwork Container -->
             <div class="art-section">
                 <div class="art-outer" id="artOuter">
                     <div class="art-inner">
@@ -209,7 +144,7 @@
 
             <!-- Info -->
             <div class="info-section">
-                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+                <div class="info-head">
                     <h1 class="track-title" id="npTitle">Select a song...</h1>
                     <button class="act-btn" id="btnFav" aria-label="Favorite" title="Favorite (F)">
                         <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -250,16 +185,16 @@
                 </div>
             </div>
 
-            <!-- Volume (mobile) -->
+            <!-- Volume (Mobile Interface) -->
             <div class="vol-section">
-                <div style="display:flex;align-items:center;gap:12px;">
-                    <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:var(--fg3);fill:none;stroke-width:1.8;"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg>
+                <div class="vol-wrap">
+                    <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg>
                     <input type="range" class="vol-sl" id="volSl" min="0" max="1" step="0.01" value="0.7" aria-label="Volume" />
                     <span class="vol-pct" id="volPct">70%</span>
                 </div>
             </div>
 
-            <!-- Actions -->
+            <!-- Extra Actions -->
             <div class="action-section">
                 <button class="act-btn" id="btnShare" aria-label="Share" title="Share">
                     <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
@@ -273,11 +208,12 @@
             </div>
         </section>
 
-        <!-- PAGE: SETTINGS (right panel / mobile "More") -->
+        <!-- PANEL 3 / MOBILE SCREEN: MORE & SETTINGS -->
         <section class="page" id="page-settings" role="region" aria-label="Settings">
-            <!-- About -->
-            <div class="about glass-card" style="margin-bottom:12px;">
-                <div class="about-logo"><img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="" loading="lazy" decoding="async" /></div>
+            <div class="panel-header-title">More Options</div>
+            
+            <div class="about glass-card">
+                <div class="about-logo"><img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Artist Logo" /></div>
                 <div class="about-name">Haiere Signature Music</div>
                 <div class="about-sub">Resonance Studio · 2025–2026</div>
                 <div class="about-rot" id="rotName">Created by <span>Regina</span></div>
@@ -288,8 +224,7 @@
                 </div>
             </div>
 
-            <!-- Settings -->
-            <div style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--letter-spacing-wider);text-transform:uppercase;color:var(--fg4);padding:8px 4px 4px;">Playback</div>
+            <div class="section-label">Playback</div>
             <div class="set-card">
                 <div class="set-row">
                     <div class="set-label">Volume <small>Loudness</small></div>
@@ -314,40 +249,40 @@
                         </div>
                     </div>
                 </div>
-                <div class="set-row" style="border-bottom:none;padding-top:6px;">
+                <div class="set-row border-none pt-1">
                     <span class="sleep-status" id="sleepStatus">Inactive</span>
                 </div>
             </div>
 
-            <div style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--letter-spacing-wider);text-transform:uppercase;color:var(--fg4);padding:14px 4px 4px;margin-top:4px;">Collection</div>
+            <div class="section-label mt-2">Collection</div>
             <div class="set-card">
-                <div class="set-row">
+                <div class="set-row border-none">
                     <div class="set-label">Total Favorites <small>Songs you like</small></div>
                     <span class="set-fav" id="favCount">0</span>
                 </div>
             </div>
 
-            <div style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--letter-spacing-wider);text-transform:uppercase;color:var(--fg4);padding:14px 4px 4px;margin-top:4px;">Quick Actions</div>
+            <div class="section-label mt-2">Quick Actions</div>
             <div class="set-card">
-                <div class="set-row" id="setShare" style="cursor:pointer;">
+                <div class="set-row pointer-item" id="setShare">
                     <div class="set-label">Share Song <small>Via WhatsApp</small></div>
-                    <span style="color:var(--fg3);font-size:var(--text-sm);">↗</span>
+                    <span class="arrow-ico">↗</span>
                 </div>
-                <div class="set-row" id="setDl" style="cursor:pointer;border-bottom:none;">
+                <div class="set-row pointer-item border-none" id="setDl">
                     <div class="set-label">Download Song <small>Muhaajir · Direct</small></div>
-                    <span style="color:var(--fg3);font-size:var(--text-sm);">⬇</span>
+                    <span class="arrow-ico">⬇</span>
                 </div>
             </div>
 
-            <div style="font-family:var(--font-mono);font-size:var(--text-xs);letter-spacing:var(--letter-spacing-wider);text-transform:uppercase;color:var(--fg4);padding:14px 4px 4px;margin-top:4px;">Keyboard Shortcuts</div>
+            <div class="section-label mt-2">Keyboard Shortcuts</div>
             <div class="set-card">
-                <div class="set-row" style="border-bottom:none;">
+                <div class="set-row border-none">
                     <div class="shortcuts">
                         <kbd>Space</kbd> <kbd>K</kbd> Play–Pause &nbsp;·&nbsp;
                         <kbd>←</kbd> <kbd>→</kbd> 5s &nbsp;·&nbsp;
                         <kbd>Shift+←</kbd> <kbd>Shift+→</kbd> Prev–Next &nbsp;·&nbsp;
                         <kbd>↑</kbd> <kbd>↓</kbd> Volume &nbsp;·&nbsp;
-                        <kbd>F</kbd> Favorite <kbd>S</kbd> Shuffle <kbd>R</kbd> Repeat <kbd>M</kbd> Download <kbd>T</kbd> Timer
+                        <kbd>F</kbd> Favorite <kbd>S</kbd> Shuffle <kbd>R</kbd> Repeat
                     </div>
                 </div>
             </div>
@@ -355,7 +290,7 @@
 
     </main>
 
-    <!-- ===== DESKTOP PLAYER BAR ===== -->
+    <!-- ===== DESKTOP PLAYER BAR (Fixed Bottom) ===== -->
     <div id="dPlayerBar" role="toolbar" aria-label="Player controls">
         <div class="dp-track">
             <div class="dp-art" id="dpArt" role="button" tabindex="0" aria-label="Open player"><canvas id="dpArtCv" aria-hidden="true"></canvas></div>
@@ -405,7 +340,7 @@
         </div>
     </div>
 
-    <!-- ===== MOBILE DOCK ===== -->
+    <!-- ===== MOBILE DOCK (Fixed Bottom Player + Navigation) ===== -->
     <div class="mobile-dock" id="mobileDock">
         <div class="bp-mini" id="bpMini" role="button" tabindex="0" aria-label="Open player">
             <div class="art"><canvas id="bpCv" aria-hidden="true"></canvas></div>
@@ -413,10 +348,10 @@
                 <div class="title" id="bpTitle">Select a song...</div>
                 <div class="sub" id="bpSub">Muhaajir</div>
             </div>
-            <button class="bp-fav" id="bpFav" aria-label="Favorite" onclick="event.stopPropagation()">
+            <button class="bp-fav" id="bpFav" aria-label="Favorite">
                 <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             </button>
-            <button class="bp-play" id="bpPlay" aria-label="Play/Pause" onclick="event.stopPropagation()">
+            <button class="bp-play" id="bpPlay" aria-label="Play/Pause">
                 <svg id="bpPlaySvg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             </button>
         </div>
@@ -427,7 +362,7 @@
             </button>
             <button class="nav-btn" data-view="playlist">
                 <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                <span>Songs</span>
+                <span>Song</span>
             </button>
             <button class="nav-btn" data-view="settings">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
@@ -452,10 +387,9 @@
         </div>
     </div>
 
-    <!-- ===== AUDIO ===== -->
+    <!-- AUDIO ENGINE -->
     <audio id="aud" preload="metadata" aria-label="Audio player"></audio>
 
     <script src="script.js"></script>
-
 </body>
 </html>
