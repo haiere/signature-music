@@ -3,6 +3,13 @@ import { SONGS } from './data-song.js';
 (function() {
     'use strict';
 
+    // ==================== LOADER FAIL-SAFE ====================
+    // Hide the loader no matter what happens below, after 3s max.
+    setTimeout(() => {
+        const l = document.getElementById('loader');
+        if (l) l.classList.add('hide');
+    }, 3000);
+
     // ==================== STATE ====================
     let currentIndex = 0;
     let isPlaying = false;
@@ -62,7 +69,8 @@ import { SONGS } from './data-song.js';
         drawCover($('artCv'), s.cover, $('artCv')?.parentElement?.clientWidth || 320);
         drawCover($('bpCv'), s.cover, 40);
         drawCover($('dpArtCv'), s.cover, 46);
-        drawCover($('sbNowCv'), s.cover, $('sbNowCv')?.parentElement?.clientWidth || 180);
+        // Note: sidebar now-play canvas removed in V2.11.5 — guarded by drawCover's null-check anyway
+        drawCover($('sbNowCv'), s.cover, 180);
     }
 
     // ==================== LOAD SONG ====================
@@ -70,15 +78,19 @@ import { SONGS } from './data-song.js';
         const s = SONGS[index];
         if (!s) return;
         currentIndex = index;
-        $('npTitle').textContent = s.name;
-        $('npAlbum').textContent = s.group + ' · Muhaajir';
-        $('bpTitle').textContent = s.name;
-        $('bpSub').textContent = s.group;
-        $('dpTitle').textContent = s.name;
-        $('dpSub').textContent = s.group + ' · Muhaajir';
-        $('sbNowTitle').textContent = s.name;
-        $('sbNowSub').textContent = s.group;
-        $('modalSub').textContent = '"' + s.name + '"';
+
+        // Safely update text nodes (elements may not exist across layouts)
+        const setText = (id, text) => { const el = $(id); if (el) el.textContent = text; };
+
+        setText('npTitle', s.name);
+        setText('npAlbum', s.group + ' · Muhaajir');
+        setText('bpTitle', s.name);
+        setText('bpSub', s.group);
+        setText('dpTitle', s.name);
+        setText('dpSub', s.group + ' · Muhaajir');
+        setText('modalSub', '"' + s.name + '"');
+        // sbNowTitle / sbNowSub no longer exist — removed.
+
         const opt = $('optCatbox');
         if (opt) opt.dataset.url = s.url;
 
@@ -124,7 +136,7 @@ import { SONGS } from './data-song.js';
             if (!t0) t0 = ts;
             const p = Math.min((ts - t0) / dur, 1);
             aud.volume = from + (to - from) * p;
-            if (p < 1) { fadeRaf = requestAnimationFrame(step); } 
+            if (p < 1) { fadeRaf = requestAnimationFrame(step); }
             else { aud.volume = to; cb && cb(); }
         }
         fadeRaf = requestAnimationFrame(step);
@@ -135,13 +147,12 @@ import { SONGS } from './data-song.js';
     function updatePlayButtons() {
         const playing = !aud.paused && aud.currentTime > 0;
         isPlaying = playing;
-        const icons = ['playSvg', 'bpPlaySvg', 'dpPlaySvg'];
-        icons.forEach(id => {
+        ['playSvg', 'bpPlaySvg', 'dpPlaySvg'].forEach(id => {
             const el = $(id);
             if (el) {
-                el.innerHTML = playing ?
-                    '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>' :
-                    '<polygon points="5 3 19 12 5 21 5 3"/>';
+                el.innerHTML = playing
+                    ? '<rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/>'
+                    : '<polygon points="5 3 19 12 5 21 5 3"/>';
             }
         });
     }
@@ -161,7 +172,8 @@ import { SONGS } from './data-song.js';
 
     // ==================== FAVORITES ====================
     function toggleFav() {
-        const name = SONGS[currentIndex].name;
+        const name = SONGS[currentIndex]?.name;
+        if (!name) return;
         favorites[name] = !favorites[name];
         localStorage.setItem('haiere_fav', JSON.stringify(favorites));
         syncFavButton();
@@ -295,16 +307,18 @@ import { SONGS } from './data-song.js';
     function clearSleep() {
         if (sleepInterval) clearInterval(sleepInterval);
         sleepInterval = null; sleepEnd = null;
-        $('sleepStop').style.display = 'none';
-        $('sleepGo').style.display = 'inline-block';
-        if ($('sleepStatus')) $('sleepStatus').textContent = 'Inactive';
+        const stop = $('sleepStop'); if (stop) stop.style.display = 'none';
+        const go = $('sleepGo'); if (go) go.style.display = 'inline-block';
+        const st = $('sleepStatus');
+        if (st) { st.textContent = 'Inactive'; st.classList.remove('active'); }
     }
 
     function startSleep(seconds) {
         clearSleep();
         sleepEnd = Date.now() + seconds * 1000;
-        $('sleepStop').style.display = 'inline-block';
-        $('sleepGo').style.display = 'none';
+        const stop = $('sleepStop'); if (stop) stop.style.display = 'inline-block';
+        const go = $('sleepGo'); if (go) go.style.display = 'none';
+        const st = $('sleepStatus'); if (st) st.classList.add('active');
 
         sleepInterval = setInterval(() => {
             const rem = sleepEnd - Date.now();
@@ -318,7 +332,8 @@ import { SONGS } from './data-song.js';
             }
             const mins = Math.floor(rem / 60000);
             const secs = Math.floor((rem % 60000) / 1000);
-            if ($('sleepStatus')) $('sleepStatus').textContent = mins + 'm ' + secs + 's left';
+            const st2 = $('sleepStatus');
+            if (st2) st2.textContent = mins + 'm ' + secs + 's left';
         }, 500);
     }
 
@@ -336,7 +351,7 @@ import { SONGS } from './data-song.js';
             document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
             const target = $('page-' + view);
             if (target) target.classList.add('active');
-            
+
             document.querySelectorAll('.bottom-nav .nav-btn').forEach(el => {
                 el.classList.toggle('on', el.dataset.view === view);
             });
@@ -347,7 +362,12 @@ import { SONGS } from './data-song.js';
     // ==================== STATE ====================
     function saveState() {
         try {
-            const state = { index: currentIndex, volume: aud.volume, shuffle: shuffleMode, repeat: repeatMode };
+            const state = {
+                index: currentIndex,
+                volume: aud.volume,
+                shuffle: shuffleMode,
+                repeat: repeatMode
+            };
             localStorage.setItem('haiere_state', JSON.stringify(state));
         } catch (_) {}
     }
@@ -368,75 +388,92 @@ import { SONGS } from './data-song.js';
 
     // ==================== INIT ====================
     function init() {
-        renderPlaylist();
-        restoreState();
-        if (!aud.src) loadSong(0, false);
+        try {
+            renderPlaylist();
+            restoreState();
+            if (!aud.src) loadSong(0, false);
 
-        aud.addEventListener('timeupdate', updateProgress);
-        aud.addEventListener('ended', () => { if (repeatMode) { aud.currentTime = 0; aud.play(); } else playNext(); });
-        
-        ['btnPlay', 'bpPlay', 'dpPlay'].forEach(id => $(id)?.addEventListener('click', togglePlay));
-        ['btnPrev', 'dpPrev'].forEach(id => $(id)?.addEventListener('click', playPrev));
-        ['btnNext', 'dpNext'].forEach(id => $(id)?.addEventListener('click', playNext));
+            aud.addEventListener('timeupdate', updateProgress);
+            aud.addEventListener('ended', () => {
+                if (repeatMode) { aud.currentTime = 0; aud.play(); }
+                else playNext();
+            });
 
-        ['btnShuffle', 'dpShuffle'].forEach(id => $(id)?.addEventListener('click', () => {
-            shuffleMode = !shuffleMode;
-            ['btnShuffle', 'dpShuffle'].forEach(i => $(i)?.classList.toggle('on', shuffleMode));
-            showToast(shuffleMode ? '🔀 Shuffle on' : '🔀 Shuffle off');
-            saveState();
-        }));
+            ['btnPlay', 'bpPlay', 'dpPlay'].forEach(id => $(id)?.addEventListener('click', togglePlay));
+            ['btnPrev', 'dpPrev'].forEach(id => $(id)?.addEventListener('click', playPrev));
+            ['btnNext', 'dpNext'].forEach(id => $(id)?.addEventListener('click', playNext));
 
-        ['btnRepeat', 'dpRepeat'].forEach(id => $(id)?.addEventListener('click', () => {
-            repeatMode = !repeatMode;
-            ['btnRepeat', 'dpRepeat'].forEach(i => $(i)?.classList.toggle('on', repeatMode));
-            showToast(repeatMode ? '🔁 Repeat on' : '🔁 Repeat off');
-            saveState();
-        }));
+            ['btnShuffle', 'dpShuffle'].forEach(id => $(id)?.addEventListener('click', () => {
+                shuffleMode = !shuffleMode;
+                ['btnShuffle', 'dpShuffle'].forEach(i => $(i)?.classList.toggle('on', shuffleMode));
+                showToast(shuffleMode ? '🔀 Shuffle on' : '🔀 Shuffle off');
+                saveState();
+            }));
 
-        ['btnFav', 'dpFav', 'bpFav'].forEach(id => $(id)?.addEventListener('click', toggleFav));
+            ['btnRepeat', 'dpRepeat'].forEach(id => $(id)?.addEventListener('click', () => {
+                repeatMode = !repeatMode;
+                ['btnRepeat', 'dpRepeat'].forEach(i => $(i)?.classList.toggle('on', repeatMode));
+                showToast(repeatMode ? '🔁 Repeat on' : '🔁 Repeat off');
+                saveState();
+            }));
 
-        ['volSl', 'volSetSl', 'dpVolSl'].forEach(id => {
-            $(id)?.addEventListener('input', e => updateVolume(parseFloat(e.target.value)));
-        });
+            ['btnFav', 'dpFav', 'bpFav'].forEach(id => $(id)?.addEventListener('click', toggleFav));
 
-        document.querySelectorAll('.bottom-nav .nav-btn[data-view]').forEach(el => {
-            el.addEventListener('click', () => showView(el.dataset.view));
-        });
+            ['volSl', 'volSetSl', 'dpVolSl'].forEach(id => {
+                $(id)?.addEventListener('input', e => updateVolume(parseFloat(e.target.value)));
+            });
 
-        $('bpMini')?.addEventListener('click', () => { if (window.innerWidth < 768) showView('player'); });
+            document.querySelectorAll('.bottom-nav .nav-btn[data-view]').forEach(el => {
+                el.addEventListener('click', () => showView(el.dataset.view));
+            });
 
-        // Desktop Right Panel Toggle Functionality
-        $('btnMoreToggle')?.addEventListener('click', () => {
-            const mainEl = $('mainArea');
-            if (mainEl) {
-                mainEl.classList.toggle('more-collapsed');
-                const isCollapsed = mainEl.classList.contains('more-collapsed');
-                const icon = $('moreToggleIcon');
-                if (icon) icon.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
-            }
-        });
+            $('bpMini')?.addEventListener('click', () => {
+                if (window.innerWidth < 768) showView('player');
+            });
 
-        document.querySelectorAll('.pl-filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => setPlaylistFilter(btn.dataset.filter));
-        });
+            // Desktop right-panel toggle
+            $('btnMoreToggle')?.addEventListener('click', () => {
+                const mainEl = $('mainArea');
+                if (mainEl) {
+                    mainEl.classList.toggle('more-collapsed');
+                    const collapsed = mainEl.classList.contains('more-collapsed');
+                    const icon = $('moreToggleIcon');
+                    if (icon) icon.style.transform = collapsed ? 'rotate(180deg)' : 'rotate(0deg)';
+                }
+            });
 
-        // Mobile drawer toggles
-        $('menuToggle')?.addEventListener('click', () => {
-            $('menuDrawer')?.classList.add('show');
-            $('menuOverlay')?.classList.add('show');
-        });
-        const closeMenu = () => {
-            $('menuDrawer')?.classList.remove('show');
-            $('menuOverlay')?.classList.remove('show');
-        };
-        $('menuClose')?.addEventListener('click', closeMenu);
-        $('menuOverlay')?.addEventListener('click', closeMenu);
+            document.querySelectorAll('.pl-filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => setPlaylistFilter(btn.dataset.filter));
+            });
 
-        window.addEventListener('resize', () => {
-            if (SONGS[currentIndex]) updateAllCovers(currentIndex);
-        });
+            // Mobile drawer
+            $('menuToggle')?.addEventListener('click', () => {
+                $('menuDrawer')?.classList.add('show');
+                $('menuOverlay')?.classList.add('show');
+            });
+            const closeMenu = () => {
+                $('menuDrawer')?.classList.remove('show');
+                $('menuOverlay')?.classList.remove('show');
+            };
+            $('menuClose')?.addEventListener('click', closeMenu);
+            $('menuOverlay')?.addEventListener('click', closeMenu);
 
-        setTimeout(() => { $('loader')?.classList.add('hide'); }, 500);
+            window.addEventListener('resize', () => {
+                if (SONGS[currentIndex]) updateAllCovers(currentIndex);
+            });
+
+            // Hide loader after init completes
+            setTimeout(() => {
+                const l = $('loader');
+                if (l) l.classList.add('hide');
+            }, 500);
+
+        } catch (err) {
+            console.error('[Haiere] init() failed:', err);
+            // Still hide the loader so the user isn't stuck
+            const l = $('loader');
+            if (l) l.classList.add('hide');
+        }
     }
 
     if (document.readyState === 'loading') {
