@@ -1,573 +1,330 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id" data-theme="dark">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    <!-- ===== PRIMARY SEO ===== -->
-    <title>Haiere Signature Music — Muhaajir | Hi-Res Web Player</title>
-    <meta name="description" content="Stream Muhaajir's original albums Fragmen Suara and Resonansi Dalam Diam in a premium Hi-Res web player. Favorites, sleep timer, shuffle, repeat, offline downloads — all in one place by Haiere Signature Music." />
-    <meta name="keywords" content="Haiere, Signature Music, Muhaajir, music player, indie music, Fragmen Suara, Resonansi Dalam Diam, Saya Akan Lawan, Hi-Res streaming, Resonance Studio, HajirStudio, web music player" />
-    <meta name="author" content="HajirStudio · Resonance Studio" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="googlebot" content="index, follow" />
-    <meta name="rating" content="general" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <link rel="canonical" href="https://signature-music.netlify.app/" />
+  <title>Haiere Signature Music | Web Player for Muhaajir</title>
+  <meta name="description" content="Stream karya orisinal Muhaajir dalam music player Hi-Res yang premium. Fragmen Suara, Resonansi Dalam Diam, dan Saya Akan Lawan." />
+  <meta name="theme-color" content="#0a0a1a" />
+  <meta name="color-scheme" content="dark light" />
+  <link rel="canonical" href="https://signature-music.vercel.app/" />
 
-    <!-- ===== THEME / PWA ===== -->
-    <meta name="theme-color" content="#0a0a1a" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#0a0a1a" media="(prefers-color-scheme: light)" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Haiere Music" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="application-name" content="Haiere Signature Music" />
-    <meta name="format-detection" content="telephone=no" />
+  <meta property="og:type" content="music.playlist" />
+  <meta property="og:title" content="Haiere Signature Music — Muhaajir" />
+  <meta property="og:description" content="Stream karya orisinal Muhaajir dalam music player Hi-Res yang premium." />
+  <meta property="og:image" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
+  <meta property="og:url" content="https://signature-music.vercel.app/" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-    <!-- ===== OPEN GRAPH ===== -->
-    <meta property="og:type" content="music.playlist" />
-    <meta property="og:url" content="https://signature-music.netlify.app/" />
-    <meta property="og:title" content="Haiere Signature Music — Muhaajir | Hi-Res Web Player" />
-    <meta property="og:description" content="Stream Fragmen Suara and Resonansi Dalam Diam in a premium Hi-Res music web player. Original works by Muhaajir." />
-    <meta property="og:image" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
-    <meta property="og:image:secure_url" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Haiere Signature Music — Muhaajir Album Artwork" />
-    <meta property="og:site_name" content="Haiere Signature Music" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="music:musician" content="https://signature-music.netlify.app/" />
+  <link rel="icon" type="image/webp" href="https://i.postimg.cc/VLrVFjF1/haieresignaturebiru.webp" />
+  <link rel="apple-touch-icon" href="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
+  <link rel="manifest" href="/manifest.webmanifest" />
 
-    <!-- ===== TWITTER CARD ===== -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@hajirstudio" />
-    <meta name="twitter:creator" content="@hajirstudio" />
-    <meta name="twitter:title" content="Haiere Signature Music — Muhaajir | Hi-Res Web Player" />
-    <meta name="twitter:description" content="Listen to Fragmen Suara and Resonansi Dalam Diam by Muhaajir in a premium Hi-Res web player." />
-    <meta name="twitter:image" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
-    <meta name="twitter:image:alt" content="Haiere Signature Music" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://files.catbox.moe" crossorigin />
+  <link rel="preconnect" href="https://i.postimg.cc" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-    <!-- ===== FAVICON ===== -->
-    <link rel="icon" type="image/webp" href="https://i.postimg.cc/VLrVFjF1/haieresignaturebiru.webp" />
-    <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
-    <link rel="mask-icon" href="https://i.postimg.cc/VLrVFjF1/haieresignaturebiru.webp" color="#a78bfa" />
+  <link rel="stylesheet" href="/style.css" />
 
-    <!-- ===== PRELOAD / PRECONNECT ===== -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://i.postimg.cc" crossorigin />
-    <link rel="preconnect" href="https://files.catbox.moe" crossorigin />
-    <link rel="dns-prefetch" href="https://i.postimg.cc" />
-    <link rel="dns-prefetch" href="https://files.catbox.moe" />
-    <link rel="preload" as="image" href="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" fetchpriority="high" />
-
-    <!-- ===== FONTS ===== -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-
-    <!-- ===== STRUCTURED DATA ===== -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "WebSite",
-                "@id": "https://signature-music.netlify.app/#website",
-                "url": "https://signature-music.netlify.app/",
-                "name": "Haiere Signature Music",
-                "description": "Premium Hi-Res web music player featuring original works by Muhaajir.",
-                "inLanguage": "en",
-                "publisher": { "@id": "https://signature-music.netlify.app/#org" }
-            },
-            {
-                "@type": "Organization",
-                "@id": "https://signature-music.netlify.app/#org",
-                "name": "Resonance Studio",
-                "alternateName": "HajirStudio",
-                "url": "https://signature-music.netlify.app/",
-                "logo": "https://i.postimg.cc/VLrVFjF1/haieresignaturebiru.webp",
-                "founder": { "@type": "Person", "name": "Regina" },
-                "foundingDate": "2025"
-            },
-            {
-                "@type": "MusicGroup",
-                "@id": "https://signature-music.netlify.app/#artist",
-                "name": "Muhaajir",
-                "genre": ["Indie", "Alternative"],
-                "url": "https://signature-music.netlify.app/",
-                "image": "https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp"
-            },
-            {
-                "@type": "MusicPlaylist",
-                "@id": "https://signature-music.netlify.app/#playlist",
-                "name": "Haiere Signature Music — Complete Collection",
-                "description": "Original albums by Muhaajir: Fragmen Suara and Resonansi Dalam Diam, plus the single Saya Akan Lawan.",
-                "url": "https://signature-music.netlify.app/",
-                "numTracks": 13,
-                "creator": { "@id": "https://signature-music.netlify.app/#artist" },
-                "track": [
-                    { "@type": "MusicRecording", "name": "Lintasan Tak Bermakna", "inAlbum": "Fragmen Suara" },
-                    { "@type": "MusicRecording", "name": "Padahal Sudah Bilang", "inAlbum": "Fragmen Suara" },
-                    { "@type": "MusicRecording", "name": "Mimpi yang Tertunda", "inAlbum": "Fragmen Suara" },
-                    { "@type": "MusicRecording", "name": "Langit Masih Sama", "inAlbum": "Fragmen Suara" },
-                    { "@type": "MusicRecording", "name": "Suatu Hari Nanti", "inAlbum": "Fragmen Suara" },
-                    { "@type": "MusicRecording", "name": "Nada Terpendam", "inAlbum": "Resonansi Dalam Diam" },
-                    { "@type": "MusicRecording", "name": "Langit Patah Arah", "inAlbum": "Resonansi Dalam Diam" },
-                    { "@type": "MusicRecording", "name": "Tak Bernama, Tapi Ada", "inAlbum": "Resonansi Dalam Diam" },
-                    { "@type": "MusicRecording", "name": "Resonansi Dalam Diam", "inAlbum": "Resonansi Dalam Diam" },
-                    { "@type": "MusicRecording", "name": "Runtuh Tanpa Suara", "inAlbum": "Resonansi Dalam Diam" },
-                    { "@type": "MusicRecording", "name": "Kilau Tanpa Sorotan", "inAlbum": "Resonansi Dalam Diam" },
-                    { "@type": "MusicRecording", "name": "Gelombang Terakhir", "inAlbum": "Resonansi Dalam Diam" },
-                    { "@type": "MusicRecording", "name": "Saya Akan Lawan", "inAlbum": "Saya Akan Lawan" }
-                ]
-            },
-            {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://signature-music.netlify.app/" },
-                    { "@type": "ListItem", "position": 2, "name": "Songs", "item": "https://signature-music.netlify.app/#songs" },
-                    { "@type": "ListItem", "position": 3, "name": "Player", "item": "https://signature-music.netlify.app/#player" }
-                ]
-            }
-        ]
-    }
-    </script>
-
-    <link rel="stylesheet" href="style.css" />
+  <script>
+    // Avoid FOUC for theme
+    (function () {
+      try {
+        var t = localStorage.getItem('haiere_theme');
+        if (t === 'light' || t === 'signature') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
 
-    <!-- ===== LOADER ===== -->
-    <div id="loader" role="status" aria-label="Loading application">
-        <div class="loader-ring"></div>
-        <div class="loader-brand">
-            <span class="lb-main">Haiere</span>
-            <span class="lb-sub">Signature Music</span>
+  <!-- Skeleton screen -->
+  <div id="skeleton" class="skeleton-screen" role="status" aria-live="polite" aria-label="Memuat aplikasi" aria-busy="true">
+    <div class="sk-topbar">
+      <div class="sk sk-logo"></div>
+      <div class="sk sk-pill"></div>
+    </div>
+    <div class="sk-layout">
+      <div class="sk-main">
+        <div class="sk sk-hero"></div>
+        <div class="sk sk-title"></div>
+        <div class="sk sk-sub"></div>
+        <div class="sk sk-controls"></div>
+        <div class="sk-row">
+          <div class="sk sk-card"></div>
+          <div class="sk sk-card"></div>
+          <div class="sk sk-card"></div>
         </div>
-        <div class="loader-text">Preparing your Hi-Res session…</div>
+        <div class="sk sk-list"></div>
+        <div class="sk sk-list short"></div>
+      </div>
+      <div class="sk-side">
+        <div class="sk sk-side-title"></div>
+        <div class="sk sk-list"></div>
+        <div class="sk sk-list short"></div>
+        <div class="sk sk-list"></div>
+      </div>
     </div>
-
-    <!-- ===== TOAST ===== -->
-    <div id="toast" role="alert" aria-live="polite"></div>
-
-    <!-- ===== AMBIENT BACKGROUND ===== -->
-    <div class="ambient" aria-hidden="true">
-        <span class="orb orb-1"></span>
-        <span class="orb orb-2"></span>
-        <span class="orb orb-3"></span>
+    <div class="sk-playerbar">
+      <div class="sk sk-mini-art"></div>
+      <div class="sk sk-mini-info"></div>
+      <div class="sk sk-mini-btn"></div>
     </div>
+    <span class="sr-only">Memuat Haiere Signature Music…</span>
+  </div>
 
-    <!-- ===== MOBILE HEADER ===== -->
-    <header id="header">
-        <a href="#" class="logo" aria-label="Haiere Signature Music — Home">
-            <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Haiere" width="34" height="34" loading="eager" />
-            <span class="logo-text">
-                <span class="main">Haiere</span>
-                <span class="sub">Signature Music</span>
-            </span>
+  <div id="appRoot" class="app-shell" aria-hidden="true">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <button class="brand" id="brandLogo" aria-label="Haiere Signature Music — beranda" title="Haiere">
+        <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="" width="36" height="36" />
+        <span class="brand-text">
+          <span class="brand-main">Haiere</span>
+          <span class="brand-sub">Signature Music</span>
+        </span>
+      </button>
+
+      <div class="topbar-actions">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+          <input id="searchInput" type="search" placeholder="Cari lagu, album, genre…" aria-label="Cari lagu" autocomplete="off" />
+          <button id="searchClear" class="search-clear" aria-label="Hapus pencarian" hidden>✕</button>
+        </div>
+        <button id="themeToggle" class="icon-btn" aria-label="Ganti tema" title="Ganti tema">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <a class="icon-btn" href="https://buymeacoffee.com/hajirstudio" target="_blank" rel="noopener noreferrer" aria-label="Dukung lewat Buy Me a Coffee">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h1a3 3 0 0 1 0 6h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
         </a>
-        <div class="header-actions">
-            <a class="hdr-donate" href="https://buymeacoffee.com/hajirstudio" target="_blank" rel="noopener noreferrer" aria-label="Support Haiere on Buy Me a Coffee">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h1a3 3 0 0 1 0 6h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-            </a>
-            <button class="menu-toggle" id="menuToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="menuDrawer">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>
-            </button>
-        </div>
+      </div>
     </header>
 
-    <!-- ===== MOBILE DRAWER ===== -->
-    <div class="menu-overlay" id="menuOverlay"></div>
-    <aside class="menu-drawer" id="menuDrawer" role="dialog" aria-modal="true" aria-label="Navigation menu">
-        <div class="menu-drawer-head">
-            <div class="menu-drawer-brand">
-                <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Haiere" width="28" height="28" />
-                <span>
-                    <span class="mdb-main">Haiere</span>
-                    <span class="mdb-sub">Signature Music</span>
-                </span>
-            </div>
-            <button class="menu-close" id="menuClose" aria-label="Close menu">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-        </div>
-        <nav class="menu-list" aria-label="Main navigation">
-            <button class="menu-item active" data-view="player">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                <span>Home</span>
-            </button>
-            <button class="menu-item" data-view="playlist">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                <span>Songs</span>
-            </button>
-            <button class="menu-item" data-view="playlist" data-filter="fav">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                <span>Favorites</span>
-            </button>
-            <button class="menu-item" data-view="settings">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-                <span>Settings</span>
-            </button>
-            <a class="menu-item" href="https://buymeacoffee.com/hajirstudio" target="_blank" rel="noopener noreferrer">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h1a3 3 0 0 1 0 6h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-                <span>Buy Me a Coffee</span>
-            </a>
-        </nav>
-        <div class="menu-drawer-footer">
-            <div class="mdf-line">V2.11.5 · Resonance Studio</div>
-        </div>
-    </aside>
+    <!-- MAIN LAYOUT -->
+    <div class="layout">
 
-    <!-- ===== DESKTOP SIDEBAR BRANDING ===== -->
-    <aside id="sidebar" role="navigation" aria-label="Brand">
-        <a href="#" class="sb-logo" aria-label="Haiere Signature Music — Home">
-            <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Haiere" width="36" height="36" />
-            <span class="brand">
-                <span class="main">Haiere</span>
-                <span class="sub">Signature Music</span>
+      <main class="content" id="mainContent">
+
+        <!-- HERO / NOW PLAYING -->
+        <section class="hero" id="heroSection" aria-label="Sedang diputar">
+          <div class="hero-cover-wrap">
+            <img id="heroCover" class="hero-cover" alt="" width="320" height="320" decoding="async" fetchpriority="high" />
+            <div class="cover-fallback" id="heroCoverFallback" hidden aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </div>
+            <span class="buffering" id="buffering" hidden aria-label="Memuat audio">
+              <span class="spinner" aria-hidden="true"></span>
             </span>
-        </a>
-    </aside>
+          </div>
 
-    <!-- ===== MAIN AREA ===== -->
-    <main id="mainArea">
+          <div class="hero-body">
+            <p class="eyebrow" id="heroEyebrow">SEDANG DIPUTAR</p>
+            <h1 class="hero-title" id="heroTitle">Pilih lagu…</h1>
+            <p class="hero-meta" id="heroMeta">Muhaajir</p>
+            <p class="hero-desc" id="heroDesc"></p>
 
-        <!-- LEFT PANEL: PLAYLIST -->
-        <section class="page" id="page-playlist" role="region" aria-label="Song library">
-            <div class="brand-block" aria-label="Haiere Signature Music">
-                <div class="bb-logo">
-                    <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Haiere" width="40" height="40" />
-                </div>
-                <div class="bb-text">
-                    <div class="bb-main">Haiere</div>
-                    <div class="bb-sub">Signature Music</div>
-                </div>
-                <div class="bb-tag">V2.11.5</div>
-            </div>
-
-            <div class="panel-header-title">Songs &amp; Library</div>
-            <div class="pl-filter" role="group" aria-label="Filter playlist">
-                <button class="pl-filter-btn active" data-filter="all">All</button>
-                <button class="pl-filter-btn" data-filter="fav">Favorites</button>
-            </div>
-            <div class="pl-card">
-                <div class="pl-header">
-                    <span>Playlist · Original</span>
-                    <span id="plCount" class="pl-count-badge">13 Songs</span>
-                </div>
-                <div class="pl-items" id="plItems" role="list"></div>
-            </div>
-
-            <a class="donate-card" href="https://buymeacoffee.com/hajirstudio" target="_blank" rel="noopener noreferrer" aria-label="Support Haiere on Buy Me a Coffee">
-                <div class="dc-ico">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h1a3 3 0 0 1 0 6h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-                </div>
-                <div class="dc-txt">
-                    <span class="dc-title">Buy Me a Coffee</span>
-                    <span class="dc-sub">Support the artist ☕</span>
-                </div>
-                <span class="dc-arrow" aria-hidden="true">
-                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-                </span>
-            </a>
-        </section>
-
-        <!-- CENTER PANEL: PLAYER -->
-        <section class="page active" id="page-player" role="main" aria-label="Music player">
-            <div class="status-row">
-                <div class="status-actions">
-                    <span class="glass-pill ghost" aria-hidden="true">Muhaajir</span>
-                    <button class="glass-pill more-toggle" id="btnMoreToggle" aria-label="Toggle right panel" aria-expanded="true">
-                        More <span id="moreToggleIcon" aria-hidden="true">›</span>
-                    </button>
-                    <img src="https://i.postimg.cc/JztFxsRH/hajir-logo-putih.webp" alt="Hajir Studio" class="brand-sub-logo" />
-                </div>
-            </div>
-
-            <div class="art-section">
-                <div class="art-outer" id="artOuter">
-                    <div class="art-inner">
-                        <canvas id="artCv" aria-label="Song cover" role="img"></canvas>
-                    </div>
-                    <div class="art-shine" aria-hidden="true"></div>
-                </div>
-            </div>
-
-            <div class="info-section">
-                <div class="info-head">
-                    <div class="info-text">
-                        <h1 class="track-title" id="npTitle">Select a song…</h1>
-                        <div class="track-album" id="npAlbum">Muhaajir · 2025</div>
-                    </div>
-                    <button class="act-btn round" id="btnFav" aria-label="Favorite" title="Favorite (F)">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                    </button>
-                </div>
-            </div>
-
-            <div class="prog-section">
-                <div class="prog-track" id="progTrack" role="slider" aria-label="Song progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-                    <div class="prog-fill" id="pFill"></div>
-                    <div class="prog-knob" id="pKnob" aria-hidden="true"></div>
-                </div>
-                <div class="prog-times">
-                    <span id="tNow">0:00</span>
-                    <span id="tEnd">0:00</span>
-                </div>
-            </div>
-
-            <div class="ctrl-section">
-                <div class="ctrl-row">
-                    <button class="ctrl-btn" id="btnShuffle" aria-label="Shuffle" title="Shuffle (S)">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
-                    </button>
-                    <button class="ctrl-btn" id="btnPrev" aria-label="Previous track" title="Previous">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
-                    </button>
-                    <button class="play-big" id="btnPlay" aria-label="Play or pause" title="Play/Pause (Space)">
-                        <svg id="playSvg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    </button>
-                    <button class="ctrl-btn" id="btnNext" aria-label="Next track" title="Next">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
-                    </button>
-                    <button class="ctrl-btn" id="btnRepeat" aria-label="Repeat" title="Repeat (R)">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-                    </button>
-                </div>
-            </div>
-
-            <div class="vol-section">
-                <div class="vol-wrap">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-                    <input type="range" class="vol-sl" id="volSl" min="0" max="1" step="0.01" value="0.7" aria-label="Volume" />
-                    <span class="vol-pct" id="volPct">70%</span>
-                </div>
-            </div>
-
-            <div class="action-section">
-                <button class="act-btn" id="btnShare" aria-label="Share song" title="Share">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                </button>
-                <button class="act-btn" id="btnDl" aria-label="Download song" title="Download (M)">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                </button>
-                <button class="act-btn" id="btnTimer" aria-label="Sleep timer" title="Timer (T)">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-                </button>
-            </div>
-        </section>
-
-        <!-- RIGHT PANEL: SETTINGS -->
-        <section class="page" id="page-settings" role="region" aria-label="Settings and more">
-            <div class="panel-header-title">More Options</div>
-
-            <div class="about glass-card">
-                <div class="about-logo"><img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="Haiere" /></div>
-                <div class="about-name">Haiere Signature Music</div>
-                <div class="about-sub">Resonance Studio · 2025–2026</div>
-                <div class="about-rot" id="rotName">Created by <span>HajirStudio</span></div>
-                <div class="about-tags">
-                    <span class="tag">Muhaajir</span>
-                    <span class="tag accent">No Copyright</span>
-                    <span class="tag">Original</span>
-                    <span class="tag">V2.11.5</span>
-                </div>
-            </div>
-
-            <div class="section-label">Support</div>
-            <a class="support-card" href="https://buymeacoffee.com/hajirstudio" target="_blank" rel="noopener noreferrer" aria-label="Buy Me a Coffee — support the artist">
-                <span class="sc-ico">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h1a3 3 0 0 1 0 6h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-                </span>
-                <span class="sc-txt">
-                    <span class="sc-name">Buy Me a Coffee</span>
-                    <span class="sc-desc">Every cup fuels new tracks ☕</span>
-                </span>
-                <span class="sc-arrow" aria-hidden="true">
-                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-                </span>
-            </a>
-
-            <div class="section-label mt-2">Playback</div>
-            <div class="set-card">
-                <div class="set-row">
-                    <div class="set-label">Volume <small>Loudness</small></div>
-                    <div class="set-control">
-                        <input type="range" id="volSetSl" min="0" max="1" step="0.01" value="0.7" aria-label="Volume" />
-                        <span class="set-value" id="volSetPct">70%</span>
-                    </div>
-                </div>
-                <div class="set-row">
-                    <div class="set-label">Sleep Timer <small>Auto pause</small></div>
-                    <div class="set-control">
-                        <div class="sleep-wrap">
-                            <select id="sleepSel" aria-label="Select timer duration">
-                                <option value="">Select</option>
-                                <option value="900">15 Min</option>
-                                <option value="1800">30 Min</option>
-                                <option value="3600">60 Min</option>
-                                <option value="5400">90 Min</option>
-                            </select>
-                            <button class="sleep-btn" id="sleepGo">Set</button>
-                            <button class="sleep-btn stop" id="sleepStop" style="display:none;" aria-label="Stop timer">✕</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="set-row border-none pt-1">
-                    <span class="sleep-status" id="sleepStatus">Inactive</span>
-                </div>
-            </div>
-
-            <div class="section-label mt-2">Collection</div>
-            <div class="set-card">
-                <div class="set-row border-none">
-                    <div class="set-label">Total Favorites <small>Songs you love</small></div>
-                    <span class="set-fav" id="favCount">0</span>
-                </div>
-            </div>
-
-            <div class="section-label mt-2">Quick Actions</div>
-            <div class="set-card">
-                <div class="set-row pointer-item" id="setShare" role="button" tabindex="0">
-                    <div class="set-label">Share Song <small>Via WhatsApp</small></div>
-                    <span class="arrow-ico" aria-hidden="true">
-                        <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-                    </span>
-                </div>
-                <div class="set-row pointer-item border-none" id="setDl" role="button" tabindex="0">
-                    <div class="set-label">Download Song <small>Muhaajir · Direct</small></div>
-                    <span class="arrow-ico" aria-hidden="true">
-                        <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-                    </span>
-                </div>
-            </div>
-
-            <div class="section-label mt-2">Keyboard Shortcuts</div>
-            <div class="set-card">
-                <div class="set-row border-none">
-                    <div class="shortcuts">
-                        <kbd>Space</kbd> <kbd>K</kbd> Play–Pause &nbsp;·&nbsp;
-                        <kbd>←</kbd> <kbd>→</kbd> 5s &nbsp;·&nbsp;
-                        <kbd>Shift+←</kbd> <kbd>Shift+→</kbd> Prev–Next &nbsp;·&nbsp;
-                        <kbd>↑</kbd> <kbd>↓</kbd> Volume &nbsp;·&nbsp;
-                        <kbd>F</kbd> Favorite &nbsp;·&nbsp; <kbd>S</kbd> Shuffle &nbsp;·&nbsp; <kbd>R</kbd> Repeat
-                    </div>
-                </div>
-            </div>
-
-            <div class="app-footer">
-                <div class="af-line">© 2025–2026 Resonance Studio · HajirStudio</div>
-                <div class="af-line dim">Haiere Signature Music · V2.11.5</div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- ===== DESKTOP PLAYER BAR ===== -->
-    <div id="dPlayerBar" role="toolbar" aria-label="Player controls">
-        <div class="dp-track">
-            <div class="dp-art" id="dpArt" role="button" tabindex="0" aria-label="Open player"><canvas id="dpArtCv" aria-hidden="true"></canvas></div>
-            <div class="dp-info">
-                <div class="dp-title" id="dpTitle">Select a song…</div>
-                <div class="dp-sub" id="dpSub">Muhaajir</div>
-            </div>
-            <button class="dp-fav" id="dpFav" aria-label="Favorite">
+            <div class="hero-controls">
+              <button id="playBtn" class="play-main" aria-label="Putar" aria-pressed="false">
+                <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true" hidden><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+              </button>
+              <button id="prevBtn" class="ctrl" aria-label="Lagu sebelumnya">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+              </button>
+              <button id="nextBtn" class="ctrl" aria-label="Lagu berikutnya">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+              </button>
+              <button id="shuffleBtn" class="ctrl" aria-label="Acak" aria-pressed="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+              </button>
+              <button id="repeatBtn" class="ctrl" aria-label="Ulangi" aria-pressed="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+              </button>
+              <button id="favBtn" class="ctrl fav" aria-label="Favorit" aria-pressed="false">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-        </div>
-        <div class="dp-center">
-            <div class="dp-ctrl">
-                <button class="cb" id="dpShuffle" aria-label="Shuffle">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
-                </button>
-                <button class="cb" id="dpPrev" aria-label="Previous">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
-                </button>
-                <button class="dp-play" id="dpPlay" aria-label="Play or pause">
-                    <svg id="dpPlaySvg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                </button>
-                <button class="cb" id="dpNext" aria-label="Next">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
-                </button>
-                <button class="cb" id="dpRepeat" aria-label="Repeat">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-                </button>
+              </button>
             </div>
-            <div class="dp-prog-row">
-                <span class="dp-time" id="dpTNow">0:00</span>
-                <div class="dp-prog-track" id="dpProgTrack" role="slider" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><div class="fill" id="dpFill"></div></div>
-                <span class="dp-time" id="dpTEnd">0:00</span>
+
+            <div class="progress-wrap">
+              <div id="progressBar" class="progress" role="slider" tabindex="0" aria-label="Posisi lagu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div id="progressFill" class="progress-fill"></div>
+                <div class="progress-knob" aria-hidden="true"></div>
+              </div>
+              <div class="time-row">
+                <span id="currentTime">0:00</span>
+                <span id="durationTime">0:00</span>
+              </div>
             </div>
-        </div>
-        <div class="dp-right">
-            <a class="act-btn dp-donate" href="https://buymeacoffee.com/hajirstudio" target="_blank" rel="noopener noreferrer" aria-label="Support on Buy Me a Coffee" title="Buy Me a Coffee">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h1a3 3 0 0 1 0 6h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-            </a>
-            <button class="act-btn" id="dpTimer" aria-label="Sleep timer">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            </button>
-            <button class="act-btn" id="dpDl" aria-label="Download">
+
+            <div class="secondary-actions">
+              <button id="shareBtn" class="text-btn" aria-label="Bagikan lagu">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                Bagikan
+              </button>
+              <button id="downloadBtn" class="text-btn" aria-label="Unduh lagu">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </button>
-            <div class="dp-vol">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg>
-                <input type="range" id="dpVolSl" min="0" max="1" step="0.01" value="0.7" aria-label="Volume" />
+                Unduh
+              </button>
+              <div class="volume-wrap">
+                <button id="muteBtn" class="icon-btn small" aria-label="Bisukan" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                </button>
+                <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Volume" />
+              </div>
             </div>
+          </div>
+        </section>
+
+        <!-- NOT FOUND -->
+        <section id="notFoundState" class="empty-state" hidden>
+          <div class="empty-icon" aria-hidden="true">🎵</div>
+          <h2>Lagu tidak ditemukan</h2>
+          <p id="notFoundMessage">URL mungkin salah atau lagu telah dipindahkan.</p>
+          <a class="primary-link" href="/">Kembali ke beranda</a>
+        </section>
+
+        <!-- ALBUMS -->
+        <section class="section" id="albumsSection" aria-labelledby="albumsHeading">
+          <div class="section-head">
+            <h2 id="albumsHeading">Album</h2>
+            <button id="showAllAlbums" class="text-btn small" hidden>Semua</button>
+          </div>
+          <div id="albumGrid" class="album-grid"></div>
+        </section>
+
+        <!-- LIBRARY / QUEUE -->
+        <section class="section" id="librarySection" aria-labelledby="libraryHeading">
+          <div class="section-head">
+            <h2 id="libraryHeading">Semua Lagu</h2>
+            <span id="songCount" class="count-badge">0 lagu</span>
+          </div>
+          <div id="queueEmpty" class="empty-state small" hidden>
+            <div class="empty-icon" aria-hidden="true">🔎</div>
+            <p>Tidak ada lagu yang cocok.</p>
+          </div>
+          <ul id="songList" class="song-list" role="list"></ul>
+        </section>
+
+        <footer class="app-footer">
+          <p>© 2025–2026 Resonance Studio · HajirStudio</p>
+          <p class="dim">Haiere Signature Music · V3.0.0</p>
+        </footer>
+      </main>
+
+      <!-- SIDE PANEL (DESKTOP) -->
+      <aside class="side-panel" aria-label="Antrean dan info">
+        <div class="side-card now-card">
+          <p class="side-label">SEKARANG</p>
+          <img id="sideArt" class="side-art" alt="" width="220" height="220" loading="lazy" decoding="async" />
+          <div id="sideArtFallback" class="cover-fallback small" hidden aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          </div>
+          <h3 id="sideTitle">—</h3>
+          <p id="sideMeta" class="muted">—</p>
+          <div class="tag-row" id="sideTags"></div>
         </div>
+
+        <div class="side-card">
+          <p class="side-label">FAVORIT</p>
+          <p id="favCount" class="big-number">0</p>
+          <p class="muted small-text">lagu disimpan</p>
+          <button id="filterFavBtn" class="text-btn small" aria-pressed="false">Tampilkan favorit</button>
+        </div>
+
+        <div class="side-card">
+          <p class="side-label">TENTANG</p>
+          <p class="muted small-text">Haiere Signature Music<br />Resonance Studio · 2025–2026</p>
+          <p class="muted small-text">Dibuat oleh <span class="accent">HajirStudio</span></p>
+        </div>
+      </aside>
     </div>
 
-    <!-- ===== MOBILE DOCK ===== -->
-    <div class="mobile-dock" id="mobileDock">
-        <div class="bp-mini" id="bpMini" role="button" tabindex="0" aria-label="Open player">
-            <div class="art"><canvas id="bpCv" aria-hidden="true"></canvas></div>
-            <div class="info">
-                <div class="title" id="bpTitle">Select a song…</div>
-                <div class="sub" id="bpSub">Muhaajir</div>
-            </div>
-            <button class="bp-fav" id="bpFav" aria-label="Favorite">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-            <button class="bp-play" id="bpPlay" aria-label="Play or pause">
-                <svg id="bpPlaySvg" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
+    <!-- PLAYER BAR (DESKTOP) -->
+    <div class="player-bar" id="playerBar" role="region" aria-label="Kontrol pemutar">
+      <div class="player-track">
+        <img id="playerArt" class="player-art" alt="" width="44" height="44" loading="lazy" decoding="async" />
+        <div class="player-info">
+          <span id="playerTitle">Pilih lagu…</span>
+          <span id="playerArtist" class="muted">Muhaajir</span>
         </div>
-        <nav class="bottom-nav" id="bottomNav" role="navigation" aria-label="Bottom navigation">
-            <button class="nav-btn on" data-view="player" aria-current="page">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-                <span>Home</span>
-            </button>
-            <button class="nav-btn" data-view="playlist">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                <span>Songs</span>
-            </button>
-            <button class="nav-btn" data-view="settings">
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-                <span>More</span>
-            </button>
-        </nav>
+        <button id="playerFav" class="icon-btn small fav" aria-label="Favorit" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </div>
+
+      <div class="player-center">
+        <div class="player-controls">
+          <button id="playerShuffle" class="icon-btn small" aria-label="Acak" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+          </button>
+          <button id="playerPrev" class="icon-btn small" aria-label="Sebelumnya">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+          </button>
+          <button id="playerPlay" class="play-main small" aria-label="Putar" aria-pressed="false">
+            <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true" hidden><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+          </button>
+          <button id="playerNext" class="icon-btn small" aria-label="Berikutnya">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+          </button>
+          <button id="playerRepeat" class="icon-btn small" aria-label="Ulangi" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </button>
+        </div>
+        <div class="player-progress-row">
+          <span id="playerCurrent">0:00</span>
+          <div id="playerProgress" class="progress thin" role="slider" tabindex="0" aria-label="Posisi lagu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="playerProgressFill" class="progress-fill"></div>
+          </div>
+          <span id="playerDuration">0:00</span>
+        </div>
+      </div>
+
+      <div class="player-right">
+        <div class="volume-wrap compact">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg>
+          <input id="playerVolume" type="range" min="0" max="1" step="0.01" value="0.7" aria-label="Volume" />
+        </div>
+      </div>
     </div>
 
-    <!-- ===== DOWNLOAD MODAL ===== -->
-    <div class="modal-overlay" id="modalBg" role="dialog" aria-modal="true" aria-label="Download song">
-        <div class="modal-box">
-            <div class="modal-title">⬇️ Download Song</div>
-            <div class="modal-sub" id="modalSub">Select download server</div>
-            <div class="modal-opt" id="optCatbox" role="button" tabindex="0">
-                <span class="ico">☁️</span>
-                <span class="txt">
-                    <span class="name">Haiere Storage</span>
-                    <span class="desc">Direct download · Stable</span>
-                </span>
-                <span class="arr" aria-hidden="true">
-                    <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-                </span>
-            </div>
-        </div>
+    <!-- MOBILE MINI PLAYER -->
+    <div class="mini-player" id="miniPlayer" role="region" aria-label="Pemutar mini">
+      <button id="miniOpen" class="mini-open" aria-label="Buka pemutar">
+        <img id="miniArt" class="mini-art" alt="" width="40" height="40" loading="lazy" decoding="async" />
+        <span class="mini-info">
+          <span id="miniTitle">Pilih lagu…</span>
+          <span id="miniArtist" class="muted">Muhaajir</span>
+        </span>
+      </button>
+      <button id="miniPlay" class="play-main small" aria-label="Putar" aria-pressed="false">
+        <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true" hidden><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+      </button>
     </div>
 
-    <audio id="aud" preload="metadata" aria-label="Audio player"></audio>
+    <!-- ERROR BANNER -->
+    <div id="errorBanner" class="error-banner" role="alert" hidden>
+      <span id="errorText">Audio tidak dapat diputar.</span>
+      <button id="errorRetry" class="text-btn small">Coba lagi</button>
+      <button id="errorClose" class="icon-btn small" aria-label="Tutup">✕</button>
+    </div>
 
-    <script type="module" src="script.js"></script>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <!-- EASTER EGG: VISUALIZER -->
+  <div id="visualizerOverlay" class="vis-overlay" role="dialog" aria-modal="true" aria-label="Visualizer rahasia" hidden>
+    <canvas id="visualizerCanvas" aria-hidden="true"></canvas>
+    <button id="visualizerClose" class="vis-close" aria-label="Tutup visualizer">✕</button>
+    <p class="vis-hint">Tekan Escape untuk menutup</p>
+  </div>
+
+  <audio id="audio" preload="metadata" aria-label="Pemutar audio"></audio>
+
+  <script type="module" src="/script.js"></script>
 </body>
-</html>
+                                                           </html>
