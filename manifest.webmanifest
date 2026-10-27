@@ -1,0 +1,25 @@
+{
+  "name": "Haiere Signature Music",
+  "short_name": "Haiere",
+  "description": "Premium web player for Muhaajir's original works.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a0a1a",
+  "theme_color": "#0a0a1a",
+  "icons": [
+    {
+      "src": "https://i.postimg.cc/8PJ0bhb1/H-haiere.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.postimg.cc/8PJ0bhb1/H-haiere.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+} 
