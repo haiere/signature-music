@@ -1,41 +1,46 @@
 /**
- * Haiere Signature Music — canonical song data.
- * One schema for every track. Do not introduce aliases like `name`, `cover`, `image`.
+ * Signature Music — canonical song catalogue.
+ * Semua field konsisten. Jangan memakai alias `name`, `group`, `cover`, `url`.
  */
 
-const ALBUM_META = {
+const ALBUM_DEFS = {
   'fragmen-suara': {
     album: 'Fragmen Suara',
     albumSlug: 'fragmen-suara',
-    coverSrc: 'https://i.postimg.cc/W3pHjGCQ/fragmen.webp',
-    colors: { primary: '#a78bfa', secondary: '#7c3aed' },
+    albumArtworkUrl: 'https://i.postimg.cc/W3pHjGCQ/fragmen.webp',
     year: 2025,
     genre: 'Indie',
+    colors: { primary: '#a78bfa', secondary: '#7c3aed' },
     description: 'Kumpulan fragmen yang tidak selalu utuh, tetapi tetap berarti.'
   },
   'resonansi-dalam-diam': {
     album: 'Resonansi Dalam Diam',
     albumSlug: 'resonansi-dalam-diam',
-    coverSrc: 'https://i.postimg.cc/Tw24GVFB/resonansi.webp',
-    colors: { primary: '#60a5fa', secondary: '#2563eb' },
+    albumArtworkUrl: 'https://i.postimg.cc/Tw24GVFB/resonansi.webp',
     year: 2025,
     genre: 'Alternative',
+    colors: { primary: '#60a5fa', secondary: '#2563eb' },
     description: 'Getaran yang tidak terdengar, namun paling terasa.'
   },
   'saya-akan-lawan': {
     album: 'Saya Akan Lawan',
     albumSlug: 'saya-akan-lawan',
-    coverSrc: 'https://i.postimg.cc/Ghj99yqK/sayaakanlawan(Copy).png',
-    colors: { primary: '#f472b6', secondary: '#db2777' },
+    albumArtworkUrl: 'https://i.postimg.cc/Ghj99yqK/sayaakanlawan(Copy).png',
     year: 2026,
     genre: 'Alternative',
+    colors: { primary: '#f472b6', secondary: '#db2777' },
     description: 'Satu suara untuk tetap berdiri.'
   }
 };
 
-const FALLBACK_COVER = '/assets/default-cover.svg';
+const ALBUM_BY_NAME = Object.values(ALBUM_DEFS).reduce((acc, a) => {
+  acc[a.album] = a;
+  return acc;
+}, {});
 
-const RAW = [
+export const DEFAULT_ARTWORK = 'https://i.postimg.cc/W3pHjGCQ/fragmen.webp';
+
+const RAW_TRACKS = [
   ['Fragmen Suara', 'Lintasan Tak Bermakna', 'lintasan-tak-bermakna', 'https://files.catbox.moe/7p3gmt.opus'],
   ['Fragmen Suara', 'Padahal Sudah Bilang', 'padahal-sudah-bilang', 'https://files.catbox.moe/izfodb.opus'],
   ['Fragmen Suara', 'Mimpi yang Tertunda', 'mimpi-yang-tertunda', 'https://files.catbox.moe/44mglv.opus'],
@@ -51,51 +56,65 @@ const RAW = [
   ['Saya Akan Lawan', 'Saya Akan Lawan', 'saya-akan-lawan', 'https://files.catbox.moe/704z9d.opus']
 ];
 
-function buildSong([album, title, slug, audioSrc], index) {
-  const meta = ALBUM_META[slug]?.album === album
-    ? ALBUM_META[slug]
-    : Object.values(ALBUM_META).find(a => a.album === album);
+export function createSlug(value) {
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
 
-  const albumSlug = meta?.albumSlug || album.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-  const coverSrc = meta?.coverSrc || FALLBACK_COVER;
-  const colors = meta?.colors || { primary: '#a78bfa', secondary: '#7c3aed' };
+function buildSong([album, title, slug, audioUrl], index) {
+  const meta = ALBUM_BY_NAME[album] || null;
+  const albumSlug = meta?.albumSlug || createSlug(album);
+  const safeSlug = createSlug(slug || title);
 
   return {
-    id: `${albumSlug}-${slug}`,
+    id: `${albumSlug}--${safeSlug}`,
     title,
+    slug: safeSlug,
     artist: 'Muhaajir',
     album,
     albumSlug,
-    slug,
-    audioSrc,
-    coverSrc,
-    coverFallback: FALLBACK_COVER,
+    albumArtist: 'Muhaajir',
+    genre: meta?.genre || null,
+    year: meta?.year || null,
+    trackNumber: index + 1,
+    discNumber: 1,
     duration: 0,
-    year: meta?.year || 2025,
-    genre: meta?.genre || 'Indie',
+    audioUrl,
+    artworkUrl: meta?.albumArtworkUrl || DEFAULT_ARTWORK,
+    fallbackArtwork: DEFAULT_ARTWORK,
+    colors: meta?.colors || { primary: '#a78bfa', secondary: '#7c3aed' },
     description: meta?.description || '',
-    colors,
-    metadata: { source: 'remote', embeddedCover: false },
+    metadataStatus: 'local',
     order: index
   };
 }
 
-export const SONGS = RAW.map(buildSong);
+export const SONGS = RAW_TRACKS.map(buildSong);
 
 /* ---------- validation ---------- */
-export function validateSlugs(songs = SONGS) {
-  const seen = new Set();
+export function validateCatalogue(songs = SONGS) {
+  const seenIds = new Set();
+  const seenRoutes = new Set();
   const errors = [];
+
   for (const s of songs) {
-    const key = `${s.albumSlug}/${s.slug}`;
-    if (seen.has(key)) errors.push(`Duplicate slug: ${key}`);
-    seen.add(key);
-    if (!s.id || !s.albumSlug || !s.slug) errors.push(`Missing slug/id: ${s.title}`);
+    if (seenIds.has(s.id)) errors.push(`Duplicate id: ${s.id}`);
+    seenIds.add(s.id);
+
+    const route = `${s.albumSlug}/${s.slug}`;
+    if (seenRoutes.has(route)) errors.push(`Duplicate route: ${route}`);
+    seenRoutes.add(route);
+
+    if (!s.title || !s.artist || !s.album || !s.audioUrl) {
+      errors.push(`Missing required field: ${s.id || s.title}`);
+    }
   }
-  if (errors.length) console.error('[Haiere] Song data validation:', errors);
   return errors;
 }
-validateSlugs();
 
 /* ---------- helpers ---------- */
 export function getSongById(id) {
@@ -109,8 +128,7 @@ export function getSongBySlug(albumSlug, songSlug) {
 export function getAdjacentSong(currentId, direction) {
   const idx = SONGS.findIndex(s => s.id === currentId);
   if (idx === -1) return SONGS[0] || null;
-  const next = (idx + direction + SONGS.length) % SONGS.length;
-  return SONGS[next];
+  return SONGS[(idx + direction + SONGS.length) % SONGS.length];
 }
 
 export function getAllAlbums() {
@@ -120,12 +138,11 @@ export function getAllAlbums() {
       map.set(s.albumSlug, {
         album: s.album,
         albumSlug: s.albumSlug,
-        coverSrc: s.coverSrc,
-        coverFallback: s.coverFallback,
-        colors: s.colors,
+        albumArtworkUrl: s.artworkUrl,
         year: s.year,
         genre: s.genre,
         description: s.description,
+        colors: s.colors,
         songs: []
       });
     }
@@ -134,21 +151,25 @@ export function getAllAlbums() {
   return Array.from(map.values());
 }
 
-export function searchSongs(query) {
+export function searchSongs(query, { albumSlug = null, genre = null } = {}) {
   const q = String(query || '').trim().toLowerCase();
-  if (!q) return SONGS.slice();
-  return SONGS.filter(s =>
-    s.title.toLowerCase().includes(q) ||
-    s.artist.toLowerCase().includes(q) ||
-    s.album.toLowerCase().includes(q) ||
-    s.genre.toLowerCase().includes(q)
-  );
+  return SONGS.filter(s => {
+    if (albumSlug && s.albumSlug !== albumSlug) return false;
+    if (genre && s.genre !== genre) return false;
+    if (!q) return true;
+    return (
+      s.title.toLowerCase().includes(q) ||
+      s.artist.toLowerCase().includes(q) ||
+      s.album.toLowerCase().includes(q) ||
+      (s.genre || '').toLowerCase().includes(q)
+    );
+  });
+}
+
+export function getSongArtwork(song) {
+  return song?.artworkUrl || song?.fallbackArtwork || DEFAULT_ARTWORK;
 }
 
 export function getSongUrl(song) {
   return `/playing/${song.albumSlug}/${song.slug}`;
 }
-
-export function getAlbumBySlug(albumSlug) {
-  return getAllAlbums().find(a => a.albumSlug === albumSlug) || null;
-        }
