@@ -1,11 +1,8 @@
-const CACHE = 'haiere-v3.0.1';
-const CORE = ['/', '/index.html', '/style.css', '/script.js', '/data-song.js',
-  '/assets/default-cover.svg', '/manifest.webmanifest'];
+const CACHE = 'sig-v3.0.0';
+const CORE = ['/', '/index.html', '/style.css', '/js/main.js', '/data-song.js'];
 
 self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(CORE).catch(() => {})).then(() => self.skipWaiting())
-  );
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE).catch(() => {})).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', e => {
