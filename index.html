@@ -5,17 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
   <title>Haiere Signature Music | Web Player for Muhaajir</title>
-  <meta name="description" content="Stream karya orisinal Muhaajir dalam music player Hi-Res yang premium. Fragmen Suara, Resonansi Dalam Diam, dan Saya Akan Lawan." />
-  <meta name="theme-color" content="#0a0a1a" />
+  <meta id="metaDescription" name="description" content="Stream karya orisinal Muhaajir dalam music player Hi-Res yang premium." />
+  <meta name="theme-color" content="#080814" />
   <meta name="color-scheme" content="dark light" />
-  <link rel="canonical" href="https://signature-music.vercel.app/" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link id="canonicalLink" rel="canonical" href="https://signature-music.vercel.app/" />
 
+  <meta id="ogTitle" property="og:title" content="Haiere Signature Music — Muhaajir" />
+  <meta id="ogDescription" property="og:description" content="Stream karya orisinal Muhaajir dalam music player Hi-Res yang premium." />
+  <meta id="ogImage" property="og:image" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
+  <meta id="ogUrl" property="og:url" content="https://signature-music.vercel.app/" />
   <meta property="og:type" content="music.playlist" />
-  <meta property="og:title" content="Haiere Signature Music — Muhaajir" />
-  <meta property="og:description" content="Stream karya orisinal Muhaajir dalam music player Hi-Res yang premium." />
-  <meta property="og:image" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
-  <meta property="og:url" content="https://signature-music.vercel.app/" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta id="twTitle" name="twitter:title" content="Haiere Signature Music — Muhaajir" />
+  <meta id="twDescription" name="twitter:description" content="Stream karya orisinal Muhaajir dalam music player Hi-Res yang premium." />
+  <meta id="twImage" name="twitter:image" content="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
 
   <link rel="icon" type="image/webp" href="https://i.postimg.cc/VLrVFjF1/haieresignaturebiru.webp" />
   <link rel="apple-touch-icon" href="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" />
@@ -26,11 +30,9 @@
   <link rel="preconnect" href="https://files.catbox.moe" crossorigin />
   <link rel="preconnect" href="https://i.postimg.cc" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="/style.css" />
 
   <script>
-    // Avoid FOUC for theme
     (function () {
       try {
         var t = localStorage.getItem('haiere_theme');
@@ -38,11 +40,22 @@
       } catch (e) {}
     })();
   </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MusicPlaylist",
+    "name": "Haiere Signature Music — Complete Collection",
+    "description": "Karya orisinal Muhaajir: Fragmen Suara, Resonansi Dalam Diam, dan Saya Akan Lawan.",
+    "url": "https://signature-music.vercel.app/",
+    "numTracks": 13
+  }
+  </script>
+  <script type="application/ld+json" id="songJsonLd"></script>
 </head>
 <body>
 
-  <!-- Skeleton screen -->
-  <div id="skeleton" class="skeleton-screen" role="status" aria-live="polite" aria-label="Memuat aplikasi" aria-busy="true">
+  <div id="skeleton" class="skeleton-screen" role="status" aria-live="polite" aria-busy="true" aria-label="Memuat aplikasi">
     <div class="sk-topbar">
       <div class="sk sk-logo"></div>
       <div class="sk sk-pill"></div>
@@ -54,9 +67,7 @@
         <div class="sk sk-sub"></div>
         <div class="sk sk-controls"></div>
         <div class="sk-row">
-          <div class="sk sk-card"></div>
-          <div class="sk sk-card"></div>
-          <div class="sk sk-card"></div>
+          <div class="sk sk-card"></div><div class="sk sk-card"></div><div class="sk sk-card"></div>
         </div>
         <div class="sk sk-list"></div>
         <div class="sk sk-list short"></div>
@@ -65,7 +76,6 @@
         <div class="sk sk-side-title"></div>
         <div class="sk sk-list"></div>
         <div class="sk sk-list short"></div>
-        <div class="sk sk-list"></div>
       </div>
     </div>
     <div class="sk-playerbar">
@@ -76,9 +86,7 @@
     <span class="sr-only">Memuat Haiere Signature Music…</span>
   </div>
 
-  <div id="appRoot" class="app-shell" aria-hidden="true">
-
-    <!-- TOP BAR -->
+  <div id="appRoot" class="app-shell">
     <header class="topbar">
       <button class="brand" id="brandLogo" aria-label="Haiere Signature Music — beranda" title="Haiere">
         <img src="https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp" alt="" width="36" height="36" />
@@ -91,33 +99,28 @@
       <div class="topbar-actions">
         <div class="search-box">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
-          <input id="searchInput" type="search" placeholder="Cari lagu, album, genre…" aria-label="Cari lagu" autocomplete="off" />
+          <input id="searchInput" type="search" enterkeyhint="search" placeholder="Cari lagu, album, genre…" aria-label="Cari lagu" autocomplete="off" />
           <button id="searchClear" class="search-clear" aria-label="Hapus pencarian" hidden>✕</button>
         </div>
         <button id="themeToggle" class="icon-btn" aria-label="Ganti tema" title="Ganti tema">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <a class="icon-btn" href="https://buymeacoffee.com/hajirstudio" target="_blank" rel="noopener noreferrer" aria-label="Dukung lewat Buy Me a Coffee">
+        <a class="icon-btn donate-link" href="https://buymeacoffee.com/hajirstudio" target="_blank" rel="noopener noreferrer" aria-label="Dukung lewat Buy Me a Coffee">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h1a3 3 0 0 1 0 6h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
         </a>
       </div>
     </header>
 
-    <!-- MAIN LAYOUT -->
     <div class="layout">
-
       <main class="content" id="mainContent">
 
-        <!-- HERO / NOW PLAYING -->
-        <section class="hero" id="heroSection" aria-label="Sedang diputar">
+        <section class="hero" id="heroSection" aria-label="Sedang diputar" hidden>
           <div class="hero-cover-wrap">
             <img id="heroCover" class="hero-cover" alt="" width="320" height="320" decoding="async" fetchpriority="high" />
             <div class="cover-fallback" id="heroCoverFallback" hidden aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
             </div>
-            <span class="buffering" id="buffering" hidden aria-label="Memuat audio">
-              <span class="spinner" aria-hidden="true"></span>
-            </span>
+            <span class="buffering" id="buffering" hidden aria-hidden="true"><span class="spinner"></span></span>
           </div>
 
           <div class="hero-body">
@@ -143,20 +146,17 @@
               <button id="repeatBtn" class="ctrl" aria-label="Ulangi" aria-pressed="false">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
               </button>
-              <button id="favBtn" class="ctrl fav" aria-label="Favorit" aria-pressed="false">
+              <button id="favBtn" class="ctrl fav" aria-label="Tambah ke favorit" aria-pressed="false">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
               </button>
             </div>
 
             <div class="progress-wrap">
-              <div id="progressBar" class="progress" role="slider" tabindex="0" aria-label="Posisi lagu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div id="progressBar" class="progress" role="slider" tabindex="0" aria-label="Posisi lagu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0:00 dari 0:00">
                 <div id="progressFill" class="progress-fill"></div>
                 <div class="progress-knob" aria-hidden="true"></div>
               </div>
-              <div class="time-row">
-                <span id="currentTime">0:00</span>
-                <span id="durationTime">0:00</span>
-              </div>
+              <div class="time-row"><span id="currentTime">0:00</span><span id="durationTime">0:00</span></div>
             </div>
 
             <div class="secondary-actions">
@@ -178,7 +178,6 @@
           </div>
         </section>
 
-        <!-- NOT FOUND -->
         <section id="notFoundState" class="empty-state" hidden>
           <div class="empty-icon" aria-hidden="true">🎵</div>
           <h2>Lagu tidak ditemukan</h2>
@@ -186,8 +185,7 @@
           <a class="primary-link" href="/">Kembali ke beranda</a>
         </section>
 
-        <!-- ALBUMS -->
-        <section class="section" id="albumsSection" aria-labelledby="albumsHeading">
+        <section class="section" aria-labelledby="albumsHeading">
           <div class="section-head">
             <h2 id="albumsHeading">Album</h2>
             <button id="showAllAlbums" class="text-btn small" hidden>Semua</button>
@@ -195,8 +193,7 @@
           <div id="albumGrid" class="album-grid"></div>
         </section>
 
-        <!-- LIBRARY / QUEUE -->
-        <section class="section" id="librarySection" aria-labelledby="libraryHeading">
+        <section class="section" aria-labelledby="libraryHeading">
           <div class="section-head">
             <h2 id="libraryHeading">Semua Lagu</h2>
             <span id="songCount" class="count-badge">0 lagu</span>
@@ -210,13 +207,12 @@
 
         <footer class="app-footer">
           <p>© 2025–2026 Resonance Studio · HajirStudio</p>
-          <p class="dim">Haiere Signature Music · V3.0.0</p>
+          <p class="dim">Haiere Signature Music · V3.0.1</p>
         </footer>
       </main>
 
-      <!-- SIDE PANEL (DESKTOP) -->
       <aside class="side-panel" aria-label="Antrean dan info">
-        <div class="side-card now-card">
+        <div class="side-card">
           <p class="side-label">SEKARANG</p>
           <img id="sideArt" class="side-art" alt="" width="220" height="220" loading="lazy" decoding="async" />
           <div id="sideArtFallback" class="cover-fallback small" hidden aria-hidden="true">
@@ -226,14 +222,12 @@
           <p id="sideMeta" class="muted">—</p>
           <div class="tag-row" id="sideTags"></div>
         </div>
-
         <div class="side-card">
           <p class="side-label">FAVORIT</p>
           <p id="favCount" class="big-number">0</p>
           <p class="muted small-text">lagu disimpan</p>
           <button id="filterFavBtn" class="text-btn small" aria-pressed="false">Tampilkan favorit</button>
         </div>
-
         <div class="side-card">
           <p class="side-label">TENTANG</p>
           <p class="muted small-text">Haiere Signature Music<br />Resonance Studio · 2025–2026</p>
@@ -242,19 +236,14 @@
       </aside>
     </div>
 
-    <!-- PLAYER BAR (DESKTOP) -->
     <div class="player-bar" id="playerBar" role="region" aria-label="Kontrol pemutar">
       <div class="player-track">
         <img id="playerArt" class="player-art" alt="" width="44" height="44" loading="lazy" decoding="async" />
-        <div class="player-info">
-          <span id="playerTitle">Pilih lagu…</span>
-          <span id="playerArtist" class="muted">Muhaajir</span>
-        </div>
-        <button id="playerFav" class="icon-btn small fav" aria-label="Favorit" aria-pressed="false">
+        <div class="player-info"><span id="playerTitle">Pilih lagu…</span><span id="playerArtist" class="muted">Muhaajir</span></div>
+        <button id="playerFav" class="icon-btn small fav" aria-label="Tambah ke favorit" aria-pressed="false">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </button>
       </div>
-
       <div class="player-center">
         <div class="player-controls">
           <button id="playerShuffle" class="icon-btn small" aria-label="Acak" aria-pressed="false">
@@ -276,13 +265,12 @@
         </div>
         <div class="player-progress-row">
           <span id="playerCurrent">0:00</span>
-          <div id="playerProgress" class="progress thin" role="slider" tabindex="0" aria-label="Posisi lagu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="playerProgress" class="progress thin" role="slider" tabindex="0" aria-label="Posisi lagu" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0:00 dari 0:00">
             <div id="playerProgressFill" class="progress-fill"></div>
           </div>
           <span id="playerDuration">0:00</span>
         </div>
       </div>
-
       <div class="player-right">
         <div class="volume-wrap compact">
           <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/></svg>
@@ -291,14 +279,10 @@
       </div>
     </div>
 
-    <!-- MOBILE MINI PLAYER -->
     <div class="mini-player" id="miniPlayer" role="region" aria-label="Pemutar mini">
       <button id="miniOpen" class="mini-open" aria-label="Buka pemutar">
         <img id="miniArt" class="mini-art" alt="" width="40" height="40" loading="lazy" decoding="async" />
-        <span class="mini-info">
-          <span id="miniTitle">Pilih lagu…</span>
-          <span id="miniArtist" class="muted">Muhaajir</span>
-        </span>
+        <span class="mini-info"><span id="miniTitle">Pilih lagu…</span><span id="miniArtist" class="muted">Muhaajir</span></span>
       </button>
       <button id="miniPlay" class="play-main small" aria-label="Putar" aria-pressed="false">
         <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -306,7 +290,6 @@
       </button>
     </div>
 
-    <!-- ERROR BANNER -->
     <div id="errorBanner" class="error-banner" role="alert" hidden>
       <span id="errorText">Audio tidak dapat diputar.</span>
       <button id="errorRetry" class="text-btn small">Coba lagi</button>
@@ -314,9 +297,9 @@
     </div>
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <div id="srAnnounce" class="sr-only" aria-live="polite"></div>
   </div>
 
-  <!-- EASTER EGG: VISUALIZER -->
   <div id="visualizerOverlay" class="vis-overlay" role="dialog" aria-modal="true" aria-label="Visualizer rahasia" hidden>
     <canvas id="visualizerCanvas" aria-hidden="true"></canvas>
     <button id="visualizerClose" class="vis-close" aria-label="Tutup visualizer">✕</button>
@@ -325,6 +308,12 @@
 
   <audio id="audio" preload="metadata" aria-label="Pemutar audio"></audio>
 
+  <noscript>
+    <p style="padding:24px;text-align:center;font-family:sans-serif">
+      Haiere Signature Music membutuhkan JavaScript untuk memutar lagu.
+    </p>
+  </noscript>
+
   <script type="module" src="/script.js"></script>
 </body>
-                                                           </html>
+            </html>
