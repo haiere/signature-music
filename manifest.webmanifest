@@ -1,25 +1,18 @@
 {
-  "name": "Haiere Signature Music",
-  "short_name": "Haiere",
-  "description": "Premium web player for Muhaajir's original works.",
+  "name": "Signature Music",
+  "short_name": "Signature",
+  "description": "Listen, discover, and enjoy your music.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#0a0a1a",
-  "theme_color": "#0a0a1a",
+  "background_color": "#0b0b12",
+  "theme_color": "#0b0b12",
   "icons": [
     {
-      "src": "https://i.postimg.cc/8PJ0bhb1/H-haiere.webp",
-      "sizes": "192x192",
-      "type": "image/webp",
-      "purpose": "any"
-    },
-    {
-      "src": "https://i.postimg.cc/8PJ0bhb1/H-haiere.webp",
+      "src": "https://i.postimg.cc/W3pHjGCQ/fragmen.webp",
       "sizes": "512x512",
       "type": "image/webp",
       "purpose": "any maskable"
     }
   ]
-} 
+}
