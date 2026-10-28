@@ -1,10 +1,6 @@
 export const translations = {
     en: {
-        nav: {
-            home: "Home",
-            music: "Music",
-            more: "More"
-        },
+        nav: { home: "Home", music: "Music", more: "More" },
         home: {
             greeting: "Welcome back",
             subtitle: "Your Signature Music session",
@@ -55,7 +51,7 @@ export const translations = {
             shareSong: "Share Song",
             shareViaWhatsApp: "Via WhatsApp",
             downloadSong: "Download Song",
-            downloadDirect: "Direct",
+            downloadDirect: "Muhaajir · Direct",
             keyboardShortcuts: "Keyboard Shortcuts",
             language: "Language",
             english: "English",
@@ -93,11 +89,7 @@ export const translations = {
         }
     },
     id: {
-        nav: {
-            home: "Beranda",
-            music: "Musik",
-            more: "Lainnya"
-        },
+        nav: { home: "Beranda", music: "Musik", more: "Lainnya" },
         home: {
             greeting: "Selamat datang kembali",
             subtitle: "Sesi Signature Music Anda",
@@ -148,7 +140,7 @@ export const translations = {
             shareSong: "Bagikan Lagu",
             shareViaWhatsApp: "Via WhatsApp",
             downloadSong: "Unduh Lagu",
-            downloadDirect: "Langsung",
+            downloadDirect: "Muhaajir · Langsung",
             keyboardShortcuts: "Pintasan Keyboard",
             language: "Bahasa",
             english: "English",
@@ -187,7 +179,11 @@ export const translations = {
     }
 };
 
-let currentLang = localStorage.getItem("haiere_lang") || "en";
+let currentLang = "en";
+try {
+    const stored = localStorage.getItem("haiere_lang");
+    if (stored === "en" || stored === "id") currentLang = stored;
+} catch (_) {}
 
 export function getLang() {
     return currentLang;
@@ -196,7 +192,7 @@ export function getLang() {
 export function setLang(lang) {
     if (lang !== "en" && lang !== "id") return;
     currentLang = lang;
-    localStorage.setItem("haiere_lang", lang);
+    try { localStorage.setItem("haiere_lang", lang); } catch (_) {}
     applyTranslations();
 }
 
@@ -208,17 +204,16 @@ export function t(path) {
             node = node[key];
         } else {
             // fallback to English
-            node = translations.en;
-            for (const k of keys) {
-                node = node?.[k];
-            }
-            return node ?? path;
+            let fallback = translations.en;
+            for (const k of keys) fallback = fallback?.[k];
+            return fallback ?? path;
         }
     }
     return node ?? path;
 }
 
 export function applyTranslations() {
+    // Plain text — only safe on leaf elements
     document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         const text = t(key);
@@ -228,13 +223,17 @@ export function applyTranslations() {
             el.textContent = text;
         }
     });
-    document.querySelectorAll("[data-i18n-aria]").forEach(el => {
-        const key = el.getAttribute("data-i18n-aria");
-        el.setAttribute("aria-label", t(key));
+    // Placeholders
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        el.placeholder = t(el.getAttribute("data-i18n-placeholder"));
     });
+    // Aria labels
+    document.querySelectorAll("[data-i18n-aria]").forEach(el => {
+        el.setAttribute("aria-label", t(el.getAttribute("data-i18n-aria")));
+    });
+    // Title tooltips
     document.querySelectorAll("[data-i18n-title]").forEach(el => {
-        const key = el.getAttribute("data-i18n-title");
-        el.setAttribute("title", t(key));
+        el.setAttribute("title", t(el.getAttribute("data-i18n-title")));
     });
     document.documentElement.lang = currentLang;
-            } 
+            }
