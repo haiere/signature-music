@@ -368,7 +368,7 @@ kbd {
     }
     .page.active { display: block; }
 
-    /* --- Mobile dock: pastikan tampil --- */
+    /* --- Mobile dock --- */
     .mobile-dock {
         display: block;
         position: fixed;
@@ -1079,11 +1079,6 @@ kbd {
 }
 
 /* ============================================================
-   14. MOBILE DOCK — base hidden, shown via media query above
-   ============================================================ */
-.mobile-dock { display: none; }
-
-/* ============================================================
    15. DOWNLOAD MODAL
    ============================================================ */
 .modal-overlay {
@@ -1175,4 +1170,4 @@ kbd {
         scroll-behavior: auto !important;
     }
     .shimmer::after { display: none; }
-                         }
+     }
