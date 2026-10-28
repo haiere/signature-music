@@ -1,7 +1,7 @@
 // ==================== SONG DATA ====================
 // Single source of truth. Audio URLs point to Catbox and must not be changed.
 // `duration` is a static placeholder; real duration is read from the audio element at runtime.
-const FALLBACK_COVER = "https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp";
+const FALLBACK_COVER = "https://i.postimg.cc/8PJ0bhb1/H-haiere.webp";
 
 export const SONGS = [
     {
