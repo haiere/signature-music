@@ -1,25 +1,28 @@
 import { SONGS } from "./data-song.js";
-import { formatTime, findSongBySlug, getSongSlug } from "./utils.js";
+import {
+    formatTime,
+    getSongSlug,
+    buildSongPath
+} from "./utils.js";
 import { getLang, setLang, t, applyTranslations } from "./i18n.js";
 import { initRouter, navigate, buildShareUrl } from "./router.js";
 
 (function () {
     "use strict";
 
-    // ==================== DOM SHORTCUT ====================
     const $ = (id) => document.getElementById(id);
 
-    // ==================== SKELETON ====================
-    // Hide skeleton after app is ready (data + first render). Fallback after 4 s.
+    /* ==================== SKELETON ==================== */
     function hideSkeleton() {
         const sk = $("skeleton");
         if (!sk) return;
         sk.classList.add("hide");
         setTimeout(() => sk.remove(), 600);
     }
+    // Fail-safe: hide skeleton after 4s max regardless of errors
     setTimeout(hideSkeleton, 4000);
 
-    // ==================== STATE ====================
+    /* ==================== STATE ==================== */
     let currentIndex = 0;
     let isPlaying = false;
     let shuffleMode = false;
@@ -31,7 +34,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
     let musicQuery = "";
     let isInteracted = false;
     let fadeRaf = null;
-    let currentRoute = "home";
+    let songLoaded = false;
 
     try {
         favorites = JSON.parse(localStorage.getItem("haiere_fav")) || {};
@@ -40,8 +43,9 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
     }
 
     const aud = $("aud");
+    const SAFE_COVER = "https://i.postimg.cc/8PJ0bhb1/H-haiere.webp";
 
-    // ==================== TOAST ====================
+    /* ==================== TOAST ==================== */
     let toastTimeout;
     function showToast(msg) {
         const el = $("toast");
@@ -52,9 +56,8 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         toastTimeout = setTimeout(() => el.classList.remove("show"), 2800);
     }
 
-    // ==================== COVER ART ====================
+    /* ==================== COVER ART ==================== */
     const coverCache = new Map();
-    const SAFE_COVER = "https://i.postimg.cc/8PJ0bhb1/H-Muhaajir.webp";
 
     function drawCover(canvas, url, size) {
         if (!canvas) return;
@@ -76,7 +79,9 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         function drawFallback() {
             const fb = new Image();
             fb.crossOrigin = "anonymous";
-            fb.onload = () => ctx.drawImage(fb, 0, 0, sz, sz);
+            fb.onload = () => {
+                try { ctx.drawImage(fb, 0, 0, sz, sz); } catch (_) {}
+            };
             fb.onerror = () => {
                 ctx.fillStyle = "#12122a";
                 ctx.fillRect(0, 0, sz, sz);
@@ -102,10 +107,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
             coverCache.set(src, img);
             paint(img);
         };
-        img.onerror = () => {
-            if (src !== SAFE_COVER) drawFallback();
-            else drawFallback();
-        };
+        img.onerror = () => drawFallback();
         img.src = src;
     }
 
@@ -117,43 +119,57 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         drawCover($("dpArtCv"), s.coverUrl, 46);
     }
 
-    // ==================== SEO ====================
+    /* ==================== SEO ==================== */
     function updateSeo(song) {
-        const title = song
-            ? `${song.title} — ${song.artist} | Haiere Signature Music`
-            : "Haiere Signature Music — Muhaajir";
-        document.title = title;
-        const desc = song
-            ? `Listen to ${song.title} by ${song.artist} from ${song.album}.`
-            : "Stream Muhaajir's original albums Fragmen Suara and Resonansi Dalam Diam.";
-        const metaDesc = document.querySelector('meta[name="description"]');
-        if (metaDesc) metaDesc.setAttribute("content", desc);
-        const ogTitle = document.querySelector('meta[property="og:title"]');
-        if (ogTitle) ogTitle.setAttribute("content", title);
-        const ogDesc = document.querySelector('meta[property="og:description"]');
-        if (ogDesc) ogDesc.setAttribute("content", desc);
-        const ogImg = document.querySelector('meta[property="og:image"]');
-        if (ogImg && song) ogImg.setAttribute("content", song.coverUrl || SAFE_COVER);
-        const twTitle = document.querySelector('meta[name="twitter:title"]');
-        if (twTitle) twTitle.setAttribute("content", title);
-        const twDesc = document.querySelector('meta[name="twitter:description"]');
-        if (twDesc) twDesc.setAttribute("content", desc);
-        const twImg = document.querySelector('meta[name="twitter:image"]');
-        if (twImg && song) twImg.setAttribute("content", song.coverUrl || SAFE_COVER);
-        const canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical) {
-            const base = window.location.origin;
-            canonical.setAttribute("href", song ? base + buildSongPath(song) : base + "/");
+        try {
+            const title = song
+                ? `${song.title} — ${song.artist} | Haiere Signature Music`
+                : "Haiere Signature Music — Muhaajir";
+            document.title = title;
+
+            const desc = song
+                ? `Listen to ${song.title} by ${song.artist} from ${song.album}.`
+                : "Stream Muhaajir's original albums Fragmen Suara and Resonansi Dalam Diam.";
+
+            const setMeta = (selector, attr, value) => {
+                const el = document.querySelector(selector);
+                if (el) el.setAttribute(attr, value);
+            };
+
+            setMeta('meta[name="description"]', "content", desc);
+            setMeta('meta[property="og:title"]', "content", title);
+            setMeta('meta[property="og:description"]', "content", desc);
+            setMeta('meta[name="twitter:title"]', "content", title);
+            setMeta('meta[name="twitter:description"]', "content", desc);
+
+            if (song) {
+                setMeta('meta[property="og:image"]', "content", song.coverUrl || SAFE_COVER);
+                setMeta('meta[name="twitter:image"]', "content", song.coverUrl || SAFE_COVER);
+            }
+
+            const canonical = document.querySelector('link[rel="canonical"]');
+            if (canonical) {
+                const base = window.location.origin;
+                const href = song ? base + buildSongPath(song) : base + "/";
+                canonical.setAttribute("href", href);
+            }
+        } catch (err) {
+            // SEO must never block playback
+            console.warn("[Haiere] updateSeo failed:", err);
         }
     }
 
-    // ==================== LOAD SONG ====================
+    /* ==================== LOAD SONG ==================== */
     function loadSong(index, autoPlay = false, pushRoute = true) {
         const s = SONGS[index];
         if (!s) return;
         currentIndex = index;
+        songLoaded = true;
 
-        const setText = (id, text) => { const el = $(id); if (el) el.textContent = text; };
+        const setText = (id, text) => {
+            const el = $(id);
+            if (el) el.textContent = text;
+        };
 
         setText("npTitle", s.title);
         setText("npAlbum", `${s.album} · ${s.artist}`);
@@ -170,7 +186,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         syncFavButton();
         updateSeo(s);
 
-        // Audio source
+        // Set audio source
         if (aud.src !== s.audioUrl) {
             aud.src = s.audioUrl;
             aud.load();
@@ -181,28 +197,31 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         };
 
         if (autoPlay && isInteracted) {
-            aud.play().catch(() => {});
+            aud.play().catch(() => {
+                aud.volume = getVol();
+                showToast(t("toast.audioError"));
+            });
         }
+
         updatePlaylistHighlight();
         updateMediaSession(s);
         saveState();
 
         // Routing
         if (pushRoute) {
-            const path = `/playing/${getSongSlug(s).title}/${getSongSlug(s).artist}`;
+            const path = buildSongPath(s);
             if (window.location.pathname !== path) navigate(path, true);
         }
 
-        // Hide not-found if visible
+        // Reset not-found
         const nf = $("notFound");
         if (nf) nf.hidden = true;
-        const center = $("page-player");
-        if (center) center.classList.remove("has-not-found");
+        const playerPage = $("page-player");
+        if (playerPage) playerPage.classList.remove("has-not-found");
     }
 
-    // ==================== ROUTE HANDLER ====================
+    /* ==================== ROUTE HANDLER ==================== */
     function handleRouteChange({ type, song }) {
-        currentRoute = type;
         const nf = $("notFound");
         const playerPage = $("page-player");
 
@@ -221,13 +240,12 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
             if (idx >= 0) {
                 loadSong(idx, false, false);
                 if (type === "playing") showView("player");
+                else if (type === "search") showView("playlist");
             }
-        } else if (type === "home") {
-            // home route: no forced song change
         }
     }
 
-    // ==================== PLAY / PAUSE ====================
+    /* ==================== PLAY / PAUSE ==================== */
     function togglePlay() {
         isInteracted = true;
         if (aud.paused) {
@@ -239,6 +257,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
                     updatePlayButtons();
                 })
                 .catch(() => {
+                    aud.volume = getVol();
                     showToast(t("toast.audioError"));
                 });
         } else {
@@ -264,9 +283,8 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
             if (!t0) t0 = ts;
             const p = Math.min((ts - t0) / dur, 1);
             aud.volume = from + (to - from) * p;
-            if (p < 1) {
-                fadeRaf = requestAnimationFrame(step);
-            } else {
+            if (p < 1) fadeRaf = requestAnimationFrame(step);
+            else {
                 aud.volume = to;
                 if (cb) cb();
             }
@@ -279,7 +297,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
     }
 
     function updatePlayButtons() {
-        const playing = !aud.paused && aud.currentTime > 0;
+        const playing = !aud.paused;
         isPlaying = playing;
         ["playSvg", "bpPlaySvg", "dpPlaySvg"].forEach((id) => {
             const el = $(id);
@@ -291,37 +309,27 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         });
     }
 
-    // ==================== NAVIGATION ====================
+    /* ==================== NAV ==================== */
     function getNextIndex(direction) {
         if (shuffleMode) {
             let r;
-            do {
-                r = Math.floor(Math.random() * SONGS.length);
-            } while (r === currentIndex && SONGS.length > 1);
+            do { r = Math.floor(Math.random() * SONGS.length); }
+            while (r === currentIndex && SONGS.length > 1);
             return r;
         }
         return (currentIndex + direction + SONGS.length) % SONGS.length;
     }
 
-    function playNext() {
-        isInteracted = true;
-        loadSong(getNextIndex(1), true);
-    }
+    function playNext() { isInteracted = true; loadSong(getNextIndex(1), true); }
+    function playPrev() { isInteracted = true; loadSong(getNextIndex(-1), true); }
 
-    function playPrev() {
-        isInteracted = true;
-        loadSong(getNextIndex(-1), true);
-    }
-
-    // ==================== FAVORITES ====================
+    /* ==================== FAVORITES ==================== */
     function toggleFav() {
         const song = SONGS[currentIndex];
         if (!song) return;
         const name = song.title;
         favorites[name] = !favorites[name];
-        try {
-            localStorage.setItem("haiere_fav", JSON.stringify(favorites));
-        } catch (_) {}
+        try { localStorage.setItem("haiere_fav", JSON.stringify(favorites)); } catch (_) {}
         syncFavButton();
         updateFavCount();
         if (plFilter === "fav") renderPlaylist();
@@ -350,7 +358,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         if (el) el.textContent = String(count || 0);
     }
 
-    // ==================== PLAYLIST ====================
+    /* ==================== PLAYLIST ==================== */
     function renderPlaylist() {
         const container = $("plItems");
         if (!container) return;
@@ -373,8 +381,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
             if (s.album !== lastGroup) {
                 lastGroup = s.album;
                 const sep = document.createElement("div");
-                sep.style.cssText =
-                    "font-size:0.65rem;font-family:var(--font-mono);color:var(--fg4);padding:8px 4px 2px;text-transform:uppercase;";
+                sep.style.cssText = "font-size:0.65rem;font-family:var(--font-mono);color:var(--fg4);padding:8px 4px 2px;text-transform:uppercase;";
                 sep.textContent = s.album;
                 container.appendChild(sep);
             }
@@ -389,6 +396,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
                 <span class="fav" data-name="${s.title}">${favorites[s.title] ? "♥" : "♡"}</span>
             `;
             div.addEventListener("click", () => {
+                isInteracted = true;
                 loadSong(i, true);
                 if (window.innerWidth < 768) showView("player");
             });
@@ -421,7 +429,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         });
     }
 
-    // ==================== MEDIA SESSION ====================
+    /* ==================== MEDIA SESSION ==================== */
     function updateMediaSession(song) {
         if ("mediaSession" in navigator) {
             try {
@@ -439,7 +447,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         }
     }
 
-    // ==================== PROGRESS ====================
+    /* ==================== PROGRESS ==================== */
     function updateProgress() {
         if (!aud.duration) return;
         const pct = (aud.currentTime / aud.duration) * 100 + "%";
@@ -473,7 +481,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
     bindProgressClick($("progTrack"));
     bindProgressClick($("dpProgTrack"));
 
-    // ==================== SLEEP TIMER ====================
+    /* ==================== SLEEP TIMER ==================== */
     function clearSleep() {
         if (sleepInterval) clearInterval(sleepInterval);
         sleepInterval = null;
@@ -516,7 +524,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         }, 500);
     }
 
-    // ==================== VOLUME ====================
+    /* ==================== VOLUME ==================== */
     function updateVolume(value) {
         aud.volume = value;
         ["volSl", "volSetSl", "dpVolSl"].forEach((id) => {
@@ -527,12 +535,10 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
             const el = $(id);
             if (el) el.textContent = Math.round(value * 100) + "%";
         });
-        try {
-            localStorage.setItem("haiere_vol", String(value));
-        } catch (_) {}
+        try { localStorage.setItem("haiere_vol", String(value)); } catch (_) {}
     }
 
-    // ==================== VIEW SWITCHING ====================
+    /* ==================== VIEW SWITCHING ==================== */
     function showView(view) {
         if (window.innerWidth < 768) {
             document.querySelectorAll(".page").forEach((el) => el.classList.remove("active"));
@@ -543,21 +549,18 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
                 el.classList.toggle("on", el.dataset.view === view);
             });
         }
-        try {
-            localStorage.setItem("haiere_view", view);
-        } catch (_) {}
+        try { localStorage.setItem("haiere_view", view); } catch (_) {}
     }
 
-    // ==================== STATE ====================
+    /* ==================== STATE PERSISTENCE ==================== */
     function saveState() {
         try {
-            const state = {
+            localStorage.setItem("haiere_state", JSON.stringify({
                 index: currentIndex,
                 volume: aud.volume,
                 shuffle: shuffleMode,
                 repeat: repeatMode,
-            };
-            localStorage.setItem("haiere_state", JSON.stringify(state));
+            }));
         } catch (_) {}
     }
 
@@ -572,7 +575,6 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
             ["btnShuffle", "dpShuffle"].forEach((id) => $(id)?.classList.toggle("on", shuffleMode));
             ["btnRepeat", "dpRepeat"].forEach((id) => $(id)?.classList.toggle("on", repeatMode));
             if (state.index !== undefined && SONGS[state.index]) {
-                // Do not force route on restore; route handler will do it if URL has a song.
                 if (!window.location.pathname.match(/^\/playing\//)) {
                     loadSong(state.index, false, false);
                 }
@@ -580,7 +582,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         } catch (_) {}
     }
 
-    // ==================== SHARE ====================
+    /* ==================== SHARE ==================== */
     async function shareCurrentSong() {
         const song = SONGS[currentIndex];
         if (!song) return;
@@ -606,7 +608,7 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
         }
     }
 
-    // ==================== EASTER EGG ====================
+    /* ==================== EASTER EGG ==================== */
     let eggClicks = 0;
     let eggTimer = null;
     function registerEggClick() {
@@ -621,243 +623,240 @@ import { initRouter, navigate, buildShareUrl } from "./router.js";
             if (logo) {
                 logo.style.transition = "transform 0.6s ease";
                 logo.style.transform = "rotate(360deg) scale(1.08)";
-                setTimeout(() => {
-                    logo.style.transform = "";
-                }, 700);
+                setTimeout(() => { logo.style.transform = ""; }, 700);
             }
         }
     }
 
-    // ==================== INIT ====================
+    /* ==================== INIT ==================== */
     function init() {
-        // Apply language
-        const langSel = $("langSel");
-        if (langSel) {
-            langSel.value = getLang();
-            langSel.addEventListener("change", (e) => {
-                setLang(e.target.value);
-                showToast(t("toast.languageChanged"));
-                renderPlaylist();
-                if (SONGS[currentIndex]) loadSong(currentIndex, false, false);
-            });
-        }
-        applyTranslations();
-
-        // Render
-        renderPlaylist();
-        restoreState();
-        if (!aud.src) loadSong(0, false, false);
-
-        // Router
-        initRouter(handleRouteChange);
-
-        // Audio events
-        aud.addEventListener("timeupdate", updateProgress);
-        aud.addEventListener("ended", () => {
-            if (repeatMode) {
-                aud.currentTime = 0;
-                aud.play();
-            } else {
-                playNext();
+        try {
+            // Language
+            const langSel = $("langSel");
+            if (langSel) {
+                langSel.value = getLang();
+                langSel.addEventListener("change", (e) => {
+                    setLang(e.target.value);
+                    showToast(t("toast.languageChanged"));
+                    renderPlaylist();
+                    if (SONGS[currentIndex]) loadSong(currentIndex, false, false);
+                });
             }
-        });
-        aud.addEventListener("play", updatePlayButtons);
-        aud.addEventListener("pause", updatePlayButtons);
+            applyTranslations();
 
-        // Play buttons
-        ["btnPlay", "bpPlay", "dpPlay"].forEach((id) =>
-            $(id)?.addEventListener("click", togglePlay)
-        );
+            // Initial render
+            renderPlaylist();
+            restoreState();
+            if (!songLoaded) loadSong(0, false, false);
 
-        // Prev / next
-        ["btnPrev", "dpPrev"].forEach((id) =>
-            $(id)?.addEventListener("click", playPrev)
-        );
-        ["btnNext", "dpNext"].forEach((id) =>
-            $(id)?.addEventListener("click", playNext)
-        );
+            // Router (may override with route song)
+            initRouter(handleRouteChange);
 
-        // Shuffle
-        ["btnShuffle", "dpShuffle"].forEach((id) =>
-            $(id)?.addEventListener("click", () => {
-                shuffleMode = !shuffleMode;
-                ["btnShuffle", "dpShuffle"].forEach((i) =>
-                    $(i)?.classList.toggle("on", shuffleMode)
-                );
-                showToast(shuffleMode ? t("toast.shuffleOn") : t("toast.shuffleOff"));
-                saveState();
-            })
-        );
+            // Audio events
+            aud.addEventListener("timeupdate", updateProgress);
+            aud.addEventListener("ended", () => {
+                if (repeatMode) {
+                    aud.currentTime = 0;
+                    aud.play();
+                } else {
+                    playNext();
+                }
+            });
+            aud.addEventListener("play", updatePlayButtons);
+            aud.addEventListener("pause", updatePlayButtons);
 
-        // Repeat
-        ["btnRepeat", "dpRepeat"].forEach((id) =>
-            $(id)?.addEventListener("click", () => {
-                repeatMode = !repeatMode;
-                ["btnRepeat", "dpRepeat"].forEach((i) =>
-                    $(i)?.classList.toggle("on", repeatMode)
-                );
-                showToast(repeatMode ? t("toast.repeatOn") : t("toast.repeatOff"));
-                saveState();
-            })
-        );
-
-        // Favorites
-        ["btnFav", "dpFav", "bpFav"].forEach((id) =>
-            $(id)?.addEventListener("click", toggleFav)
-        );
-
-        // Volume
-        ["volSl", "volSetSl", "dpVolSl"].forEach((id) => {
-            $(id)?.addEventListener("input", (e) =>
-                updateVolume(parseFloat(e.target.value))
+            // Play
+            ["btnPlay", "bpPlay", "dpPlay"].forEach((id) =>
+                $(id)?.addEventListener("click", togglePlay)
             );
-        });
 
-        // Navigation
-        document.querySelectorAll(".bottom-nav .nav-btn[data-view]").forEach((el) => {
-            el.addEventListener("click", () => showView(el.dataset.view));
-        });
-        document.querySelectorAll(".menu-item[data-view]").forEach((el) => {
-            el.addEventListener("click", () => {
-                showView(el.dataset.view);
+            // Prev / Next
+            ["btnPrev", "dpPrev"].forEach((id) =>
+                $(id)?.addEventListener("click", playPrev)
+            );
+            ["btnNext", "dpNext"].forEach((id) =>
+                $(id)?.addEventListener("click", playNext)
+            );
+
+            // Shuffle
+            ["btnShuffle", "dpShuffle"].forEach((id) =>
+                $(id)?.addEventListener("click", () => {
+                    shuffleMode = !shuffleMode;
+                    ["btnShuffle", "dpShuffle"].forEach((i) =>
+                        $(i)?.classList.toggle("on", shuffleMode)
+                    );
+                    showToast(shuffleMode ? t("toast.shuffleOn") : t("toast.shuffleOff"));
+                    saveState();
+                })
+            );
+
+            // Repeat
+            ["btnRepeat", "dpRepeat"].forEach((id) =>
+                $(id)?.addEventListener("click", () => {
+                    repeatMode = !repeatMode;
+                    ["btnRepeat", "dpRepeat"].forEach((i) =>
+                        $(i)?.classList.toggle("on", repeatMode)
+                    );
+                    showToast(repeatMode ? t("toast.repeatOn") : t("toast.repeatOff"));
+                    saveState();
+                })
+            );
+
+            // Favorites
+            ["btnFav", "dpFav", "bpFav"].forEach((id) =>
+                $(id)?.addEventListener("click", toggleFav)
+            );
+
+            // Volume
+            ["volSl", "volSetSl", "dpVolSl"].forEach((id) => {
+                $(id)?.addEventListener("input", (e) =>
+                    updateVolume(parseFloat(e.target.value))
+                );
+            });
+
+            // Bottom nav
+            document.querySelectorAll(".bottom-nav .nav-btn[data-view]").forEach((el) => {
+                el.addEventListener("click", () => showView(el.dataset.view));
+            });
+
+            // Drawer nav
+            document.querySelectorAll(".menu-item[data-view]").forEach((el) => {
+                el.addEventListener("click", () => {
+                    showView(el.dataset.view);
+                    $("menuDrawer")?.classList.remove("show");
+                    $("menuOverlay")?.classList.remove("show");
+                });
+            });
+
+            // Mini player → player view (ignore clicks on inner buttons)
+            $("bpMini")?.addEventListener("click", (e) => {
+                if (e.target.closest("button")) return;
+                if (window.innerWidth < 768) showView("player");
+            });
+
+            // Desktop right-panel toggle
+            $("btnMoreToggle")?.addEventListener("click", () => {
+                const mainEl = $("mainArea");
+                if (mainEl) {
+                    mainEl.classList.toggle("more-collapsed");
+                    const collapsed = mainEl.classList.contains("more-collapsed");
+                    const icon = $("moreToggleIcon");
+                    if (icon) icon.style.transform = collapsed ? "rotate(180deg)" : "rotate(0deg)";
+                }
+            });
+
+            // Playlist filter
+            document.querySelectorAll(".pl-filter-btn").forEach((btn) => {
+                btn.addEventListener("click", () => setPlaylistFilter(btn.dataset.filter));
+            });
+
+            // Music search
+            $("musicSearch")?.addEventListener("input", (e) => {
+                musicQuery = e.target.value.trim();
+                renderPlaylist();
+            });
+
+            // Mobile drawer
+            $("menuToggle")?.addEventListener("click", () => {
+                $("menuDrawer")?.classList.add("show");
+                $("menuOverlay")?.classList.add("show");
+            });
+            const closeMenu = () => {
                 $("menuDrawer")?.classList.remove("show");
                 $("menuOverlay")?.classList.remove("show");
+            };
+            $("menuClose")?.addEventListener("click", closeMenu);
+            $("menuOverlay")?.addEventListener("click", closeMenu);
+
+            // Download modal
+            const openModal = () => $("modalBg")?.classList.add("show");
+            const closeModal = () => $("modalBg")?.classList.remove("show");
+            ["btnDl", "dpDl", "setDl"].forEach((id) => $(id)?.addEventListener("click", openModal));
+            $("modalBg")?.addEventListener("click", (e) => {
+                if (e.target === $("modalBg")) closeModal();
             });
-        });
+            $("optCatbox")?.addEventListener("click", () => {
+                const url = $("optCatbox")?.dataset.url;
+                if (url) window.open(url, "_blank", "noopener");
+                closeModal();
+            });
 
-        // Mini player → open player
-        $("bpMini")?.addEventListener("click", () => {
-            if (window.innerWidth < 768) showView("player");
-        });
+            // Share
+            ["btnShare", "setShare"].forEach((id) => $(id)?.addEventListener("click", shareCurrentSong));
 
-        // Desktop right-panel toggle
-        $("btnMoreToggle")?.addEventListener("click", () => {
-            const mainEl = $("mainArea");
-            if (mainEl) {
-                mainEl.classList.toggle("more-collapsed");
-                const collapsed = mainEl.classList.contains("more-collapsed");
-                const icon = $("moreToggleIcon");
-                if (icon) icon.style.transform = collapsed ? "rotate(180deg)" : "rotate(0deg)";
-            }
-        });
-
-        // Playlist filter
-        document.querySelectorAll(".pl-filter-btn").forEach((btn) => {
-            btn.addEventListener("click", () => setPlaylistFilter(btn.dataset.filter));
-        });
-
-        // Music search
-        $("musicSearch")?.addEventListener("input", (e) => {
-            musicQuery = e.target.value.trim();
-            renderPlaylist();
-        });
-
-        // Mobile drawer
-        $("menuToggle")?.addEventListener("click", () => {
-            $("menuDrawer")?.classList.add("show");
-            $("menuOverlay")?.classList.add("show");
-        });
-        const closeMenu = () => {
-            $("menuDrawer")?.classList.remove("show");
-            $("menuOverlay")?.classList.remove("show");
-        };
-        $("menuClose")?.addEventListener("click", closeMenu);
-        $("menuOverlay")?.addEventListener("click", closeMenu);
-
-        // Download modal
-        const openModal = () => $("modalBg")?.classList.add("show");
-        const closeModal = () => $("modalBg")?.classList.remove("show");
-        ["btnDl", "dpDl", "setDl"].forEach((id) => $(id)?.addEventListener("click", openModal));
-        $("modalBg")?.addEventListener("click", (e) => {
-            if (e.target === $("modalBg")) closeModal();
-        });
-        $("optCatbox")?.addEventListener("click", () => {
-            const url = $("optCatbox")?.dataset.url;
-            if (url) window.open(url, "_blank", "noopener");
-            closeModal();
-        });
-
-        // Share
-        ["btnShare", "setShare"].forEach((id) => $(id)?.addEventListener("click", shareCurrentSong));
-
-        // Sleep timer
-        $("sleepGo")?.addEventListener("click", () => {
-            const val = parseInt($("sleepSel")?.value || "0", 10);
-            if (val > 0) startSleep(val);
-        });
-        $("sleepStop")?.addEventListener("click", clearSleep);
-        $("btnTimer")?.addEventListener("click", () => {
-            const panel = $("page-settings");
-            if (panel) {
+            // Sleep timer
+            $("sleepGo")?.addEventListener("click", () => {
+                const val = parseInt($("sleepSel")?.value || "0", 10);
+                if (val > 0) startSleep(val);
+            });
+            $("sleepStop")?.addEventListener("click", clearSleep);
+            $("btnTimer")?.addEventListener("click", () => {
                 showView("settings");
-                panel.scrollIntoView({ behavior: "smooth" });
-            }
-        });
-        $("dpTimer")?.addEventListener("click", () => {
-            showView("settings");
-        });
+                $("page-settings")?.scrollIntoView({ behavior: "smooth" });
+            });
+            $("dpTimer")?.addEventListener("click", () => showView("settings"));
 
-        // Not-found back
-        $("notFoundBack")?.addEventListener("click", () => {
-            navigate("/");
-            showView("playlist");
-        });
+            // Not-found back
+            $("notFoundBack")?.addEventListener("click", () => {
+                navigate("/");
+                showView("playlist");
+            });
 
-        // Easter egg
-        $("headerLogo")?.addEventListener("click", (e) => {
-            e.preventDefault();
-            registerEggClick();
-        });
+            // Header logo: navigate home + track egg clicks
+            $("headerLogo")?.addEventListener("click", (e) => {
+                e.preventDefault();
+                registerEggClick();
+                if (window.location.pathname !== "/") navigate("/");
+                if (window.innerWidth < 768) showView("player");
+            });
 
-        // Resize → redraw covers
-        window.addEventListener("resize", () => {
-            if (SONGS[currentIndex]) updateAllCovers(currentIndex);
-        });
+            // Redraw covers on resize
+            window.addEventListener("resize", () => {
+                if (SONGS[currentIndex]) updateAllCovers(currentIndex);
+            });
 
-        // Keyboard shortcuts
-        document.addEventListener("keydown", (e) => {
-            const tag = document.activeElement?.tagName;
-            if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
-            switch (e.key) {
-                case " ":
-                case "k":
-                    e.preventDefault();
-                    togglePlay();
-                    break;
-                case "ArrowRight":
-                    e.preventDefault();
-                    if (e.shiftKey) playNext();
-                    else aud.currentTime = Math.min(aud.duration || 0, aud.currentTime + 5);
-                    break;
-                case "ArrowLeft":
-                    e.preventDefault();
-                    if (e.shiftKey) playPrev();
-                    else aud.currentTime = Math.max(0, aud.currentTime - 5);
-                    break;
-                case "ArrowUp":
-                    e.preventDefault();
-                    updateVolume(Math.min(1, getVol() + 0.05));
-                    break;
-                case "ArrowDown":
-                    e.preventDefault();
-                    updateVolume(Math.max(0, getVol() - 0.05));
-                    break;
-                case "f":
-                    toggleFav();
-                    break;
-                case "s":
-                    $("btnShuffle")?.click();
-                    break;
-                case "r":
-                    $("btnRepeat")?.click();
-                    break;
-            }
-        });
+            // Keyboard shortcuts
+            document.addEventListener("keydown", (e) => {
+                const tag = document.activeElement?.tagName;
+                if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+                switch (e.key) {
+                    case " ":
+                    case "k":
+                        e.preventDefault();
+                        togglePlay();
+                        break;
+                    case "ArrowRight":
+                        e.preventDefault();
+                        if (e.shiftKey) playNext();
+                        else aud.currentTime = Math.min(aud.duration || 0, aud.currentTime + 5);
+                        break;
+                    case "ArrowLeft":
+                        e.preventDefault();
+                        if (e.shiftKey) playPrev();
+                        else aud.currentTime = Math.max(0, aud.currentTime - 5);
+                        break;
+                    case "ArrowUp":
+                        e.preventDefault();
+                        updateVolume(Math.min(1, getVol() + 0.05));
+                        break;
+                    case "ArrowDown":
+                        e.preventDefault();
+                        updateVolume(Math.max(0, getVol() - 0.05));
+                        break;
+                    case "f": toggleFav(); break;
+                    case "s": $("btnShuffle")?.click(); break;
+                    case "r": $("btnRepeat")?.click(); break;
+                }
+            });
 
-        // Hide skeleton after first successful render
-        requestAnimationFrame(() => {
-            setTimeout(hideSkeleton, 300);
-        });
+            // Hide skeleton after successful init
+            requestAnimationFrame(() => setTimeout(hideSkeleton, 300));
+
+        } catch (err) {
+            console.error("[Haiere] init() failed:", err);
+            // Always hide skeleton so user isn't stuck
+            hideSkeleton();
+        }
     }
 
     if (document.readyState === "loading") {
